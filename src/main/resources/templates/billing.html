@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Bootstrap CSS -->
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous"
+    />
+    <title>Paiement</title>
+</head>
+<body>
+<div class="qlf-central-container">
+    <div id="connexion" class="qlf-central-tile qlf-tile">
+        <h1>Procédez au paiement : </h1>
+        <p class="qlf-alert" th:text="${error}"></p>
+        <form method="post" action="/billingconfirm">
+            <div class="qlf-split-form">
+                <div id="price1" class="qlf-splitted-content-3 qlf-splitted-content-checked">
+                    <p>Abonnement 1 mois</p>
+                    <p class="qlf-price">14,99€</p>
+                </div>
+                <div id="price3" class="qlf-splitted-content-3">
+                    <p>Abonnement 3 mois</p>
+                    <p class="qlf-price">42,99€</p>
+                </div>
+                <div id="price12" class="qlf-splitted-content-3">
+                    <p>Abonnement 12 mois</p>
+                    <p class="qlf-price">159,99€</p>
+                </div>
+            </div>
+            <label class="qlf-label" for="creditCard">Numéro de carte bancaire</label>
+            <input type="text" id="creditCard" name="creditCard" placeholder="Entrez votre numéro de carte bancaire" required pattern="[0-9]{16}">
+            <div class="qlf-split-form">
+                <div class="qlf-splitted-content">
+                    <label class="qlf-label" for="expirationDate">Date d'expiration</label>
+                    <input type="text" id="expirationDate" name="expirationDate"
+                           placeholder="Entrez votre date d'expiration de carte au format MM/AA" required pattern="[0-9]{2}/[0-9]{2}">
+                </div>
+                <div class="qlf-splitted-content">
+                    <label class="qlf-label" for="cryptogram">Cryptogramme</label>
+                    <input type="text" id="cryptogram" name="cryptogram"
+                           placeholder="Entrez votre cryptogramme de carte" required pattern="[0-9]{3}">
+                </div>
+            </div>
+            <input type="radio" id="month1" class="qlf-radio-input" name="duration" value="1" checked hidden>
+            <input type="radio" id="month3" class="qlf-radio-input" name="duration" value="3" hidden>
+            <input type="radio" id="month12" class="qlf-radio-input" name="duration" value="12" hidden>
+            <input type="submit" class="qlf-rounded-btn" value="Procéder au paiement">
+        </form>
+    </div>
+</div>
+<script>
+    const durations = document.querySelectorAll(".qlf-splitted-content-3");
+    durations.forEach(e => e.addEventListener('click', function () {
+        switch (e.id) {
+            case "price1":
+                document.getElementById("month1").checked = true;
+                document.querySelector(".qlf-splitted-content-checked").classList.remove("qlf-splitted-content-checked");
+                e.classList.add("qlf-splitted-content-checked");
+                break;
+            case "price3":
+                document.getElementById("month3").checked = true;
+                document.querySelector(".qlf-splitted-content-checked").classList.remove("qlf-splitted-content-checked");
+                e.classList.add("qlf-splitted-content-checked");
+                break;
+            case "price12":
+                document.getElementById("month12").checked = true;
+                document.querySelector(".qlf-splitted-content-checked").classList.remove("qlf-splitted-content-checked");
+                e.classList.add("qlf-splitted-content-checked");
+                break;
+            default :
+                break;
+        }
+    }))
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Bootstrap CSS -->
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous"
+    />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat&display=swap" rel="stylesheet"/>
+    <!-- Icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="icon" type="image/png" href="images/logo_sans_texte.png"/>
+    <title>Erreur</title>
+</head>
+<body class="index">
+<div th:insert="fragments/navbar.html :: navbar"></div>
+<div>
+    <div class="container-fluid text-center qlf-container">
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <img src="images/logo_first_page.png" alt="QLF" class="qlf-central-logo"/>
+                    <div class="content my-5"
+                         th:if="${#strings.equalsIgnoreCase(error, 'not found')== true or #strings.equalsIgnoreCase(error, 'internal server error')== true}">
+                        <h1 class="error">Une erreur est survenue !</h1>
+                    </div>
+                    <div class="content my-5"
+                         th:if="${#strings.equalsIgnoreCase(error, 'not found')== false and #strings.equalsIgnoreCase(error, 'internal server error')==false}">
+                        <h1 class="error" th:text="'Erreur, ' + ${error} "></h1>
+                    </div>
+                    <a class="btn btn-lg btn-block btn-go-qlf" href="/index">Retourner à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
