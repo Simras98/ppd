@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.sql.DataSource;
 
 @Controller
-public class QlfController {
+public class PpdController {
 
   @Autowired private DataSource dataSource;
 
