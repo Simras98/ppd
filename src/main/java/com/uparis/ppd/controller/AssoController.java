@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.sql.DataSource;
 
 @Controller
-public class PpdController {
+public class AssoController {
 
   @Autowired private DataSource dataSource;
 
