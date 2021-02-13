@@ -53,6 +53,9 @@ public class ConnectionController {
   @Value("${controller.billing}")
   private String billing;
 
+  @Value("${controller.dashboard}")
+  private String dashboard;
+
   @Value("${controller.error}")
   private String error;
 
@@ -146,7 +149,7 @@ public class ConnectionController {
                 phoneNumber);
         userService.save(user);
         request.getSession().setAttribute("user", user);
-        return index;
+        return dashboard;
     } else {
       model.addAttribute("error", "L'adresse email est déjà utilisée !");
       return signup;
