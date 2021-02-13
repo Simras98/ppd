@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-public class PpdConfiguration {
+public class AssoConfiguration {
 
   @Value("${spring.datasource.hikari.jdbc-url}")
   private String url;
