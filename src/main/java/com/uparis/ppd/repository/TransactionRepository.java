@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-  @Transactional
-  @Modifying
-  @Query("DELETE FROM Transaction t WHERE t.user.id = :id")
-  void deleteAllByCustomerId(@Param("id") long id);
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Transaction t WHERE t.member.id = :id")
+    void deleteAllByCustomerId(@Param("id") long id);
 }

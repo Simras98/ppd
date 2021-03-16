@@ -13,7 +13,7 @@
     <groupId>com.uparis.ppd</groupId>
     <artifactId>ppd</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>qlf</name>
+    <name>ppd</name>
     <description>PPD Project : Collaborative tool to help associations</description>
 
     <properties>
@@ -41,7 +41,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>

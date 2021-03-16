@@ -2,17 +2,17 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <!-- Bootstrap CSS -->
     <link
-            rel="stylesheet"
+            crossorigin="anonymous"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-            crossorigin="anonymous"
+            rel="stylesheet"
     />
-    <title>Project Asso</title>
+    <title>Accueil</title>
 </head>
 <body>
-    <a href="/signup">Inscription</a>
-    <a href="/login">Connexion</a>
+<div th:insert="fragments/navbar.html :: navbar"></div>
+<h1>Accueil</h1>
 </body>

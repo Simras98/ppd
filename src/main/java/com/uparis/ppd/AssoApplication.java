@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(StorageProperties.class)
 public class AssoApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(AssoApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(AssoApplication.class, args);
+    }
 }

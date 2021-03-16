@@ -2,105 +2,89 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <!-- Bootstrap CSS -->
     <link
-            rel="stylesheet"
+            crossorigin="anonymous"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-            crossorigin="anonymous"
+            rel="stylesheet"
     />
     <!-- hCaptcha -->
-    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Inscription</title>
 </head>
 <body>
 <div>
-    <div id="connexion">
-        <h1>Inscrivez-vous : </h1>
-        <p th:text="${error}"></p>
-        <form id="signupForm" method="post" action="/signupconfirm">
-            <label>Quel type d'utilisateur êtes-vous ?</label>
-            <div>
-                <label for="firstName">Prénom</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Entrez votre prénom" required>
-            </div>
-            <div>
-                <label for="lastName">Nom</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Entrez votre nom" required>
-            </div>
-            <div>
-                <label for="address">Adresse</label>
-                <input type="text" id="address" name="address" placeholder="Entrez votre adresse" required>
-            </div>
-            <div>
-                <label for="city">Ville</label>
-                <input type="text" id="city" name="city" placeholder="Entrez votre ville" required pattern="[A-Za-zéèêëàâîïôöûüç-' ]*">
-            </div>
-            <div>
-                <label for="postalCode">Code Postal</label>
-                <input type="text" id="postalCode" name="postalCode" placeholder="Entrez votre code postal" required pattern="[0-9]{5}">
-            </div>
-            <div>
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
-            </div>
-            <div>
-                <label for="phoneNumber">Numéro de téléphone</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Entrez votre numéro de téléphone" required pattern="(0|\+33)[1-9]( *[0-9]{2}){4}">
-            </div>
-            <div>
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
-            </div>
-            <div>
-                <label for="confirmPassword">Confirmation de mot de passe</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe" required>
-            </div>
-            <div class="qlf-captcha">
-                <div class="h-captcha" data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d" data-callback="submitForm"></div>
-            </div>
-            <a href="/login">Déjà inscrit ? Connectez-vous !</a>
-            <input id="signUpButton" type="submit" value="S'inscrire" disabled>
-        </form>
-    </div>
+    <h1>Inscrivez-vous : </h1>
+    <p th:text="${error}"></p>
+    <form action="/signupconfirm" id="signupForm" method="post">
+        <label>Quel type d'utilisateur êtes-vous ?</label>
+        <div>
+            <label for="firstName">Prénom</label>
+            <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez votre prénom" required type="text">
+        </div>
+        <div>
+            <label for="lastName">Nom</label>
+            <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez votre nom" required type="text">
+        </div>
+        <div>
+            <label for="address">Adresse</label>
+            <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
+                   placeholder="Entrez votre adresse" required type="text">
+        </div>
+        <div>
+            <label for="city">Ville</label>
+            <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez votre ville" required type="text">
+        </div>
+        <div>
+            <label for="postalCode">Code Postal</label>
+            <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
+                   placeholder="Entrez votre code postal" required type="text">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="Entrez votre email" required type="email">
+        </div>
+        <div>
+            <label for="phoneNumber">Numéro de téléphone</label>
+            <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
+                   placeholder="Entrez votre numéro de téléphone" required type="tel">
+        </div>
+        <div>
+            <label for="password">Mot de passe</label>
+            <input id="password" name="password" placeholder="Entrez votre mot de passe" required type="password">
+        </div>
+        <div>
+            <label for="confirmPassword">Confirmation de mot de passe</label>
+            <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
+                   required type="password">
+        </div>
+        <div data-callback="submitForm"
+             data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
+        </div>
+        <a href="/login">Déjà inscrit ? Connectez-vous !</a>
+        <input id="signUpButton" type="submit" value="S'inscrire">
+    </form>
 </div>
 <script>
-    function toggleField(disp) {
-        if (disp) {
-            $(".only_for_producer").each(function () {
-                $(this).show(500);
-            });
-        } else {
-            $(".only_for_producer").each(function () {
-                $(this).hide(500);
-            });
-        }
-    }
-    const producer = document.getElementById("producer");
-    producer.addEventListener("change", function () {
-        if (this.checked)
-            toggleField(true);
-    });
-    const consumer = document.getElementById("consumer");
-    consumer.addEventListener("change", function () {
-        if (this.checked)
-            toggleField(false);
-    });
     async function submitForm() {
-      const signUpForm = document.querySelector('form');
-      const formData = new FormData(signUpForm);
-      formData.delete('g-recaptcha-response');
-      const response = await fetch('/hcaptcha', {
-        method: 'POST',
-        body: formData
-      });
-      const ok = await response.json();
-      if (ok) {
-        document.getElementById("signUpButton").disabled = false;
-      } else {
-        window.location.href = "signup.html";
-      }
+        const signUpForm = document.querySelector('form');
+        const formData = new FormData(signUpForm);
+        formData.delete('g-recaptcha-response');
+        const response = await fetch('/hcaptcha', {
+            method: 'POST',
+            body: formData
+        });
+        const ok = await response.json();
+        if (ok) {
+            document.getElementById("signUpButton").disabled = false;
+        } else {
+            window.location.href = "signup.html";
+        }
     }
 </script>
 </body>

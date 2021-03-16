@@ -2,31 +2,48 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <!-- Bootstrap CSS -->
     <link
-            rel="stylesheet"
+            crossorigin="anonymous"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-            crossorigin="anonymous"
+            rel="stylesheet"
     />
+    <!-- hCaptcha -->
+    <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Connexion</title>
 </head>
 <body>
 <div>
-    <div id="connexion">
-        <h1>Connectez-vous : </h1>
-        <p th:text="${error}"></p>
-        <form method="post" action="/loginconfirm">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Entrez votre adresse email">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe">
-            <a href="/signup">Pas encore inscrit ? Inscrivez vous !</a>
-            <a href="/passwordforgotten">Mot de passe oublié ?</a>
-            <input type="submit" value="Se connecter">
-        </form>
-    </div>
+    <h1>Connectez-vous : </h1>
+    <p th:text="${error}"></p>
+    <form action="/loginconfirm" id="loginForm" method="post">
+        <label for="email">Email</label>
+        <input id="email" name="email" placeholder="Entrez votre adresse email" type="email">
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" placeholder="Entrez votre mot de passe" type="password">
+        <a href="/signup">Pas encore inscrit ? Inscrivez vous !</a>
+        <a href="/passwordforgotten">Mot de passe oublié ?</a>
+        <input id="loginButton" type="submit" value="Se connecter">
+    </form>
 </div>
+<script>
+    async function submitForm() {
+        const signUpForm = document.querySelector('form');
+        const formData = new FormData(signUpForm);
+        formData.delete('g-recaptcha-response');
+        const response = await fetch('/hcaptcha', {
+            method: 'POST',
+            body: formData
+        });
+        const ok = await response.json();
+        if (ok) {
+            document.getElementById("loginButton").disabled = false;
+        } else {
+            window.location.href = "login.html";
+        }
+    }
+</script>
 </body>
 </html>
