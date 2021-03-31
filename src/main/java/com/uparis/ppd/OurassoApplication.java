@@ -7,9 +7,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
-public class AssoApplication {
+public class OurassoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AssoApplication.class, args);
+        SpringApplication.run(OurassoApplication.class, args);
     }
 }

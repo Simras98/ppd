@@ -33,21 +33,21 @@ public class FileSystemStorageService {
   public String store(MultipartFile file) {
     String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
     fileName =
-        fileName.substring(0, fileName.lastIndexOf('.'))
-            + "_"
-            + (new Date()).getTime()
-            + fileName.substring(fileName.lastIndexOf('.'));
+            fileName.substring(0, fileName.lastIndexOf('.'))
+                    + "_"
+                    + (new Date()).getTime()
+                    + fileName.substring(fileName.lastIndexOf('.'));
     try {
       if (file.isEmpty()) {
         throw new StorageException("Failed to store empty file " + fileName);
       }
       if (fileName.contains("..")) {
         throw new StorageException(
-            "Cannot store file with relative path outside current directory " + fileName);
+                "Cannot store file with relative path outside current directory " + fileName);
       }
       try (InputStream inputStream = file.getInputStream()) {
         Files.copy(
-            inputStream, this.rootLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                inputStream, this.rootLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
         return fileName;
       }
     } catch (IOException e) {

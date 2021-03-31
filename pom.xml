@@ -20,7 +20,7 @@
         <java.version>11</java.version>
         <sonar.exclusions>
             **/view/**,
-            **/AssoApplication.java
+            **/OurassoApplication.java
         </sonar.exclusions>
     </properties>
 
@@ -73,6 +73,15 @@
             <artifactId>re2j</artifactId>
             <version>1.5</version>
         </dependency>
+        <!-- Excel dependencies -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
         <!-- Heroku dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -107,7 +116,7 @@
                         <configuration>
                             <classifier>spring-boot</classifier>
                             <mainClass>
-                                com.uparis.ppd.AssoApplication
+                                com.uparis.ppd.OurassoApplication
                             </mainClass>
                         </configuration>
                     </execution>

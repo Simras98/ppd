@@ -19,7 +19,6 @@
     <h1>Inscrivez-vous : </h1>
     <p th:text="${error}"></p>
     <form action="/signupconfirm" id="signupForm" method="post">
-        <label>Quel type d'utilisateur êtes-vous ?</label>
         <div>
             <label for="firstName">Prénom</label>
             <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"

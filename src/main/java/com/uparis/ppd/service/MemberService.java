@@ -1,18 +1,26 @@
 package com.uparis.ppd.service;
 
+import com.uparis.ppd.exception.StorageException;
 import com.uparis.ppd.model.Member;
 import com.uparis.ppd.repository.MemberRepository;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -76,6 +84,28 @@ public class MemberService {
         }
     }
 
+    public void addMembers(MultipartFile file) {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+            XSSFSheet worksheet = workbook.getSheetAt(0);
+            for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+                if (index > 0) {
+                    XSSFRow row = worksheet.getRow(index);
+                    create(row.getCell(0).getStringCellValue(),
+                            row.getCell(1).getStringCellValue(),
+                            row.getCell(2).getStringCellValue(),
+                            row.getCell(3).getStringCellValue(),
+                            row.getCell(4).getStringCellValue(),
+                            row.getCell(5).getStringCellValue(),
+                            row.getCell(6).getStringCellValue(),
+                            createRandomPassword());
+                }
+            }
+        } catch (IOException e) {
+            throw new StorageException("Failed to read file " + file, e);
+        }
+    }
+
     public boolean checkEmail(String email) {
         Member member = memberRepository.findByEmail(email);
         return member == null;
@@ -91,23 +121,50 @@ public class MemberService {
         return false;
     }
 
-    public void resetPassword(String email) throws NoSuchProviderException, NoSuchAlgorithmException {
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
+    public String createRandomPassword() {
+        SecureRandom random = null;
+        try {
+            random = SecureRandom.getInstance("SHA1PRNG", "SUN");
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+            e.printStackTrace();
+        }
         byte[] bytes = new byte[8];
+        assert random != null;
         random.nextBytes(bytes);
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-        String newPassword = encoder.encodeToString(bytes);
+        return encoder.encodeToString(bytes);
+    }
+
+    public void resetPassword(String email) {
         Member member = memberRepository.findByEmail(email);
+        String newPassword = createRandomPassword();
         member.setPassword(bCryptPasswordEncoder.encode(newPassword));
         memberRepository.save(member);
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("Asso");
+        message.setFrom("contact.ourasso@gmail.com");
         message.setTo(email);
         message.setSubject("Votre nouveau mot de passe");
         message.setText(
                 "Votre nouveau mot de passe : "
                         + newPassword
                         + "\n"
+                        + "https://ppd-asso.herokuapp.com/login");
+        emailSender.send(message);
+    }
+
+    public void notifyMember(String firstName, String lastName, String address, String city, String postalCode, String email, String phoneNumber) {
+        String password = createRandomPassword();
+        create(firstName, lastName, address, city, postalCode, email, phoneNumber, password);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("contact.ourasso@gmail.com");
+        message.setTo(email);
+        message.setSubject("Bienvenue chez Ourasso !");
+        message.setText(
+                "Bonjour "+ firstName + " " + lastName + " !" + "\n"
+                        + "Bienvenue chez Ourasso !" + "\n"
+                        + "Voici vos identifiants pour vous connecter : " + "\n"
+                        + email + "\n"
+                        + password + "\n"
                         + "https://ppd-asso.herokuapp.com/login");
         emailSender.send(message);
     }

@@ -18,8 +18,45 @@
 <div>
     <h1>Ajout </h1>
     <p th:text="${error}"></p>
-    <form action="/addmembersconfirm" id="addMembersForm" method="post" enctype="multipart/form-data">
-        <input type="file" id="memberlist" name="memberlist"
+    <form action="/addmemberconfirm" id="addMemberForm" method="post">
+        <div>
+            <label for="firstName">Prénom</label>
+            <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez le prénom" required type="text">
+        </div>
+        <div>
+            <label for="lastName">Nom</label>
+            <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez le nom" required type="text">
+        </div>
+        <div>
+            <label for="address">Adresse</label>
+            <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
+                   placeholder="Entrez l'adresse" required type="text">
+        </div>
+        <div>
+            <label for="city">Ville</label>
+            <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez la ville" required type="text">
+        </div>
+        <div>
+            <label for="postalCode">Code Postal</label>
+            <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
+                   placeholder="Entrez le code postal" required type="text">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="Entrez l'email" required type="email">
+        </div>
+        <div>
+            <label for="phoneNumber">Numéro de téléphone</label>
+            <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
+                   placeholder="Entrez le numéro de téléphone" required type="tel">
+        </div>
+        <input id="addMemberButton" type="submit" value="S'inscrire">
+    </form>
+    <form action="/addmemberwithfileconfirm" id="addMemberWithFileForm" method="post" enctype="multipart/form-data">
+        <input type="file" id="memberslist" name="memberslist"
                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                placeholder="Choisissez un fichier excel">
         <input name='addButton' type='submit'/>
