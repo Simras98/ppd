@@ -13,6 +13,7 @@ public class RegexService {
     private String phoneNumber = "(0|\\+33)[1-9]( *[0-9]{2}){4}";
     private String postalCode = "[0-9]{5}";
     private String word = "^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$";
+    private String level = "^(true|false)$";
 
     public String getAddress() {
         return address;
@@ -76,5 +77,13 @@ public class RegexService {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

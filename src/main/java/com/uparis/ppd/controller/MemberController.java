@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.util.Objects;
 
 @Controller
@@ -29,8 +26,11 @@ public class MemberController {
     @Value("${controller.addmember}")
     private String addMember;
 
-    @Value("${controller.addmemberconfirm}")
-    private String addMemberConfirm;
+    @Value("${controller.profile}")
+    private String profile;
+
+    @Value("${controller.success}")
+    private String success;
 
     @Value("${controller.error}")
     private String error;
@@ -49,7 +49,7 @@ public class MemberController {
             @RequestParam(name = "postalCode") String postalCode,
             @RequestParam(name = "email") String email,
             @RequestParam(name = "phoneNumber") String phoneNumber,
-            HttpServletRequest request,
+            @RequestParam(name = "level") String level,
             Model model) {
         model.addAttribute(error, "");
         if (firstName.isEmpty()
@@ -58,7 +58,8 @@ public class MemberController {
                 || city.isEmpty()
                 || postalCode.isEmpty()
                 || email.isEmpty()
-                || phoneNumber.isEmpty()) {
+                || phoneNumber.isEmpty()
+                || level.isEmpty()) {
             model.addAttribute(error, "Vous devez remplir les champs pour valider !");
             return addMember;
         }
@@ -90,20 +91,45 @@ public class MemberController {
             model.addAttribute(error, "Vous devez rentrer un numéro de téléphone valide !");
             return addMember;
         }
-        memberService.notifyMember(firstName, lastName, address, city, postalCode, email, phoneNumber);
-        return addMemberConfirm;
+        if (!Pattern.compile(regexService.getLevel()).matcher(level).find()) {
+            model.addAttribute(error, "Vous devez choisir un statut valide !");
+            return addMember;
+        }
+        model.addAttribute(success, "Le membre a bien été ajouté !");
+        memberService.notifyMember(firstName, lastName, address, city, postalCode, email, phoneNumber, null, level);
+        return addMember;
     }
 
     @PostMapping("/addmemberwithfileconfirm")
     public String addMemberWithFileConfirm(
-            @RequestParam(name = "memberlist") MultipartFile file, HttpServletRequest request, Model model) {
+            @RequestParam(name = "file") MultipartFile file, Model model) {
         if (Objects.equals(file.getOriginalFilename(), "")) {
-            model.addAttribute("error", "Vous devez choisir un fichier avant de valider !");
-            return addMember;
+            model.addAttribute(error, "Vous devez choisir un fichier avant de valider !");
         } else {
-            model.addAttribute("error", "");
+            model.addAttribute(success, "Les membres ont bien été ajoutés !");
             memberService.addMembers(file);
         }
-        return addMemberConfirm;
+        return addMember;
+    }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return profile;
+    }
+
+    @PostMapping("/passwordedit")
+    public String passwordEdit(
+            @RequestParam(name = "email") String email,
+            @RequestParam(name = "oldPassword") String oldPassword,
+            @RequestParam(name = "newPassword") String newPassword,
+            @RequestParam(name = "confirmNewPassword") String confirmNewPassword,
+            Model model) {
+        boolean confirm = memberService.editPassword(email, oldPassword, newPassword, confirmNewPassword);
+        if (confirm) {
+            model.addAttribute(success, "Mot de passe modifié avec succès !");
+        } else {
+            model.addAttribute(error, "Un problème a eu lieu !");
+        }
+        return profile;
     }
 }

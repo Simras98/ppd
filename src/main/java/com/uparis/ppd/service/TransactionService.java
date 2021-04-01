@@ -14,9 +14,37 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public void create(Member member, Long time, double price) {
-        Transaction transaction = new Transaction(member, time, price);
+    @Autowired
+    private MemberService memberService;
+
+    public Transaction create(Member member, String duration) {
+        long time = System.currentTimeMillis();
+        Transaction transaction;
+        switch (duration) {
+            case "1":
+                transaction = new Transaction(member, time, 14.99);
+                member.setEndSubscription(time + (60*1000));
+                // member.setEndSubscription(time + ((31556952L / 12) * 1000));
+                break;
+            case "3":
+                transaction = new Transaction(member, time, 42.99);
+                member.setEndSubscription(time + (60*1000));
+                // member.setEndSubscription(time + ((3 * 31556952L / 12) * 1000));
+                break;
+            case "12":
+                transaction = new Transaction(member, time, 149.99);
+                member.setEndSubscription(time + (60*1000));
+                // member.setEndSubscription(time + ((12 * 31556952L / 12) * 1000));
+                break;
+            default:
+                return null;
+        }
         transactionRepository.save(transaction);
+        member.setStartSubscription(time);
+        member.setDelaySubscription(0);
+        member.setDelayedSubscription(false);
+        memberService.update(member);
+        return transaction;
     }
 
     public boolean checkExpirationDate(String expirationDate) {

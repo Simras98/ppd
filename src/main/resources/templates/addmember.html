@@ -10,13 +10,12 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
-    <!-- hCaptcha -->
-    <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Ajout</title>
 </head>
 <body>
 <div>
-    <h1>Ajout </h1>
+    <h1>Ajout</h1>
+    <p th:text="${success}"></p>
     <p th:text="${error}"></p>
     <form action="/addmemberconfirm" id="addMemberForm" method="post">
         <div>
@@ -53,13 +52,16 @@
             <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
                    placeholder="Entrez le numéro de téléphone" required type="tel">
         </div>
-        <input id="addMemberButton" type="submit" value="S'inscrire">
+        <div>
+            <input id="admin" name="level" type="radio" value="true">Administrateur
+            <input id="member" name="level" type="radio" value="false">Membre
+        </div>
+        <input id="addMemberButton" name='addMemberButton' type="submit" value="Ajouter">
     </form>
     <form action="/addmemberwithfileconfirm" id="addMemberWithFileForm" method="post" enctype="multipart/form-data">
-        <input type="file" id="memberslist" name="memberslist"
-               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-               placeholder="Choisissez un fichier excel">
-        <input name='addButton' type='submit'/>
+        <input type="file" id="file" name="file"
+               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        <input id="addMembersButton" name='addMembersButton' type='submit' value="Ajouter"/>
     </form>
 </div>
 </body>

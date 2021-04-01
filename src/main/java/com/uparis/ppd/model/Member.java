@@ -23,6 +23,7 @@ public class Member implements Serializable {
     private long endSubscription;
     private long delaySubscription;
     private boolean delayedSubscription;
+    private boolean level;
 
     public Member() {
     }
@@ -34,7 +35,8 @@ public class Member implements Serializable {
                   String postalCode,
                   String email,
                   String phoneNumber,
-                  String password) {
+                  String password,
+                  boolean level) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -44,6 +46,7 @@ public class Member implements Serializable {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.delayedSubscription = false;
+        this.level = level;
     }
 
     public long getId() {
@@ -146,5 +149,13 @@ public class Member implements Serializable {
 
     public void setDelayedSubscription(boolean delayedSubscription) {
         this.delayedSubscription = delayedSubscription;
+    }
+
+    public boolean getLevel() {
+        return level;
+    }
+
+    public void setLevel(boolean level) {
+        this.level = level;
     }
 }

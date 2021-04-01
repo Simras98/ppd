@@ -61,15 +61,14 @@ public class OurassoConfiguration {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setUsername(usernameMail);
-        mailSender.setPassword(passwordMail);
         mailSender.setHost(host);
         mailSender.setPort(Integer.parseInt(port));
+        mailSender.setUsername(usernameMail);
+        mailSender.setPassword(passwordMail);
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         return mailSender;
     }
 }

@@ -16,31 +16,23 @@ public class OurassoController {
     @Autowired
     private MemberService memberService;
 
+    @Value("${controller.index}")
+    private String index;
+
     @Value("${controller.billing}")
     private String billing;
 
     @Value("${controller.error}")
     private String error;
 
-    @GetMapping("/")
-    public String home(HttpServletRequest request, Model model) {
-        model.addAttribute(error, "");
-        Member member = (Member) request.getSession().getAttribute("member");
-        if (member != null && !memberService.checkSubscription(member)) {
-            model.addAttribute(error, "Votre abonnement a expiré. Veuillez renouveler votre abonnement !");
-            return billing;
-        }
-        return "index";
-    }
-
-    @GetMapping("/index")
+    @GetMapping({"/", "/index"})
     public String index(HttpServletRequest request, Model model) {
         model.addAttribute(error, "");
         Member member = (Member) request.getSession().getAttribute("member");
-        if (member != null && !memberService.checkSubscription(member)) {
+        if (member != null && memberService.checkSubscription(member)) {
             model.addAttribute(error, "Votre abonnement a expiré. Veuillez renouveler votre abonnement !");
             return billing;
         }
-        return "index";
+        return index;
     }
 }

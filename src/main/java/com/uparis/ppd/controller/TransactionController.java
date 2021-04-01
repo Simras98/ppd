@@ -83,28 +83,10 @@ public class TransactionController {
                 model.addAttribute(error, "Votre carte bancaire a exprirée !");
                 return billing;
             }
-            long time = System.currentTimeMillis();
-            switch (duration) {
-                case "1":
-                    transactionService.create(member, time, 14.99);
-                    member.setEndSubscription(time + ((31556952L / 12) * 1000));
-                    break;
-                case "3":
-                    transactionService.create(member, time, 42.99);
-                    member.setEndSubscription(time + ((3 * 31556952L / 12) * 1000));
-                    break;
-                case "12":
-                    transactionService.create(member, time, 149.99);
-                    member.setEndSubscription(time + ((12 * 31556952L / 12) * 1000));
-                    break;
-                default:
-                    model.addAttribute(error, "Paiment invalide. Veuillez-contacter les administrateurs.");
-                    return billing;
+            if (transactionService.create(member, duration) == null) {
+                model.addAttribute(error, "Paiment invalide. Veuillez-contacter les administrateurs.");
+                return billing;
             }
-            member.setStartSubscription(time);
-            member.setDelaySubscription(0);
-            member.setDelayedSubscription(false);
-            memberService.update(member);
             return index;
         } else {
             model.addAttribute(error, "Vous n'êtes pas connecté");
@@ -117,11 +99,7 @@ public class TransactionController {
         model.addAttribute(error, "");
         Member member = (Member) request.getSession().getAttribute("member");
         if (member != null) {
-            long time = System.currentTimeMillis();
-            member.setDelaySubscription(time + (60*1000));
-            // member.setDelaySubscription(time + ((31556952L / 365) * 7) * 1000);
-            member.setDelayedSubscription(true);
-            memberService.update(member);
+            memberService.skipSubscription(member);
             return index;
         }
         model.addAttribute(error, "Vous n'êtes pas connecté");

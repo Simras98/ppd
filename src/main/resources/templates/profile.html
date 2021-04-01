@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <!-- Bootstrap CSS -->
+    <link
+            crossorigin="anonymous"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            rel="stylesheet"
+    />
+    <title>Profile</title>
+</head>
+<body>
+<div>
+    <h1>Profile</h1>
+    <p th:text="${success}"></p>
+    <p th:text="${error}"></p>
+    <form action="/passwordedit" id="profilForm" method="post">
+        <div>
+            <label for="firstName">Prénom</label>
+            <input id="firstName" name="firstName" placeholder="Entrez votre prénom" type="text" th:value="${session.member.firstName}" disabled>
+        </div>
+        <div>
+            <label for="lastName">Nom</label>
+            <input id="lastName" name="lastName" placeholder="Entrez votre nom" type="text" th:value="${session.member.lastName}" disabled>
+        </div>
+        <div>
+            <label for="address">Adresse</label>
+            <input id="address" name="address" placeholder="Entrez votre adresse" type="text" th:value="${session.member.address}" disabled>
+        </div>
+        <div>
+            <label for="city">Ville</label>
+            <input id="city" name="city" placeholder="Entrez votre ville" type="text" th:value="${session.member.city}" disabled>
+        </div>
+        <div>
+            <label for="postalCode">Code Postal</label>
+            <input id="postalCode" name="postalCode" placeholder="Entrez votre code postal" type="text" th:value="${session.member.postalCode}" disabled>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="Entrez votre email" type="email" th:value="${session.member.email}" disabled>
+        </div>
+        <div>
+            <label for="phoneNumber">Numéro de téléphone</label>
+            <input id="phoneNumber" name="phoneNumber" placeholder="Entrez votre numéro de téléphone" type="tel" th:value="${session.member.phoneNumber}" disabled>
+        </div>
+        <div>
+            <label for="level">Niveau</label>
+            <input id="level" name="level" placeholder="Entrez votre niveau" type="text" th:value="${session.member.level}" disabled>
+        </div>
+        <div>
+            <label for="oldPassword">Ancien mot de passe</label>
+            <input id="oldPassword" name="oldPassword" placeholder="Entrez votre ancien mot de passe" required type="password">
+        </div>
+        <div>
+            <label for="newPassword">Nouveau mot de passe</label>
+            <input id="newPassword" name="newPassword" placeholder="Entrez votre nouveau mot de passe" required type="password">
+        </div>
+        <div>
+            <label for="confirmNewPassword">Confirmation du nouveau mot de passe</label>
+            <input id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirmez votre nouveau mot de passe"
+                   required type="password">
+        </div>
+        <input id="editButton" type="submit" value="Modifier">
+    </form>
+</div>
+</body>
+</html>

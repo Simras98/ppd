@@ -35,9 +35,13 @@ public class MemberService {
     @Autowired
     private JavaMailSender emailSender;
 
-    public Member create(String firstName, String lastName, String address, String city, String postalCode, String email, String phoneNumber, String password) {
-        if (checkEmail(email)) {
-            Member member = new Member(capitalize(firstName), capitalize(lastName), capitalize(address), capitalize(city), postalCode, email, phoneNumber, bCryptPasswordEncoder.encode(password));
+    public Member create(String firstName, String lastName, String address, String city, String postalCode, String email, String phoneNumber, String password, String level) {
+        boolean booleanLevel = Boolean.parseBoolean(level);
+        if (memberRepository.findAll().isEmpty()) {
+            booleanLevel = true;
+        }
+        if (getByEmail(email) == null) {
+            Member member = new Member(capitalize(firstName), capitalize(lastName), capitalize(address), capitalize(city), postalCode, email, phoneNumber, bCryptPasswordEncoder.encode(password), booleanLevel);
             memberRepository.save(member);
             return member;
         } else {
@@ -71,10 +75,6 @@ public class MemberService {
         }
     }
 
-    public List<Member> getAllUsers() {
-        return memberRepository.findAll();
-    }
-
     public Member connect(String email, String password) {
         Member member = memberRepository.findByEmail(email);
         if (member != null && bCryptPasswordEncoder.matches(password, member.getPassword())) {
@@ -91,34 +91,37 @@ public class MemberService {
             for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
                 if (index > 0) {
                     XSSFRow row = worksheet.getRow(index);
-                    create(row.getCell(0).getStringCellValue(),
+                    notifyMember(row.getCell(0).getStringCellValue(),
                             row.getCell(1).getStringCellValue(),
                             row.getCell(2).getStringCellValue(),
                             row.getCell(3).getStringCellValue(),
-                            row.getCell(4).getStringCellValue(),
+                            String.valueOf(row.getCell(4).getNumericCellValue()).substring(0, String.valueOf(row.getCell(4).getNumericCellValue()).length() - 2),
                             row.getCell(5).getStringCellValue(),
                             row.getCell(6).getStringCellValue(),
-                            createRandomPassword());
+                            null,
+                            row.getCell(7).getStringCellValue());
                 }
             }
         } catch (IOException e) {
-            throw new StorageException("Failed to read file " + file, e);
+            throw new StorageException("impossible de lire le fichier " + file, e);
         }
     }
 
-    public boolean checkEmail(String email) {
-        Member member = memberRepository.findByEmail(email);
-        return member == null;
+    public void skipSubscription(Member member) {
+        long time = System.currentTimeMillis();
+        member.setDelaySubscription(time + (60 * 1000));
+        // member.setDelaySubscription(time + ((31556952L / 365) * 7) * 1000);
+        member.setDelayedSubscription(true);
+        member.setStartSubscription(0);
+        member.setEndSubscription(0);
+        update(member);
     }
 
     public boolean checkSubscription(Member member) {
-        if (member.getDelaySubscription() == 0 && member.getEndSubscription() == 0) {
+        if (member.isDelayedSubscription() && System.currentTimeMillis() < member.getDelaySubscription()) {
             return false;
         }
-        if (member.getDelaySubscription() != 0) {
-            return member.getDelaySubscription() > System.currentTimeMillis();
-        }
-        return false;
+        return System.currentTimeMillis() >= member.getEndSubscription();
     }
 
     public String createRandomPassword() {
@@ -143,7 +146,7 @@ public class MemberService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("contact.ourasso@gmail.com");
         message.setTo(email);
-        message.setSubject("Votre nouveau mot de passe");
+        message.setSubject("Ourasso : Votre nouveau mot de passe");
         message.setText(
                 "Votre nouveau mot de passe : "
                         + newPassword
@@ -152,21 +155,35 @@ public class MemberService {
         emailSender.send(message);
     }
 
-    public void notifyMember(String firstName, String lastName, String address, String city, String postalCode, String email, String phoneNumber) {
-        String password = createRandomPassword();
-        create(firstName, lastName, address, city, postalCode, email, phoneNumber, password);
+    public boolean editPassword(String email, String oldPassword, String newPassword, String confirmNewPassword) {
+        Member member = connect(email, oldPassword);
+        if (member != null && newPassword.equals(confirmNewPassword)) {
+            member.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            memberRepository.save(member);
+            return true;
+        }
+        return false;
+    }
+
+    public Member notifyMember(String firstName, String lastName, String address, String city, String postalCode, String email, String phoneNumber, String password, String level) {
+        if (password == null) {
+            password = createRandomPassword();
+        }
+        Member member = create(firstName, lastName, address, city, postalCode, email, phoneNumber, password, level);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("contact.ourasso@gmail.com");
         message.setTo(email);
         message.setSubject("Bienvenue chez Ourasso !");
         message.setText(
-                "Bonjour "+ firstName + " " + lastName + " !" + "\n"
+                "Bonjour " + firstName + " " + lastName + " !" + "\n"
                         + "Bienvenue chez Ourasso !" + "\n"
                         + "Voici vos identifiants pour vous connecter : " + "\n"
                         + email + "\n"
                         + password + "\n"
+                        + "Voici l'adresse pour vous y connecter : " + "\n"
                         + "https://ppd-asso.herokuapp.com/login");
         emailSender.send(message);
+        return member;
     }
 
     public String capitalize(String str) {

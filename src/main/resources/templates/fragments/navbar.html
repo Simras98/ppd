@@ -24,12 +24,15 @@
         <a href="/login"
            th:classappend="${#httpServletRequest.requestURI == '/login'}"
            th:if="${session.member == null}">Connexion</a>
+        <a href="/profile"
+           th:classappend="${#httpServletRequest.requestURI == '/profile'}"
+           th:if="${session.member != null}">Profile</a>
         <a href="/billing"
            th:classappend="${#httpServletRequest.requestURI == '/billing'}"
            th:if="${session.member != null && session.member.endSubscription == 0}">Paiement</a>
-        <a href="/login"
-           th:classappend="${#httpServletRequest.requestURI == '/addmembers'}"
-           th:if="${session.member != null}">Ajoutez des membres</a>
+        <a href="/addmember"
+           th:classappend="${#httpServletRequest.requestURI == '/addmember'}"
+           th:if="${session.member != null && session.member.level == True}">Ajoutez des membres</a>
         <a href="/logout"
            th:classappend="${#httpServletRequest.requestURI == '/logout'}"
            th:if="${session.member != null}">Déconnexion</a>

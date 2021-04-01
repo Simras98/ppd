@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.re2j.Pattern;
 import com.uparis.ppd.model.Member;
-import com.uparis.ppd.service.RegexService;
 import com.uparis.ppd.service.MemberService;
+import com.uparis.ppd.service.RegexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,10 +23,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.time.Duration;
-
 
 @Controller
 public class ConnectionController {
@@ -56,8 +53,14 @@ public class ConnectionController {
     @Value("${controller.billing}")
     private String billing;
 
+    @Value("${controller.success}")
+    private String success;
+
     @Value("${controller.error}")
     private String error;
+
+    @Value("${controller.passwordforgotten}")
+    private String passwordForgotten;
 
     ConnectionController() {
         this.httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
@@ -145,7 +148,7 @@ public class ConnectionController {
             model.addAttribute(error, "Les mots de passe ne correspondent pas !");
             return signup;
         }
-        Member member = memberService.create(firstName, lastName, address, city, postalCode, email, phoneNumber, password);
+        Member member = memberService.notifyMember(firstName, lastName, address, city, postalCode, email, phoneNumber, password, "False");
         if (member != null) {
             request.getSession().setAttribute("member", member);
             return billing;
@@ -174,7 +177,7 @@ public class ConnectionController {
         Member member = memberService.connect(email, password);
         if (member != null) {
             request.getSession().setAttribute("member", member);
-            if (!memberService.checkSubscription(member)) {
+            if (memberService.checkSubscription(member)) {
                 model.addAttribute(error, "Votre abonnement a expiré. Veuillez renouveler votre abonnement !");
                 return billing;
             } else {
@@ -194,21 +197,19 @@ public class ConnectionController {
 
     @GetMapping("/passwordforgotten")
     public String passwordForgotten() {
-        return "passwordforgotten";
+        return passwordForgotten;
     }
 
     @PostMapping("/passwordforgotten")
     public String passwordForgotten(
-            @RequestParam(name = "email", required = false) String email, Model model)
-            throws NoSuchProviderException, NoSuchAlgorithmException {
+            @RequestParam(name = "email") String email, Model model) {
         Member member = memberService.getByEmail(email);
         if (member != null) {
             memberService.resetPassword(email);
-            model.addAttribute("email", email);
-            return "passwordforgottenconfirm";
+            model.addAttribute(success, "Un email vous a été envoyé !");
         } else {
             model.addAttribute(error, "L'adresse email n'a pas été trouvée !");
-            return "passwordforgotten";
         }
+        return passwordForgotten;
     }
 }
