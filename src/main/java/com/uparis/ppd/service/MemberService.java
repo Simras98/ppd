@@ -148,9 +148,11 @@ public class MemberService {
         message.setTo(email);
         message.setSubject("Ourasso : Votre nouveau mot de passe");
         message.setText(
-                "Votre nouveau mot de passe : "
-                        + newPassword
+                "Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
                         + "\n"
+                        + "Voici votre nouveau mot de passe : " + newPassword + "\n"
+                        + "\n"
+                        + "Voici l'adresse pour vous y connecter : " + "\n"
                         + "https://ppd-asso.herokuapp.com/login");
         emailSender.send(message);
     }
@@ -175,11 +177,12 @@ public class MemberService {
         message.setTo(email);
         message.setSubject("Bienvenue chez Ourasso !");
         message.setText(
-                "Bonjour " + firstName + " " + lastName + " !" + "\n"
-                        + "Bienvenue chez Ourasso !" + "\n"
+                "Bonjour " + firstName + " " + lastName + ", " + "bienvenue chez Ourasso !" + "\n"
+                        + "\n"
                         + "Voici vos identifiants pour vous connecter : " + "\n"
-                        + email + "\n"
-                        + password + "\n"
+                        + "Adresse mail : " + email + "\n"
+                        + "Mot de passe : " + password + "\n"
+                        + "\n"
                         + "Voici l'adresse pour vous y connecter : " + "\n"
                         + "https://ppd-asso.herokuapp.com/login");
         emailSender.send(message);
