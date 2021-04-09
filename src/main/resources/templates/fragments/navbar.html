@@ -30,9 +30,9 @@
         <a href="/billing"
            th:classappend="${#httpServletRequest.requestURI == '/billing'}"
            th:if="${session.subscription != null && session.subscription.stop == 0}">Paiement</a>
-        <a href="/addmember"
-           th:classappend="${#httpServletRequest.requestURI == '/addmember'}"
-           th:if="${session.subscription != null && session.subscription.status.admin == True}">Ajoutez des membres</a>
+        <a href="/managemembers"
+           th:classappend="${#httpServletRequest.requestURI == '/managemembers'}"
+           th:if="${session.subscription != null && session.subscription.status.admin == True}">Gestion des membres</a>
         <a href="/logout"
            th:classappend="${#httpServletRequest.requestURI == '/logout'}"
            th:if="${session.subscription != null}">Déconnexion</a>

@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ConstantProperties {
 
     // Controller constants
-    private static final String CONTROLLER_ADDMEMBER = "addmember";
+    private static final String CONTROLLER_MANAGEMEMBERS = "managemembers";
     private static final String CONTROLLER_BILLINGMEMBER = "billingmember";
     private static final String CONTROLLER_BILLINGSUPERADMIN = "billingsuperadmin";
     private static final String CONTROLLER_INDEX = "index";
@@ -79,7 +79,7 @@ public class ConstantProperties {
 
 
     public String getControllerAddMember() {
-        return CONTROLLER_ADDMEMBER;
+        return CONTROLLER_MANAGEMEMBERS;
     }
 
     public String getControllerBillingMember() {

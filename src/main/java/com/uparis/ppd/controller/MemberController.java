@@ -43,8 +43,8 @@ public class MemberController {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @GetMapping("/addmember")
-    public String addMember(HttpServletRequest request, Model model) {
+    @GetMapping("/managemembers")
+    public String manageMembers(HttpServletRequest request, Model model) {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
         if (subscription != null) {
             if (subscriptionService.isValid(subscription)) {
@@ -66,7 +66,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/addmemberconfirm")
+    @PostMapping("/addmembersconfirm")
     public String addMemberConfirm(
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
@@ -163,7 +163,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/addmemberfromfileconfirm")
+    @PostMapping("/addmembersfromfileconfirm")
     public String addMemberFromFileConfirm(
             @RequestParam(name = "file") MultipartFile file,
             HttpServletRequest request,
