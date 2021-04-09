@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface MemberRepository extends CrudRepository<Member, Long> {
 
+    @Override
+    List<Member> findAll();
+
     Member findByEmail(String email);
 
     Optional<Member> findById(Long id);
 
     @Query("SELECT m FROM Member m WHERE CONCAT(UPPER(m.firstName), UPPER(m.lastName)) LIKE %?1%")
     List<Member> search(String keyword);
-
-    @Override
-    List<Member> findAll();
 }

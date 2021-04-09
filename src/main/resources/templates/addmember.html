@@ -13,11 +13,12 @@
     <title>Ajout</title>
 </head>
 <body>
+<div th:insert="fragments/navbar.html :: navbar"></div>
 <div>
     <h1>Ajout</h1>
     <p th:text="${success}"></p>
     <p th:text="${error}"></p>
-    <form action="/addmemberconfirm" id="addMemberForm" method="post">
+    <form action="/addmemberconfirm" id="addMemberConfirm" method="post">
         <div>
             <label for="firstName">Prénom</label>
             <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
@@ -27,6 +28,16 @@
             <label for="lastName">Nom</label>
             <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
                    placeholder="Entrez le nom" required type="text">
+        </div>
+        <div>
+            <label>Sexe</label>
+            <input id="homme" name="sex" value="homme" checked type="radio">Homme
+            <input id="femme" name="sex" value="femme" type="radio">Femme
+            <input id="autre" name="sex" value="autre" type="radio">Autre
+        </div>
+        <div>
+            <label for="birthDate">Date de naissance</label>
+            <input id="birthDate" name="birthDate" required type="date">
         </div>
         <div>
             <label for="address">Adresse</label>
@@ -53,16 +64,46 @@
                    placeholder="Entrez le numéro de téléphone" required type="tel">
         </div>
         <div>
-            <input id="admin" name="level" type="radio" value="true">Administrateur
-            <input id="member" name="level" type="radio" value="false">Membre
+            <label>Niveau</label>
+            <input id="admin" name="admin" type="radio" value="true">Administrateur
+            <input id="member" name="admin" type="radio" value="false">Membre
         </div>
         <input id="addMemberButton" name='addMemberButton' type="submit" value="Ajouter">
     </form>
-    <form action="/addmemberwithfileconfirm" id="addMemberWithFileForm" method="post" enctype="multipart/form-data">
+    <form action="/addmemberfromfileconfirm" id="addMemberFromFileConfirm" method="post" enctype="multipart/form-data">
         <input type="file" id="file" name="file"
                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-        <input id="addMembersButton" name='addMembersButton' type='submit' value="Ajouter"/>
+        <input id="addMemberFromFileButton" name='addMemberFromFileButton' type='submit' value="Ajouter"/>
     </form>
+    <form action="/receivemembersfromfile" method="get">
+        <button type="submit">Exporter</button>
+    </form>
+    <div>
+        <table>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Sexe</th>
+                <th>Date de naissance</th>
+                <th>Adresse</th>
+                <th>Ville</th>
+                <th>Code postal</th>
+                <th>Email</th>
+                <th>Numéro de téléphone</th>
+            </tr>
+            <tr id="members" th:each="Member : ${members}">
+                <td th:utext="${Member.firstName}"></td>
+                <td th:utext="${#strings.capitalize(Member.lastName)}"></td>
+                <td th:utext="${#strings.capitalize(Member.sex)}"></td>
+                <td th:utext="${#strings.capitalize(Member.birthDate)}"></td>
+                <td th:utext="${#strings.capitalize(Member.address)}"></td>
+                <td th:utext="${#strings.capitalize(Member.city)}"></td>
+                <td th:utext="${#strings.capitalize(Member.postalCode)}"></td>
+                <td th:utext="${Member.email}"></td>
+                <td th:utext="${#strings.capitalize(Member.phoneNumber)}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>

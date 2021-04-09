@@ -1,10 +1,16 @@
 package com.uparis.ppd.controller;
 
 import com.google.re2j.Pattern;
-import com.uparis.ppd.service.MemberService;
-import com.uparis.ppd.service.RegexService;
+import com.uparis.ppd.model.Member;
+import com.uparis.ppd.model.Status;
+import com.uparis.ppd.model.Subscription;
+import com.uparis.ppd.properties.ConstantProperties;
+import com.uparis.ppd.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +18,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
 public class MemberController {
+
+    @Autowired
+    private ConstantProperties constantProperties;
 
     @Autowired
     private MemberService memberService;
@@ -23,98 +37,196 @@ public class MemberController {
     @Autowired
     private RegexService regexService;
 
-    @Value("${controller.addmember}")
-    private String addMember;
+    @Autowired
+    private StatusService statusService;
 
-    @Value("${controller.profile}")
-    private String profile;
-
-    @Value("${controller.success}")
-    private String success;
-
-    @Value("${controller.error}")
-    private String error;
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @GetMapping("/addmember")
-    public String addMember() {
-        return addMember;
+    public String addMember(HttpServletRequest request, Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                Object[] members = subscriptionService.getMembersByAssociation(subscription);
+                model.addAttribute(constantProperties.getAttributeNameMembers(), members);
+                return constantProperties.getControllerAddMember();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatus(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
+        }
     }
 
     @PostMapping("/addmemberconfirm")
     public String addMemberConfirm(
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
+            @RequestParam(name = "man") String man,
+            @RequestParam(name = "birthDate") String birthDate,
             @RequestParam(name = "address") String address,
             @RequestParam(name = "city") String city,
             @RequestParam(name = "postalCode") String postalCode,
             @RequestParam(name = "email") String email,
             @RequestParam(name = "phoneNumber") String phoneNumber,
-            @RequestParam(name = "level") String level,
-            Model model) {
-        model.addAttribute(error, "");
-        if (firstName.isEmpty()
-                || lastName.isEmpty()
-                || address.isEmpty()
-                || city.isEmpty()
-                || postalCode.isEmpty()
-                || email.isEmpty()
-                || phoneNumber.isEmpty()
-                || level.isEmpty()) {
-            model.addAttribute(error, "Vous devez remplir les champs pour valider !");
-            return addMember;
+            @RequestParam(name = "admin") String isAdmin,
+            @RequestParam(name = "associationName") String associationName,
+            HttpServletRequest request, Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                if (firstName.isEmpty()
+                        || lastName.isEmpty()
+                        || man.isEmpty()
+                        || birthDate.isEmpty()
+                        || address.isEmpty()
+                        || city.isEmpty()
+                        || postalCode.isEmpty()
+                        || email.isEmpty()
+                        || phoneNumber.isEmpty()
+                        || isAdmin.isEmpty()
+                        || associationName.isEmpty()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFulfillFields());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getWord()).matcher(firstName).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFirstname());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getWord()).matcher(lastName).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getSex()).matcher(man).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescBirthdate());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getAddress()).matcher(address).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAddress());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getWord()).matcher(city).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescCity());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getPostalCode()).matcher(postalCode).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPostalCode());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getEmail()).matcher(email).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescEmail());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getPhoneNumber()).matcher(phoneNumber).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPhoneNumber());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getLevel()).matcher(isAdmin).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescStatus());
+                    return constantProperties.getControllerAddMember();
+                }
+                if (!Pattern.compile(regexService.getWord()).matcher(associationName).find()) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationName());
+                    return constantProperties.getControllerAddMember();
+                }
+                String password = memberService.createRandomPassword();
+                Member member = memberService.create(firstName, lastName, man, birthDate, address, city, postalCode, email, phoneNumber, password);
+                Status status = statusService.create(Boolean.parseBoolean(isAdmin), false);
+                Subscription newSubscription = subscriptionService.create(0, 0, 0, false, false, member, status, subscription.getAssociation(), Collections.emptySet());
+                subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), password);
+                model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescMemberAdded());
+                return constantProperties.getControllerAddMember();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatus(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
         }
-        if (!Pattern.compile(regexService.getWord()).matcher(firstName).find()) {
-            model.addAttribute(error, "Vous devez rentrer un prénom valide !");
-            return addMember;
-        }
-        if (!Pattern.compile(regexService.getWord()).matcher(lastName).find()) {
-            model.addAttribute(error, "Vous devez rentrer un nom valide !");
-            return addMember;
-        }
-        if (!Pattern.compile(regexService.getAddress()).matcher(address).find()) {
-            model.addAttribute(error, "Vous devez rentrer une adresse valide !");
-            return addMember;
-        }
-        if (!Pattern.compile(regexService.getWord()).matcher(city).find()) {
-            model.addAttribute(error, "Vous devez rentrer une ville valide !");
-            return addMember;
-        }
-        if (!Pattern.compile(regexService.getPostalCode()).matcher(postalCode).find()) {
-            model.addAttribute(error, "Vous devez rentrer un code postal valide !");
-            return addMember;
-        }
-        if (!Pattern.compile(regexService.getEmail()).matcher(email).find()) {
-            model.addAttribute(error, "Vous devez rentrer une adresse mail valide !");
-            return addMember;
-        }
-        if (!Pattern.compile(regexService.getPhoneNumber()).matcher(phoneNumber).find()) {
-            model.addAttribute(error, "Vous devez rentrer un numéro de téléphone valide !");
-            return addMember;
-        }
-        if (!Pattern.compile(regexService.getLevel()).matcher(level).find()) {
-            model.addAttribute(error, "Vous devez choisir un statut valide !");
-            return addMember;
-        }
-        model.addAttribute(success, "Le membre a bien été ajouté !");
-        memberService.notifyMember(firstName, lastName, address, city, postalCode, email, phoneNumber, null, level);
-        return addMember;
     }
 
-    @PostMapping("/addmemberwithfileconfirm")
-    public String addMemberWithFileConfirm(
-            @RequestParam(name = "file") MultipartFile file, Model model) {
-        if (Objects.equals(file.getOriginalFilename(), "")) {
-            model.addAttribute(error, "Vous devez choisir un fichier avant de valider !");
+    @PostMapping("/addmemberfromfileconfirm")
+    public String addMemberFromFileConfirm(
+            @RequestParam(name = "file") MultipartFile file,
+            HttpServletRequest request,
+            Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                if (Objects.equals(file.getOriginalFilename(), "")) {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescChooseFile());
+                    return constantProperties.getControllerAddMember();
+                }
+                List<String> passwords = memberService.createRandomPasswords(memberService.getNumberOfPasswords(file));
+                List<Member> members = memberService.createFromFile(file, passwords);
+                List<Status> status = statusService.createFromFile(file);
+                for (int i = 0; i < members.size(); i++) {
+                    Subscription newSubscription = subscriptionService.create(0, 0, 0, false, false, members.get(i), status.get(i), subscription.getAssociation(), Collections.emptySet());
+                    subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), passwords.get(i));
+                }
+                model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescMembersAdded());
+                return constantProperties.getControllerAddMember();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatus(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
         } else {
-            model.addAttribute(success, "Les membres ont bien été ajoutés !");
-            memberService.addMembers(file);
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
         }
-        return addMember;
+    }
+
+    @GetMapping(value = "receivemembersfromfile", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public HttpEntity<ByteArrayResource> receiveMembersFromFile(HttpServletRequest request) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        final ByteArrayOutputStream in = subscriptionService.exportMembers(subscription);
+        HttpHeaders header = new HttpHeaders();
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + subscription.getAssociation().getName() + "Members.xlsx");
+        return new HttpEntity<>(new ByteArrayResource(in.toByteArray()), header);
     }
 
     @GetMapping("/profile")
-    public String profile() {
-        return profile;
+    public String profile(HttpServletRequest request, Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                return constantProperties.getControllerProfile();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatus(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
+        }
     }
 
     @PostMapping("/passwordedit")
@@ -123,13 +235,30 @@ public class MemberController {
             @RequestParam(name = "oldPassword") String oldPassword,
             @RequestParam(name = "newPassword") String newPassword,
             @RequestParam(name = "confirmNewPassword") String confirmNewPassword,
+            HttpServletRequest request,
             Model model) {
-        boolean confirm = memberService.editPassword(email, oldPassword, newPassword, confirmNewPassword);
-        if (confirm) {
-            model.addAttribute(success, "Mot de passe modifié avec succès !");
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                boolean confirm = memberService.editPassword(email, oldPassword, newPassword, confirmNewPassword);
+                if (confirm) {
+                    model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescPasswordChanged());
+                } else {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescError());
+                }
+                return constantProperties.getControllerProfile();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatus(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
         } else {
-            model.addAttribute(error, "Un problème a eu lieu !");
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
         }
-        return profile;
     }
 }

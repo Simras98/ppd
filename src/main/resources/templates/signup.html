@@ -10,81 +10,13 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
-    <!-- hCaptcha -->
-    <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Inscription</title>
 </head>
 <body>
+<div th:insert="fragments/navbar.html :: navbar"></div>
 <div>
-    <h1>Inscription :</h1>
-    <p th:text="${error}"></p>
-    <form action="/signupconfirm" id="signupForm" method="post">
-        <div>
-            <label for="firstName">Prénom</label>
-            <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez votre prénom" required type="text">
-        </div>
-        <div>
-            <label for="lastName">Nom</label>
-            <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez votre nom" required type="text">
-        </div>
-        <div>
-            <label for="address">Adresse</label>
-            <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
-                   placeholder="Entrez votre adresse" required type="text">
-        </div>
-        <div>
-            <label for="city">Ville</label>
-            <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez votre ville" required type="text">
-        </div>
-        <div>
-            <label for="postalCode">Code Postal</label>
-            <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
-                   placeholder="Entrez votre code postal" required type="text">
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" placeholder="Entrez votre email" required type="email">
-        </div>
-        <div>
-            <label for="phoneNumber">Numéro de téléphone</label>
-            <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
-                   placeholder="Entrez votre numéro de téléphone" required type="tel">
-        </div>
-        <div>
-            <label for="password">Mot de passe</label>
-            <input id="password" name="password" placeholder="Entrez votre mot de passe" required type="password">
-        </div>
-        <div>
-            <label for="confirmPassword">Confirmation de mot de passe</label>
-            <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
-                   required type="password">
-        </div>
-        <div data-callback="submitForm"
-             data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
-        </div>
-        <a href="/login">Déjà inscrit ? Connectez-vous !</a>
-        <input id="signUpButton" type="submit" value="S'inscrire">
-    </form>
+    <a href="signupmember">S'inscire en tant que membre</a>
+    <a href="signupsuperadmin">S'inscire en tant que créateur</a>
 </div>
-<script>
-    async function submitForm() {
-        const signUpForm = document.querySelector('form');
-        const formData = new FormData(signUpForm);
-        formData.delete('g-recaptcha-response');
-        const response = await fetch('/hcaptcha', {
-            method: 'POST',
-            body: formData
-        });
-        const ok = await response.json();
-        if (ok) {
-            document.getElementById("signUpButton").disabled = false;
-        } else {
-            window.location.href = "signup.html";
-        }
-    }
-</script>
 </body>
 </html>

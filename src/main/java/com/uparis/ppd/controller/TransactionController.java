@@ -1,12 +1,12 @@
 package com.uparis.ppd.controller;
 
 import com.google.re2j.Pattern;
-import com.uparis.ppd.model.Member;
-import com.uparis.ppd.service.MemberService;
+import com.uparis.ppd.model.Subscription;
+import com.uparis.ppd.properties.ConstantProperties;
 import com.uparis.ppd.service.RegexService;
+import com.uparis.ppd.service.SubscriptionService;
 import com.uparis.ppd.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,33 +19,24 @@ import javax.servlet.http.HttpServletRequest;
 public class TransactionController {
 
     @Autowired
-    private TransactionService transactionService;
+    private ConstantProperties constantProperties;
 
     @Autowired
-    private MemberService memberService;
+    private TransactionService transactionService;
 
     @Autowired
     private RegexService regexService;
 
-    @Value("${controller.index}")
-    private String index;
+    @Autowired
+    private SubscriptionService subscriptionService;
 
-    @Value("${controller.login}")
-    private String login;
-
-    @Value("${controller.billing}")
-    private String billing;
-
-    @Value("${controller.error}")
-    private String error;
-
-    @GetMapping("/billing")
-    public String billing() {
-        return billing;
+    @GetMapping("/billingmember")
+    public String billingMember() {
+        return constantProperties.getControllerBillingMember();
     }
 
-    @PostMapping("/billingconfirm")
-    public String billingConfirm(
+    @PostMapping("/billingmemberconfirm")
+    public String billingMemberConfirm(
             @RequestParam(name = "creditCard") String creditCard,
             @RequestParam(name = "expirationDate") String expirationDate,
             @RequestParam(name = "cryptogram") String cryptogram,
@@ -53,56 +44,106 @@ public class TransactionController {
             @RequestParam(name = "duration") String duration,
             HttpServletRequest request,
             Model model) {
-        model.addAttribute(error, "");
-        Member member = (Member) request.getSession().getAttribute("member");
-        if (member != null) {
-            if (creditCard.isEmpty()
-                    || expirationDate.isEmpty()
-                    || cryptogram.isEmpty()
-                    || name.isEmpty()) {
-                model.addAttribute(error, "Vous devez remplir les champs avant de valider !");
-                return billing;
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (creditCard.isEmpty() || expirationDate.isEmpty() || cryptogram.isEmpty() || name.isEmpty()) {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFulfillFields());
+                return constantProperties.getControllerBillingMember();
             }
             if (!Pattern.compile(regexService.getCreditCard()).matcher(creditCard).find()) {
-                model.addAttribute(error, "Vous devez rentrer un numéro de carte bancaire valide !");
-                return billing;
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescCreditCard());
+                return constantProperties.getControllerBillingMember();
             }
             if (!Pattern.compile(regexService.getExpirationDate()).matcher(expirationDate).find()) {
-                model.addAttribute(error, "Vous devez rentrer une date d'expiration valide !");
-                return billing;
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescExpirationDate());
+                return constantProperties.getControllerBillingMember();
             }
             if (!Pattern.compile(regexService.getCryptogram()).matcher(cryptogram).find()) {
-                model.addAttribute(error, "Vous devez rentrer un cryptogramme valide !");
-                return billing;
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescCryptogram());
+                return constantProperties.getControllerBillingMember();
             }
             if (!Pattern.compile(regexService.getWord()).matcher(name).find()) {
-                model.addAttribute(error, "Vous devez rentrer un nom valide !");
-                return billing;
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescName());
+                return constantProperties.getControllerBillingMember();
             }
             if (!transactionService.checkExpirationDate(expirationDate)) {
-                model.addAttribute(error, "Votre carte bancaire a exprirée !");
-                return billing;
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescExpirationDateExpired());
+                return constantProperties.getControllerBillingMember();
             }
-            if (transactionService.create(member, duration) == null) {
-                model.addAttribute(error, "Paiment invalide. Veuillez-contacter les administrateurs.");
-                return billing;
+            if (subscriptionService.subscribe(subscription, duration)) {
+                request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+                return constantProperties.getControllerIndex();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPaymentFailed());
+                return constantProperties.getControllerBillingMember();
             }
-            return index;
         } else {
-            model.addAttribute(error, "Vous n'êtes pas connecté");
-            return login;
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
+        }
+    }
+
+    @GetMapping("/billingsuperadmin")
+    public String billingSuperAdmin() {
+        return constantProperties.getControllerBillingSuperAdmin();
+    }
+
+    @PostMapping("/billingsuperadminconfirm")
+    public String billingSuperAdminConfirm(
+            @RequestParam(name = "creditCard") String creditCard,
+            @RequestParam(name = "expirationDate") String expirationDate,
+            @RequestParam(name = "cryptogram") String cryptogram,
+            @RequestParam(name = "name") String name,
+            HttpServletRequest request,
+            Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (creditCard.isEmpty() || expirationDate.isEmpty() || cryptogram.isEmpty() || name.isEmpty()) {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFulfillFields());
+                return constantProperties.getControllerBillingSuperAdmin();
+            }
+            if (!Pattern.compile(regexService.getCreditCard()).matcher(creditCard).find()) {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescCreditCard());
+                return constantProperties.getControllerBillingSuperAdmin();
+            }
+            if (!Pattern.compile(regexService.getExpirationDate()).matcher(expirationDate).find()) {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescExpirationDate());
+                return constantProperties.getControllerBillingSuperAdmin();
+            }
+            if (!Pattern.compile(regexService.getCryptogram()).matcher(cryptogram).find()) {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescCryptogram());
+                return constantProperties.getControllerBillingSuperAdmin();
+            }
+            if (!Pattern.compile(regexService.getWord()).matcher(name).find()) {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescName());
+                return constantProperties.getControllerBillingSuperAdmin();
+            }
+            if (!transactionService.checkExpirationDate(expirationDate)) {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescExpirationDateExpired());
+                return constantProperties.getControllerBillingSuperAdmin();
+            }
+            if (subscriptionService.subscribe(subscription, null)) {
+                request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+                return constantProperties.getControllerIndex();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPaymentFailed());
+                return constantProperties.getControllerBillingSuperAdmin();
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
         }
     }
 
     @PostMapping("/billingskip")
     public String billingSkip(HttpServletRequest request, Model model) {
-        model.addAttribute(error, "");
-        Member member = (Member) request.getSession().getAttribute("member");
-        if (member != null) {
-            memberService.skipSubscription(member);
-            return index;
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            subscriptionService.skipSubscription(subscription);
+            request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+            return constantProperties.getControllerIndex();
         }
-        model.addAttribute(error, "Vous n'êtes pas connecté");
-        return login;
+        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+        return constantProperties.getControllerLogin();
     }
 }

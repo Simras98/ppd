@@ -13,24 +13,14 @@
     <title>Paiement</title>
 </head>
 <body>
+<div th:insert="fragments/navbar.html :: navbar"></div>
 <div>
     <h1>Paiement</h1>
     <p th:text="${error}"></p>
-    <form action="/billingconfirm" id="billingForm" method="post">
-        <div id="price1">
-            <p>Abonnement 1 mois</p>
-            <p>14,99€</p>
-            <input checked id="month1" name="duration" type="radio" value="1">
-        </div>
-        <div id="price3">
-            <p>Abonnement 3 mois</p>
-            <p>42,99€</p>
-            <input id="month3" name="duration" type="radio" value="3">
-        </div>
-        <div id="price12">
-            <p>Abonnement 12 mois</p>
-            <p>159,99€</p>
-            <input id="month12" name="duration" type="radio" value="12">
+    <form action="/billingconfirm" id="billingConfirm" method="post">
+        <div>
+            <p>Prix de l'abonnement :</p>
+            <p th:text="${price}"></p>
         </div>
         <div>
             <label for="creditCard">Numéro de carte bancaire</label>
@@ -56,9 +46,6 @@
                    required type="text">
         </div>
         <input type="submit" value="Procéder au paiement">
-    </form>
-    <form action="/billingskip" method="post">
-        <input th:disabled="${session.member.delayedSubscription}" type="submit" value="Effectuer le paiement plus tard">
     </form>
 </div>
 </body>

@@ -20,22 +20,22 @@
             Accueil</a>
         <a href="/signup"
            th:classappend="${#httpServletRequest.requestURI == '/signup'}"
-           th:if="${session.member == null}">Inscription</a>
+           th:if="${session.subscription == null}">Inscription</a>
         <a href="/login"
            th:classappend="${#httpServletRequest.requestURI == '/login'}"
-           th:if="${session.member == null}">Connexion</a>
+           th:if="${session.subscription == null}">Connexion</a>
         <a href="/profile"
            th:classappend="${#httpServletRequest.requestURI == '/profile'}"
-           th:if="${session.member != null}">Profile</a>
+           th:if="${session.subscription != null}">Profile</a>
         <a href="/billing"
            th:classappend="${#httpServletRequest.requestURI == '/billing'}"
-           th:if="${session.member != null && session.member.endSubscription == 0}">Paiement</a>
+           th:if="${session.subscription != null && session.subscription.stop == 0}">Paiement</a>
         <a href="/addmember"
            th:classappend="${#httpServletRequest.requestURI == '/addmember'}"
-           th:if="${session.member != null && session.member.level == True}">Ajoutez des membres</a>
+           th:if="${session.subscription != null && session.subscription.status.admin == True}">Ajoutez des membres</a>
         <a href="/logout"
            th:classappend="${#httpServletRequest.requestURI == '/logout'}"
-           th:if="${session.member != null}">Déconnexion</a>
+           th:if="${session.subscription != null}">Déconnexion</a>
     </nav>
 </div>
 </body>

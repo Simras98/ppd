@@ -13,42 +13,51 @@
     <title>Profile</title>
 </head>
 <body>
+<div th:insert="fragments/navbar.html :: navbar"></div>
 <div>
     <h1>Profile</h1>
     <p th:text="${success}"></p>
     <p th:text="${error}"></p>
-    <form action="/passwordedit" id="profilForm" method="post">
+    <form action="/passwordedit" id="profil" method="post">
         <div>
             <label for="firstName">Prénom</label>
-            <input id="firstName" name="firstName" placeholder="Entrez votre prénom" type="text" th:value="${session.member.firstName}" disabled>
+            <input id="firstName" name="firstName" placeholder="Entrez votre prénom" type="text" th:value="${session.subscription.member.firstName}" disabled>
         </div>
         <div>
             <label for="lastName">Nom</label>
-            <input id="lastName" name="lastName" placeholder="Entrez votre nom" type="text" th:value="${session.member.lastName}" disabled>
+            <input id="lastName" name="lastName" placeholder="Entrez votre nom" type="text" th:value="${session.subscription.member.lastName}" disabled>
+        </div>
+        <div>
+            <label for="sex">Sexe</label>
+            <input id="sex" name="sex" placeholder="Entrez votre sexe" type="text" th:value="${session.subscription.member.sex}" disabled>
+        </div>
+        <div>
+            <label for="birthDate">Date de naissance</label>
+            <input id="birthDate" name="birthDate" placeholder="Entrez votre date de naissance" type="text" th:value="${session.subscription.member.birthDate}" disabled>
         </div>
         <div>
             <label for="address">Adresse</label>
-            <input id="address" name="address" placeholder="Entrez votre adresse" type="text" th:value="${session.member.address}" disabled>
+            <input id="address" name="address" placeholder="Entrez votre adresse" type="text" th:value="${session.subscription.member.address}" disabled>
         </div>
         <div>
             <label for="city">Ville</label>
-            <input id="city" name="city" placeholder="Entrez votre ville" type="text" th:value="${session.member.city}" disabled>
+            <input id="city" name="city" placeholder="Entrez votre ville" type="text" th:value="${session.subscription.member.city}" disabled>
         </div>
         <div>
             <label for="postalCode">Code Postal</label>
-            <input id="postalCode" name="postalCode" placeholder="Entrez votre code postal" type="text" th:value="${session.member.postalCode}" disabled>
+            <input id="postalCode" name="postalCode" placeholder="Entrez votre code postal" type="text" th:value="${session.subscription.member.postalCode}" disabled>
         </div>
         <div>
             <label for="email">Email</label>
-            <input id="email" name="email" placeholder="Entrez votre email" type="email" th:value="${session.member.email}" disabled>
+            <input id="email" name="email" placeholder="Entrez votre email" type="email" th:value="${session.subscription.member.email}" disabled>
         </div>
         <div>
             <label for="phoneNumber">Numéro de téléphone</label>
-            <input id="phoneNumber" name="phoneNumber" placeholder="Entrez votre numéro de téléphone" type="tel" th:value="${session.member.phoneNumber}" disabled>
+            <input id="phoneNumber" name="phoneNumber" placeholder="Entrez votre numéro de téléphone" type="tel" th:value="${session.subscription.member.phoneNumber}" disabled>
         </div>
         <div>
-            <label for="level">Niveau</label>
-            <input id="level" name="level" placeholder="Entrez votre niveau" type="text" th:value="${session.member.level}" disabled>
+            <label for="admin">Niveau</label>
+            <input id="admin" name="admin" placeholder="Entrez votre niveau" type="text" th:value="${session.subscription.status.admin}" disabled>
         </div>
         <div>
             <label for="oldPassword">Ancien mot de passe</label>

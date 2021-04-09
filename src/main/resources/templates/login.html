@@ -15,15 +15,18 @@
     <title>Connexion</title>
 </head>
 <body>
+<div th:insert="fragments/navbar.html :: navbar"></div>
 <div>
     <h1>Connexion</h1>
     <p th:text="${error}"></p>
-    <form action="/loginconfirm" id="loginForm" method="post">
+    <form action="/loginconfirm" id="loginConfirm" method="post">
+        <label for="associationName">Association</label>
+        <input id="associationName" name="associationName" placeholder="Entrez le nom de l'association" value="Test" type="text">
         <label for="email">Email</label>
-        <input id="email" name="email" placeholder="Entrez votre adresse email" type="email">
+        <input id="email" name="email" placeholder="Entrez votre adresse email" value="simonweb98@gmail.com" type="email">
         <label for="password">Mot de passe</label>
-        <input id="password" name="password" placeholder="Entrez votre mot de passe" type="password">
-        <a href="/signup">Pas encore inscrit ? Inscrivez vous !</a>
+        <input id="password" name="password" placeholder="Entrez votre mot de passe" value="abcd" type="password">
+        <a href="/signup">Pas encore inscrit ? Inscrivez-vous !</a>
         <a href="/passwordforgotten">Mot de passe oublié ?</a>
         <input id="loginButton" type="submit" value="Se connecter">
     </form>

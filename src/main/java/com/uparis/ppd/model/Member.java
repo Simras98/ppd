@@ -2,6 +2,7 @@ package com.uparis.ppd.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "member")
@@ -13,40 +14,41 @@ public class Member implements Serializable {
 
     private String firstName;
     private String lastName;
+    private String sex;
+    private String birthDate;
     private String address;
     private String city;
     private String postalCode;
     private String email;
     private String phoneNumber;
     private String password;
-    private long startSubscription;
-    private long endSubscription;
-    private long delaySubscription;
-    private boolean delayedSubscription;
-    private boolean level;
+
+    @OneToMany(mappedBy = "member")
+    private Set<Subscription> subscriptions;
 
     public Member() {
     }
 
     public Member(String firstName,
                   String lastName,
+                  String sex,
+                  String birthDate,
                   String address,
                   String city,
                   String postalCode,
                   String email,
                   String phoneNumber,
-                  String password,
-                  boolean level) {
+                  String password) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.sex = sex;
+        this.birthDate = birthDate;
         this.address = address;
         this.city = city;
         this.postalCode = postalCode;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.delayedSubscription = false;
-        this.level = level;
     }
 
     public long getId() {
@@ -71,6 +73,22 @@ public class Member implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getAddress() {
@@ -119,43 +137,5 @@ public class Member implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public long getStartSubscription() { return this.startSubscription; }
-
-    public void setStartSubscription(long startSubscription) {
-        this.startSubscription = startSubscription;
-    }
-
-    public long getEndSubscription() {
-        return this.endSubscription;
-    }
-
-    public void setEndSubscription(long endSubscription) {
-        this.endSubscription = endSubscription;
-    }
-
-    public long getDelaySubscription() {
-        return delaySubscription;
-    }
-
-    public void setDelaySubscription(long delaySubscription) {
-        this.delaySubscription = delaySubscription;
-    }
-
-    public boolean isDelayedSubscription() {
-        return delayedSubscription;
-    }
-
-    public void setDelayedSubscription(boolean delayedSubscription) {
-        this.delayedSubscription = delayedSubscription;
-    }
-
-    public boolean getLevel() {
-        return level;
-    }
-
-    public void setLevel(boolean level) {
-        this.level = level;
     }
 }

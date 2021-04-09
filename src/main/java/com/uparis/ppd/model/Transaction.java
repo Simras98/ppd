@@ -11,18 +11,18 @@ public class Transaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(targetEntity = Member.class)
-    private Member member;
-
-    private long dateTransaction;
+    private long date;
     private double price;
+
+    @ManyToOne
+    @JoinColumn(name = "subscription_id")
+    private Subscription subscription;
 
     public Transaction() {
     }
 
-    public Transaction(Member member, long date, double price) {
-        this.member = member;
-        this.dateTransaction = date;
+    public Transaction(long date, double price) {
+        this.date = date;
         this.price = price;
     }
 
@@ -34,20 +34,12 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Member getMember() {
-        return member;
+    public long getDate() {
+        return date;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public long getDateTransaction() {
-        return dateTransaction;
-    }
-
-    public void setDateTransaction(long dateTransaction) {
-        this.dateTransaction = dateTransaction;
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public double getPrice() {

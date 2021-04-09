@@ -1,9 +1,9 @@
 package com.uparis.ppd.controller;
 
-import com.uparis.ppd.model.Member;
-import com.uparis.ppd.service.MemberService;
+import com.uparis.ppd.model.Subscription;
+import com.uparis.ppd.properties.ConstantProperties;
+import com.uparis.ppd.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,25 +14,28 @@ import javax.servlet.http.HttpServletRequest;
 public class OurassoController {
 
     @Autowired
-    private MemberService memberService;
+    private ConstantProperties constantProperties;
 
-    @Value("${controller.index}")
-    private String index;
-
-    @Value("${controller.billing}")
-    private String billing;
-
-    @Value("${controller.error}")
-    private String error;
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @GetMapping({"/", "/index"})
     public String index(HttpServletRequest request, Model model) {
-        model.addAttribute(error, "");
-        Member member = (Member) request.getSession().getAttribute("member");
-        if (member != null && memberService.checkSubscription(member)) {
-            model.addAttribute(error, "Votre abonnement a expiré. Veuillez renouveler votre abonnement !");
-            return billing;
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                return constantProperties.getControllerIndex();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscription.getStatus().isSuperAdmin()) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            return constantProperties.getControllerIndex();
         }
-        return index;
     }
 }
