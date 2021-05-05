@@ -1,0 +1,151 @@
+.logo{
+    width : 100px;
+    float : left;
+    margin-right : 20px;
+}
+main {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
+.formulaire{
+
+    padding : 20px 30px;
+    max-width : 800px;
+    width: 100%;
+    background:#fff;
+    border-radius : 5px;
+    justify-content: center;
+
+}
+.formulaire .titre{
+    font-size: 20px;
+}
+.formulaire form .user-details{
+    display : flex;
+    flex-wrap : wrap;
+    justify-content : space-between;
+    margin : 20px 0 12px 0;
+
+}
+form .user-details .input-box{
+    margin-bottom : 15px;
+    width : calc(100% /2 - 20px);
+
+}
+.user-details .input-box .details {
+    display : block;
+    margin-bottom : 10px;
+    font-size : 15px;
+    font-weight : 550;
+
+}
+.user-details .input-box input {
+    height : 45px;
+    width: 100%;
+    outline : none;
+    border-radius:5px;
+    border:1px solid #ccc;
+    padding-left : 15px;
+    font-size : 16px;
+    border-bottom-width: 2px;
+    transition : all 0.3s ease;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+    border-color : #9b59b6;
+
+}
+
+
+form .ab-details .ab-title {
+    font-size : 15px;
+    font-weight : 550;
+}
+
+form .ab-details .type {
+    display : flex;
+    width : 80%;
+    margin: 14px 0;
+    justify-content : space-between;
+}
+
+.ab-details .type label {
+    display : flex;
+    align-items : center;
+}
+
+.ab-details .type .price{
+    height : 18px;
+    width :  18px;
+    background : #d9d9d9;
+    border-radius : 50%;
+    margin-right : 10px;
+    border : 5px solid transparent;
+    transition: all 0.3s ease;
+
+}
+
+#price-1:checked ~ .type  label .one,
+#price-3:checked ~ .type  label .two,
+#price-12:checked ~ .type  label .three {
+    border-color : #d9d9d9;
+    background: #9b59b6;
+}
+
+
+
+form input[type="radio"]{
+    display: none;
+}
+
+form  .button input{
+
+    outline: none;
+    color:#fff;
+    border:none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 5px;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+    margin-left: 180px;
+
+}
+.button{
+    display: flex;
+
+}
+
+@media (width: 584px) {
+    .formulaire{
+        max-width: 100%;
+    }
+    form .user-details .input-box{
+        margin-bottom : 15px;
+        width : 100%;
+
+    }
+    form .ab-details .type {
+        width : 100%;
+
+    }
+    .formulaire form .user-details{
+        max-height: 300px;
+        overflow: scroll;
+    }
+
+
+}
+@media (max-height: 584px) {
+    .formulaire{
+        max-height: 100%;
+    }
+
+}
+.logo{
+    width: 100px;
+    height: 100px;
+}

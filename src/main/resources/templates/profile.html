@@ -10,70 +10,101 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/profile.css"/>
     <title>Profile</title>
+
 </head>
 <body>
+<header>
+    <img class="logo" src="images/logo.png">
+</header>
 <div th:insert="fragments/navbar.html :: navbar"></div>
-<div>
-    <h1>Profile</h1>
-    <p th:text="${success}"></p>
-    <p th:text="${error}"></p>
-    <form action="/passwordedit" id="profil" method="post">
-        <div>
-            <label for="firstName">Prénom</label>
-            <input id="firstName" name="firstName" placeholder="Entrez votre prénom" type="text" th:value="${session.subscription.member.firstName}" disabled>
-        </div>
-        <div>
-            <label for="lastName">Nom</label>
-            <input id="lastName" name="lastName" placeholder="Entrez votre nom" type="text" th:value="${session.subscription.member.lastName}" disabled>
-        </div>
-        <div>
-            <label for="sex">Sexe</label>
-            <input id="sex" name="sex" placeholder="Entrez votre sexe" type="text" th:value="${session.subscription.member.sex}" disabled>
-        </div>
-        <div>
-            <label for="birthDate">Date de naissance</label>
-            <input id="birthDate" name="birthDate" placeholder="Entrez votre date de naissance" type="text" th:value="${session.subscription.member.birthDate}" disabled>
-        </div>
-        <div>
-            <label for="address">Adresse</label>
-            <input id="address" name="address" placeholder="Entrez votre adresse" type="text" th:value="${session.subscription.member.address}" disabled>
-        </div>
-        <div>
-            <label for="city">Ville</label>
-            <input id="city" name="city" placeholder="Entrez votre ville" type="text" th:value="${session.subscription.member.city}" disabled>
-        </div>
-        <div>
-            <label for="postalCode">Code Postal</label>
-            <input id="postalCode" name="postalCode" placeholder="Entrez votre code postal" type="text" th:value="${session.subscription.member.postalCode}" disabled>
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" placeholder="Entrez votre email" type="email" th:value="${session.subscription.member.email}" disabled>
-        </div>
-        <div>
-            <label for="phoneNumber">Numéro de téléphone</label>
-            <input id="phoneNumber" name="phoneNumber" placeholder="Entrez votre numéro de téléphone" type="tel" th:value="${session.subscription.member.phoneNumber}" disabled>
-        </div>
-        <div>
-            <label for="admin">Niveau</label>
-            <input id="admin" name="admin" placeholder="Entrez votre niveau" type="text" th:value="${session.subscription.status.admin}" disabled>
-        </div>
-        <div>
-            <label for="oldPassword">Ancien mot de passe</label>
-            <input id="oldPassword" name="oldPassword" placeholder="Entrez votre ancien mot de passe" required type="password">
-        </div>
-        <div>
-            <label for="newPassword">Nouveau mot de passe</label>
-            <input id="newPassword" name="newPassword" placeholder="Entrez votre nouveau mot de passe" required type="password">
-        </div>
-        <div>
-            <label for="confirmNewPassword">Confirmation du nouveau mot de passe</label>
-            <input id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirmez votre nouveau mot de passe"
-                   required type="password">
-        </div>
-        <input id="editButton" type="submit" value="Modifier">
-    </form>
-</div>
+<main>
+    <div class="container">
+
+        <div class="title">Profile</div>
+
+        <p th:text="${success}"></p>
+        <p th:text="${error}"></p>
+
+            <form action="/passwordedit" id="profil" method="post">
+                <div class="user-details">
+                <div class="input-box">
+                    <label class="details" for="firstName">Prénom</label>
+                    <input id="firstName" name="firstName" placeholder="Entrez votre prénom" type="text" th:value="${session.subscription.member.firstName}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="lastName">Nom</label>
+                    <input id="lastName" name="lastName" placeholder="Entrez votre nom" type="text" th:value="${session.subscription.member.lastName}" disabled>
+                </div>
+                    <div class="gender-details">
+                        <input type="radio" name="gender" id="dot-1">
+                        <input type="radio" name="gender" id="dot-2">
+                        <input type="radio" name="gender" id="dot-3">
+                        <span class="gender-title">Sexe</span>
+                        <div class="category">
+                            <label for="dot-1">
+                                <span class="dot one"></span>
+                                <span class="gender"> Homme </span>
+                            </label>
+                            <label for="dot-2">
+                                <span class="dot two"></span>
+                                <span class="gender"> Femme </span>
+
+                            </label>
+                            <label for="dot-3" >
+                                <span class="dot three"></span>
+                                <span class="gender"> Autre </span>
+                            </label>
+                        </div>
+                    </div>
+                <div class="input-box">
+                    <label class="details" for="birthDate">Date de naissance</label>
+                    <input id="birthDate" name="birthDate" placeholder="Entrez votre date de naissance" type="text" th:value="${session.subscription.member.birthDate}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="address">Adresse</label>
+                    <input id="address" name="address" placeholder="Entrez votre adresse" type="text" th:value="${session.subscription.member.address}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="city">Ville</label>
+                    <input id="city" name="city" placeholder="Entrez votre ville" type="text" th:value="${session.subscription.member.city}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="postalCode">Code Postal</label>
+                    <input id="postalCode" name="postalCode" placeholder="Entrez votre code postal" type="text" th:value="${session.subscription.member.postalCode}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="email">Email</label>
+                    <input id="email" name="email" placeholder="Entrez votre email" type="email" th:value="${session.subscription.member.email}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="phoneNumber">Numéro de téléphone</label>
+                    <input id="phoneNumber" name="phoneNumber" placeholder="Entrez votre numéro de téléphone" type="tel" th:value="${session.subscription.member.phoneNumber}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="admin">Niveau</label>
+                    <input id="admin" name="admin" placeholder="Entrez votre niveau" type="text" th:value="${session.subscription.status.admin}" disabled>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="oldPassword">Ancien mot de passe</label>
+                    <input id="oldPassword" name="oldPassword" placeholder="Entrez votre ancien mot de passe" required type="password">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="newPassword">Nouveau mot de passe</label>
+                    <input id="newPassword" name="newPassword" placeholder="Entrez votre nouveau mot de passe" required type="password">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="confirmNewPassword">Confirmation du nouveau mot de passe</label>
+                    <input id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirmez votre nouveau mot de passe"
+                           required type="password">
+                </div>
+                </div>
+                <div class="button">
+                <input id="editButton" type="submit" value="Modifier">
+                </div>
+            </form>
+    </div>
+</main>
 </body>
 </html>

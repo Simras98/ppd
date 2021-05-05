@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <!-- Required meta tags -->
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
@@ -10,123 +10,153 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/signupsuperadmin.css">
     <!-- hCaptcha -->
     <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Inscription</title>
+
+
 </head>
 <body>
+<header>
+    <img class="logo" src="Images/logo.png">
+</header>
 <div th:insert="fragments/navbar.html :: navbar"></div>
-<div>
-    <h1>Inscription :</h1>
+<main>
+<div class="container">
+    <div class="title">Inscrivez-vous!</div>
     <p th:text="${error}"></p>
     <form action="/signupsuperadminconfirm" id="signupSuperAdminConfirm" method="post">
-        <div>
-            <label for="associationName">Nom de votre association</label>
-            <input id="associationName" name="associationName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez le nom de votre association" required type="text">
-        </div>
-        <div>
-            <label for="associationDescription">Description de votre association</label>
-            <input id="associationDescription" name="associationDescription" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez la description de votre association" required type="text">
-        </div>
-        <div>
-            <p>Voici les prix en fonction de la taille de votre association</p>
-            <div>
-                <p>Pour moins de 30 membres</p>
-                <p>0€</p>
-            </div>
-            <div>
-                <p>Pour moins de 200 membres</p>
-                <p>9,99€</p>
-            </div>
-            <div>
-                <p>Pour moins de 500 membres</p>
-                <p>19,99€</p>
-            </div>
-            <div>
-                <p>Pour plus de de 500 membres</p>
-                <p>49,99€</p>
-            </div>
-        </div>
-        <div>
-            <p>Choisissez la tarification de votre association</p>
-            <div>
-                <p>Abonnement 1 mois</p>
-                <input id="associationPrice1Month" name="associationPrice1Month" pattern="^[0-9 \,.€]*$"
-                       placeholder="Entrez le prix pour 1 mois" required type="text">
-            </div>
-            <div>
-                <p>Abonnement 3 mois</p>
-                <input id="associationPrice3Months" name="associationPrice3Months" pattern="^[0-9 \,.€]*$"
-                       placeholder="Entrez le prix pour 3 mois" required type="text">
-            </div>
-            <div>
-                <p>Abonnement 12 mois</p>
-                <input id="associationPrice12Months" name="associationPrice12Months" pattern="^[0-9 \,.€]*$"
-                       placeholder="Entrez le prix pour 12 mois" required type="text">
-            </div>
-        </div>
-        <div>
-            <label for="firstName">Prénom</label>
+        <div class="user-details">
+        <div class="input-box">
+            <label class="details" for="firstName">Prénom</label>
             <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
                    placeholder="Entrez votre prénom" required type="text">
         </div>
-        <div>
-            <label for="lastName">Nom</label>
+        <div class="input-box">
+            <label class="details" for="lastName">Nom</label>
             <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
                    placeholder="Entrez votre nom" required type="text">
         </div>
-        <div>
-            <label>Sexe</label>
-            <input id="man" name="sex" value="homme" checked type="radio">Homme
-            <input id="woman" name="sex" value="femme" type="radio">Femme
-            <input id="other" name="sex" value="autre" type="radio">Autre
-        </div>
-        <div>
-            <label for="birthDate">Date de naissance</label>
+            <div class="gender-details">
+                <input type="radio" name="gender" id="dot-1">
+                <input type="radio" name="gender" id="dot-2">
+                <input type="radio" name="gender" id="dot-3">
+                <span class="gender-title">Sexe</span>
+                <div class="category">
+                    <label for="dot-1">
+                        <span class="dot one"></span>
+                        <span class="gender"> Homme</span>
+                    </label>
+                    <label for="dot-2">
+                        <span class="dot two"></span>
+                        <span class="gender"> Femme</span>
+                    </label>
+                    <label for="dot-3" >
+                        <span class="dot three"></span>
+                        <span class="gender"> Autre</span>
+                    </label>
+                </div>
+            </div>
+        <div class="input-box">
+            <label class="details" for="birthDate">Date de naissance</label>
             <input id="birthDate" name="birthDate" required type="date">
         </div>
-        <div>
-            <label for="address">Adresse</label>
+        <div class="input-box">
+            <label class="details" for="address">Adresse</label>
             <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
                    placeholder="Entrez votre adresse" required type="text">
         </div>
-        <div>
-            <label for="city">Ville</label>
+        <div class="input-box">
+            <label class="details" for="city">Ville</label>
             <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
                    placeholder="Entrez votre ville" required type="text">
         </div>
-        <div>
-            <label for="postalCode">Code Postal</label>
+        <div class="input-box">
+            <label class="details" for="postalCode">Code Postal</label>
             <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
                    placeholder="Entrez votre code postal" required type="text">
         </div>
-        <div>
-            <label for="email">Email</label>
+        <div class="input-box">
+            <label class="details" for="email">Email</label>
             <input id="email" name="email" placeholder="Entrez votre email" required type="email">
         </div>
-        <div>
-            <label for="phoneNumber">Numéro de téléphone</label>
+        <div class="input-box">
+            <label class="details" for="phoneNumber">Numéro de téléphone</label>
             <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
                    placeholder="Entrez votre numéro de téléphone" required type="tel">
         </div>
-        <div>
-            <label for="password">Mot de passe</label>
+        <div class="input-box">
+            <label class="details" for="password">Mot de passe</label>
             <input id="password" name="password" placeholder="Entrez votre mot de passe" required type="password">
         </div>
-        <div>
-            <label for="confirmPassword">Confirmation de votre mot de passe</label>
+        <div class="input-box">
+            <label class="details" for="confirmPassword">Confirmation de votre mot de passe</label>
             <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
                    required type="password">
         </div>
-        <div data-callback="submitForm"
-             data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
+            <div class="input-box"></div>
+            <div class="input-box">
+                <label class="details" for="associationName">Nom de votre association</label>
+                <input id="associationName" name="associationName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                       placeholder="Entrez le nom de votre association" required type="text">
+            </div>
+            <div class="input-box">
+                <label class="details" for="associationDescription">Description de votre association</label>
+                <input id="associationDescription" name="associationDescription" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                       placeholder="Entrez la description de votre association" required type="text">
+            </div>
+            <div class="input-box">
+                <label class="details" for="city">Choisissez la tarification de votre association</label>
+                    <label>Abonnement 1 mois</label>
+                    <input id="associationPrice1Month" name="associationPrice1Month" pattern="^[0-9 \,.€]*$"
+                           placeholder="Entrez le prix pour 1 mois" required type="text">
+                <div>
+                    <label>Abonnement 3 mois</label>
+                    <input id="associationPrice3Months" name="associationPrice3Months" pattern="^[0-9 \,.€]*$"
+                           placeholder="Entrez le prix pour 3 mois" required type="text">
+                </div>
+                <div>
+                    <label>Abonnement 12 mois</label>
+                    <input id="associationPrice12Months" name="associationPrice12Months" pattern="^[0-9 \,.€]*$"
+                           placeholder="Entrez le prix pour 12 mois" required type="text">
+                </div>
+            </div>
+            <div class="price-details">
+
+                <label class="details"> Prix en fonction de la taille de votre association </label>
+
+                <div class="category">
+                    <span class="price"> -30 membres </span>
+                    <span> 0€ </span>
+                </div>
+                <div class="category">
+                    <span class="price"> -200 membres</span>
+                    <span> 9,99€ </span>
+                </div>
+                <div class="category">
+                    <span class="price"> -500 membres</span>
+                    <span > 19,99€ </span>
+                </div>
+                <div class="category">
+                    <span class="price"> +500 membres</span>
+                    <span> 49,99€ </span>
+                </div>
+            </div>
         </div>
-        <a href="/login">Déjà inscrit ? Connectez-vous !</a>
-        <input id="signUpButton" type="submit" value="S'inscrire">
+            <div data-callback="submitForm"
+                 data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
+            </div>
+        </br>
+            <div>
+                <a href="/login">Déjà inscrit ? Connectez-vous !</a>
+            </div>
+            <div class="button">
+                <input id="signUpButton" type="submit" value="S'inscrire">
+            </div>
     </form>
 </div>
+</main>
 <script>
     async function submitForm() {
         const signUpForm = document.querySelector('form');

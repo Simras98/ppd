@@ -10,12 +10,18 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/error.css"/>
     <title>Erreur</title>
+
 </head>
 <body>
+<header>
+    <img class="logo" src="images/logo.png"/>
+</header>
 <div th:insert="fragments/navbar.html :: navbar"></div>
+<main>
 <div>
-    <div th:if="${#strings.equalsIgnoreCase(error, 'not found')== true or #strings.equalsIgnoreCase(error, 'internal server error')== true}">
+    <div class="head" th:if="${#strings.equalsIgnoreCase(error, 'not found')== true or #strings.equalsIgnoreCase(error, 'internal server error')== true}">
         <h1 class="error">Une erreur est survenue !</h1>
     </div>
     <div th:if="${#strings.equalsIgnoreCase(error, 'not found')== false and #strings.equalsIgnoreCase(error, 'internal server error')==false}">
@@ -24,3 +30,4 @@
     <a href="/index">Retourner à l'accueil</a>
 </div>
 </body>
+</html>

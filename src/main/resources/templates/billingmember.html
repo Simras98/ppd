@@ -10,57 +10,95 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
-    <title>Paiement</title>
+    <link rel="stylesheet" href="css/billingmember.css"/>
+    <title>Effectuer un paiement</title>
 </head>
 <body>
 <div th:insert="fragments/navbar.html :: navbar"></div>
-<div>
-    <h1>Paiement</h1>
-    <p th:text="${error}"></p>
-    <form action="/billingconfirm" id="billingConfirm" method="post">
-        <div id="price1">
-            <p>Abonnement 1 mois</p>
-            <p th:text="${session.subscription.association.price1Month}"></p>
-            <input id="month1" name="duration" value="1" checked type="radio">
-        </div>
-        <div id="price3">
-            <p>Abonnement 3 mois</p>
-            <p th:text="${session.subscription.association.price3Months}"></p>
-            <input id="month3" name="duration" value="3" type="radio">
-        </div>
-        <div id="price12">
-            <p>Abonnement 12 mois</p>
-            <p th:text="${session.subscription.association.price12Months}"></p>
-            <input id="month12" name="duration" value="12" type="radio">
-        </div>
-        <div>
-            <label for="creditCard">Numéro de carte bancaire</label>
-            <input id="creditCard" name="creditCard"
-                   pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12})$"
-                   placeholder="Entrez votre numéro de carte bancaire"
-                   required type="text">
-        </div>
-        <div>
-            <label for="expirationDate">Date d'expiration</label>
-            <input id="expirationDate" name="expirationDate" pattern="[0-9]{2}/[0-9]{2}"
-                   placeholder="Entrez votre date d'expiration de carte au format MM/AA" required
-                   type="text">
-        </div>
-        <div>
-            <label for="cryptogram">Cryptogramme</label>
-            <input id="cryptogram" name="cryptogram" pattern="[0-9]{3}" placeholder="Entrez votre cryptogramme de carte"
-                   required type="text">
-        </div>
-        <div>
-            <label for="name">Nom</label>
-            <input id="name" name="name" placeholder="Entrez le nom présent sur la carte bancaire"
-                   required type="text">
-        </div>
-        <input type="submit" value="Procéder au paiement">
-    </form>
-    <form action="/billingskip" method="post">
-        <input th:disabled="${session.subscription.delayed}" type="submit" value="Effectuer le paiement plus tard">
-    </form>
-</div>
+<header>
+    <img class="logo" src="images/logo.png">
+</header>
+<main>
+    <div class = formulaire>
+        <div class="titre"><strong>Ajouter un paiement</strong></div>
+        <p th:text="${error}"></p>
+        <form action="/billingconfirm" id="billingConfirm" method="post">
+
+            <div class="user-details">
+                <div class="input-box">
+                    <label class="details"  for="creditCard">Numéro de carte bancaire</label>
+                    <input id="creditCard" name="creditCard"
+                           pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12})$"
+                           placeholder="Entrez votre numéro de carte bancaire"
+                           required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="expirationDate">Date d'expiration</label>
+                    <input id="expirationDate" name="expirationDate" pattern="[0-9]{2}/[0-9]{2}"
+                           placeholder="Entrez votre date d'expiration de carte au format MM/AA" required
+                           type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="cryptogram">Cryptogramme</label>
+                    <input id="cryptogram" name="cryptogram" pattern="[0-9]{3}" placeholder="Entrez votre cryptogramme de carte"
+                           required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="name">Nom</label>
+                    <input id="name" name="name" placeholder="Entrez le nom présent sur la carte bancaire"
+                           required type="text">
+                </div>
+
+
+            </div>
+            <div class="ab-details">
+                <input type="radio" name="ab" id="price-1">
+                <input type="radio" name="ab" id="price-3">
+                <input type="radio" name="ab" id="price-12">
+                <span class="ab-title">Choisissez votre abonnement</span>
+                <div class="type">
+                    <label for="price-1">
+                        <span class="price one"></span>
+                        <span class="ab">Abonnement 1 mois</span>
+                        <p th:text="${session.subscription.association.price1Month}"></p>
+
+                    </label>
+
+                    <label for="price-3">
+                        <span class="price two"></span>
+                        <span class="ab">Abonnement 3 mois</span>
+                        <p th:text="${session.subscription.association.price3Months}"></p>
+
+                    </label>
+
+                    <label for="price-12" >
+                        <span class="price three"></span>
+                        <span class="ab"> Abonnement 12 mois</span>
+                        <p th:text="${session.subscription.association.price12Months}"></p>
+
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="button">
+                <div class="input-button">
+                    <input type="submit" value="Procéder au paiement">
+                </div>
+                <div class="input-button">
+                    <form action="/billingskip" method="post">
+                        <input th:disabled="${session.subscription.delayed}" type="submit" value="Effectuer le paiement plus tard">
+                    </form>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+
+
+</main>
+
 </body>
 </html>
