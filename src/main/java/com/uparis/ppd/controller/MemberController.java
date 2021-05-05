@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -105,7 +104,7 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerAddMember();
                 }
-                if (!Pattern.compile(regexService.getSex()).matcher(man).find()) {
+                if (!Pattern.compile(regexService.getGender()).matcher(man).find()) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerAddMember();
                 }

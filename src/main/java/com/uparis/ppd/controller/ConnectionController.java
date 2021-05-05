@@ -165,7 +165,7 @@ public class ConnectionController {
             @RequestParam(name = "associationName") String associationName,
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
-            @RequestParam(name = "sex") String sex,
+            @RequestParam(name = "gender") String gender,
             @RequestParam(name = "birthDate") String birthDate,
             @RequestParam(name = "address") String address,
             @RequestParam(name = "city") String city,
@@ -179,7 +179,7 @@ public class ConnectionController {
         if (associationName.isEmpty()
                 || firstName.isEmpty()
                 || lastName.isEmpty()
-                || sex.isEmpty()
+                || gender.isEmpty()
                 || birthDate.isEmpty()
                 || address.isEmpty()
                 || city.isEmpty()
@@ -203,8 +203,8 @@ public class ConnectionController {
             model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
             return constantProperties.getControllerSignupMember();
         }
-        if (!Pattern.compile(regexService.getSex()).matcher(sex).find()) {
-            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSex());
+        if (!Pattern.compile(regexService.getGender()).matcher(gender).find()) {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescGender());
             return constantProperties.getControllerSignupMember();
         }
         if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
@@ -239,7 +239,7 @@ public class ConnectionController {
         if (member == null) {
             Association association = associationService.getByName(associationName);
             if (association != null) {
-                member = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
+                member = memberService.create(firstName, lastName, gender, birthDate, address, city, postalCode, email, phoneNumber, password);
                 Status status = statusService.create(false, false);
                 Subscription subscription = subscriptionService.create(0, 0, 0, false, false, member, status, association, Collections.emptySet());
                 subscriptionService.notifyWelcome(subscription, null, null);
@@ -269,7 +269,7 @@ public class ConnectionController {
             @RequestParam(name = "associationPrice12Months") String association12MonthPrice,
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
-            @RequestParam(name = "sex") String sex,
+            @RequestParam(name = "gender") String gender,
             @RequestParam(name = "birthDate") String birthDate,
             @RequestParam(name = "address") String address,
             @RequestParam(name = "city") String city,
@@ -287,7 +287,7 @@ public class ConnectionController {
                 || association12MonthPrice.isEmpty()
                 || firstName.isEmpty()
                 || lastName.isEmpty()
-                || sex.isEmpty()
+                || gender.isEmpty()
                 || birthDate.isEmpty()
                 || address.isEmpty()
                 || city.isEmpty()
@@ -321,8 +321,8 @@ public class ConnectionController {
             model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
             return constantProperties.getControllerSignupSuperAdmin();
         }
-        if (!Pattern.compile(regexService.getSex()).matcher(sex).find()) {
-            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSex());
+        if (!Pattern.compile(regexService.getGender()).matcher(gender).find()) {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescGender());
             return constantProperties.getControllerSignupSuperAdmin();
         }
         if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
@@ -357,7 +357,7 @@ public class ConnectionController {
         if (superAdmin == null) {
             Association association = associationService.getByName(associationName);
             if (association == null) {
-                superAdmin = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
+                superAdmin = memberService.create(firstName, lastName, gender, birthDate, address, city, postalCode, email, phoneNumber, password);
                 Status status = statusService.create(true, true);
                 association = associationService.create(associationName, associationDescription, association1MonthPrice, association3MonthPrice, association12MonthPrice);
                 Subscription subscription = subscriptionService.create(System.currentTimeMillis(), System.currentTimeMillis() + (60 * 1000), 0, false, false, superAdmin, status, association, Collections.emptySet());

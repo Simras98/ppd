@@ -23,16 +23,18 @@
 <div th:insert="fragments/navbar.html :: navbar"></div>
 <main>
     <div class="container">
-        <div class="text">Connectez-vous! </div><hr/>
-         <p th:text="${error}"></p>
+        <div class="text">Connectez-vous !</div>
+        <hr/>
+        <p th:text="${error}"></p>
         <form action="/loginconfirm" id="loginConfirm" method="post">
             <div class="data">
                 <label for="associationName">Association</label>
-                <input id="associationName" name="associationName" placeholder="Entrez le nom de l'association" type="text">
+                <input id="associationName" name="associationName" placeholder="Entrez le nom de l'association"
+                       type="text">
             </div>
             <div class="data">
                 <label for="email">Email</label>
-                <input id="email" name="email" placeholder="Entrez votre adresse email"  type="email">
+                <input id="email" name="email" placeholder="Entrez votre adresse email" type="email">
             </div>
             <div class="data">
                 <label for="password">Mot de passe</label>
@@ -40,7 +42,8 @@
             </div>
             <div>
                 <a href="/passwordforgotten">Mot de passe oublié ?</a>
-            </div><br/>
+            </div>
+            <br/>
             <div class="connecter">
                 <input id="loginButton" type="submit" value="Se connecter">
             </div>
@@ -49,7 +52,6 @@
             </div>
         </form>
     </div>
-</div>
 </main>
 <script>
     async function submitForm() {

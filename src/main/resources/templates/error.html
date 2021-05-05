@@ -12,7 +12,6 @@
     />
     <link rel="stylesheet" href="css/error.css"/>
     <title>Erreur</title>
-
 </head>
 <body>
 <header>
@@ -20,14 +19,16 @@
 </header>
 <div th:insert="fragments/navbar.html :: navbar"></div>
 <main>
-<div>
-    <div class="head" th:if="${#strings.equalsIgnoreCase(error, 'not found')== true or #strings.equalsIgnoreCase(error, 'internal server error')== true}">
-        <h1 class="error">Une erreur est survenue !</h1>
+    <div>
+        <div class="head"
+             th:if="${#strings.equalsIgnoreCase(error, 'not found')== true or #strings.equalsIgnoreCase(error, 'internal server error')== true}">
+            <h1 class="error">Une erreur est survenue !</h1>
+        </div>
+        <div th:if="${#strings.equalsIgnoreCase(error, 'not found')== false and #strings.equalsIgnoreCase(error, 'internal server error')==false}">
+            <h1 class="error" th:text="'Erreur, ' + ${error} "></h1>
+        </div>
+        <a href="/index">Retourner à l'accueil</a>
     </div>
-    <div th:if="${#strings.equalsIgnoreCase(error, 'not found')== false and #strings.equalsIgnoreCase(error, 'internal server error')==false}">
-        <h1 class="error" th:text="'Erreur, ' + ${error} "></h1>
-    </div>
-    <a href="/index">Retourner à l'accueil</a>
-</div>
+</main>
 </body>
 </html>

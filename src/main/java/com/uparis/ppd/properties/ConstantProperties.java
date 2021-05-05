@@ -60,6 +60,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_EXPIRATIONDATEEXPIRED = "Votre carte bancaire a exprirée !";
     private static final String ATTRIBUTE_DESC_FIRSTNAME = "Vous devez rentrer un prénom valide !";
     private static final String ATTRIBUTE_DESC_FULFILLFIELDS = "Vous devez remplir les champs pour valider !";
+    private static final String ATTRIBUTE_DESC_GENDER = "Vous devez rentrer un sexe valide !";
     private static final String ATTRIBUTE_DESC_LASTNAME = "Vous devez rentrer un nom valide !";
     private static final String ATTRIBUTE_DESC_LOGINFAILED = "L'adresse email et le mot de passe ne correspondent pas !";
     private static final String ATTRIBUTE_DESC_LOGOUT = "Vous n'êtes pas connecté !";
@@ -73,7 +74,6 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_PASSWORDCHANGED = "Mot de passe modifié avec succès !";
     private static final String ATTRIBUTE_DESC_POSTALCODE = "Vous devez rentrer un code postal valide !";
     private static final String ATTRIBUTE_DESC_PRICE = "Vous devez rentrer une description d'association valide !";
-    private static final String ATTRIBUTE_DESC_SEX = "Vous devez rentrer un sexe valide !";
     private static final String ATTRIBUTE_DESC_STATUS = "Vous devez choisir un statut valide !";
     private static final String ATTRIBUTE_DESC_SUBSCRIPTIONEXPIRED = "Votre abonnement a expiré. Veuillez renouveler votre abonnement !";
 
@@ -298,8 +298,8 @@ public class ConstantProperties {
         return ATTRIBUTE_DESC_PRICE;
     }
 
-    public String getAttributeDescSex() {
-        return ATTRIBUTE_DESC_SEX;
+    public String getAttributeDescGender() {
+        return ATTRIBUTE_DESC_GENDER;
     }
 
     public String getAttributeDescStatus() {

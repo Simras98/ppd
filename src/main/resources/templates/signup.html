@@ -12,32 +12,30 @@
     />
     <link rel="stylesheet" href="css/signup.css">
     <title>Inscription</title>
-
 </head>
 <body>
 <header>
     <img class="logo" src="images/logo.png"/>
 </header>
 <div th:insert="fragments/navbar.html :: navbar"></div>
-
 <main>
     <div class="head">
         <H3>inscrivez-vous en tant que:</H3>
     </div>
-<div class="cont">
-    <div class="container" >
-        <div class="link-box">
-            <img class="image1" src="images/administrator.png">
-            <a class="link" href="/signupsuperadmin"> Admin</a>
+    <div class="cont">
+        <div class="container">
+            <div class="link-box">
+                <img class="image1" src="images/administrator.png">
+                <a class="link" href="/signupsuperadmin"> Admin</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="link-box">
+                <img class="image" src="images/group.png">
+                <a class="link" href="/signupmember">Membre</a>
+            </div>
         </div>
     </div>
-    <div class="container">
-        <div class="link-box">
-            <img class="image" src="images/group.png">
-            <a class="link" href="/signupmember">Membre</a>
-        </div>
-    </div>
-</div>
 </main>
 </body>
 </html>
