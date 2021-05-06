@@ -21,9 +21,10 @@ public class Transaction implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(long date, double price) {
+    public Transaction(long date, double price, Subscription subscription) {
         this.date = date;
         this.price = price;
+        this.subscription = subscription;
     }
 
     public long getId() {

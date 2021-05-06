@@ -1,5 +1,6 @@
 package com.uparis.ppd.service;
 
+import com.uparis.ppd.model.Subscription;
 import com.uparis.ppd.model.Transaction;
 import com.uparis.ppd.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public Transaction create(long date, double price) {
-        Transaction transaction = new Transaction(date, price);
+    public Transaction create(long date, double price, Subscription subscription) {
+        Transaction transaction = new Transaction(date, price, subscription);
         update(transaction);
         return transaction;
     }

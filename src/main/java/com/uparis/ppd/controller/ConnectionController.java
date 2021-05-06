@@ -106,7 +106,7 @@ public class ConnectionController {
                         return constantProperties.getControllerIndex();
                     } else {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
-                        if (subscriptionService.getStatus(subscription)) {
+                        if (subscriptionService.getStatusSuperAdmin(subscription)) {
                             model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
                             return constantProperties.getControllerBillingSuperAdmin();
                         } else {
@@ -157,7 +157,7 @@ public class ConnectionController {
 
     @GetMapping("/signupmember")
     public String signupMember() {
-        return constantProperties.getControllerSignup();
+        return constantProperties.getControllerSignupMember();
     }
 
     @PostMapping("/signupmemberconfirm")

@@ -27,9 +27,15 @@
         <a href="/profile"
            th:classappend="${#httpServletRequest.requestURI == '/profile'}"
            th:if="${session.subscription != null}">Profile</a>
-        <a href="/billing"
-           th:classappend="${#httpServletRequest.requestURI == '/billing'}"
-           th:if="${session.subscription != null && session.subscription.stop == 0}">Paiement</a>
+        <a href="/managepayments"
+           th:classappend="${#httpServletRequest.requestURI == '/managepayments'}"
+           th:if="${session.subscription != null}">Historique de paiements</a>
+        <a href="/billingmember"
+           th:classappend="${#httpServletRequest.requestURI == '/billingmember'}"
+           th:if="${session.subscription != null && session.subscription.status.superAdmin == False && session.subscription.stop == 0}">Paiement</a>
+        <a href="/billingsuperadmin"
+           th:classappend="${#httpServletRequest.requestURI == '/billingsuperadmin'}"
+           th:if="${session.subscription != null && session.subscription.status.superAdmin == True && session.subscription.stop == 0}">Paiement</a>
         <a href="/managemembers"
            th:classappend="${#httpServletRequest.requestURI == '/managemembers'}"
            th:if="${session.subscription != null && session.subscription.status.admin == True}">Gestion des membres</a>
