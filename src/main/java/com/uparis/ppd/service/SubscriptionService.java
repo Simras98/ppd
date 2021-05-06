@@ -53,13 +53,13 @@ public class SubscriptionService {
         return subscriptionRepository.findByAssociation(association);
     }
 
-    public Object[] getMembersByAssociation(Subscription subscription) {
+    public List<Member> getMembersByAssociation(Subscription subscription) {
         List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
         List<Member> members = new ArrayList<>();
         for (Subscription sub : subscriptions) {
             members.add(sub.getMember());
         }
-        return members.toArray();
+        return members;
     }
 
     public Object[] getTransactions(Subscription subscription) {

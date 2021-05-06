@@ -30,6 +30,9 @@
         <a href="/profile"
            th:classappend="${#httpServletRequest.requestURI == '/profile'}"
            th:if="${session.subscription != null}">Profile</a>
+        <a href="/contact"
+           th:classappend="${#httpServletRequest.requestURI == '/contact'}"
+           th:if="${session.subscription != null}">Contact</a>
         <a href="/managepayments"
            th:classappend="${#httpServletRequest.requestURI == '/managepayments'}"
            th:if="${session.subscription != null}">Historique de paiements</a>
