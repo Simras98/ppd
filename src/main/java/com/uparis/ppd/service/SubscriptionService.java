@@ -92,8 +92,7 @@ public class SubscriptionService {
                             + "Voici l'adresse pour vous connecter : https://ppd-asso.herokuapp.com/login" + "\n"
                             + "\n"
                             + "Cordialement, l'équipe Ourasso.");
-        }
-        if (subscription.getStatus().isSuperAdmin()) {
+        } else if (subscription.getStatus().isSuperAdmin()) {
             message.setText(
                     "Bonjour " + subscription.getMember().getFirstName() + " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n"
                             + "\n"
@@ -315,5 +314,26 @@ public class SubscriptionService {
             e.printStackTrace();
         }
         return byteArrayOutputStream;
+    }
+
+    public void sendEmailToAll(String object, String body, Subscription subscription) {
+        List<Member> members = getMembersByAssociation(subscription);
+        for (Member member : members) {
+            sendEmail(object, body, member, subscription);
+        }
+    }
+
+    public void sendEmail(String object, String body, Member member, Subscription subscription) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(constantProperties.getOurassoEmail());
+        message.setTo(member.getEmail());
+        message.setSubject(object);
+        message.setText("Bonjour " + member.getFirstName() + " " + member.getLastName() + ", " +
+                subscription.getMember().getFirstName() + " " + subscription.getMember().getLastName() + " vous a envoyé un message :" + "\n"
+                + "\n"
+                + body + "\n"
+                + "\n"
+                + "Cordialement, l'équipe Ourasso.");
+        emailSender.send(message);
     }
 }

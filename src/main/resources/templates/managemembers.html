@@ -65,15 +65,15 @@
         </div>
         <div>
             <label>Niveau</label>
-            <input id="admin" name="admin" type="radio" value="true">Administrateur
+            <input id="admin" name="admin" type="radio" checked value="true">Administrateur
             <input id="member" name="admin" type="radio" value="false">Membre
         </div>
         <input id="addMemberButton" name='addMemberButton' type="submit" value="Ajouter">
     </form>
-    <form action="/addmemberfromfileconfirm" id="addMemberFromFileConfirm" method="post" enctype="multipart/form-data">
+    <form action="/addmembersfromfileconfirm" id="addMembersFromFileConfirm" method="post" enctype="multipart/form-data">
         <input type="file" id="file" name="file"
                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-        <input id="addMemberFromFileButton" name='addMemberFromFileButton' type='submit' value="Ajouter"/>
+        <input id="addMembersFromFileButton" name='addMembersFromFileButton' type='submit' value="Ajouter"/>
     </form>
     <form action="/receivemembersfromfile" method="get">
         <button type="submit">Exporter</button>

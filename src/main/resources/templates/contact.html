@@ -29,6 +29,7 @@
         <div th:object="${member}">
             <select id="emailMember" name="emailMember">
                 <option value="">Choisir un membre</option>
+                <option value="all">Tous les membres</option>
                 <option th:each="member : ${members}"
                         th:value="${member.email}"
                         th:text="${member.firstName}+' '+${member.lastName}"></option>

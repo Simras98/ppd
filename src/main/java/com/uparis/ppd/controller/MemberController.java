@@ -72,7 +72,7 @@ public class MemberController {
     public String addMemberConfirm(
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
-            @RequestParam(name = "man") String man,
+            @RequestParam(name = "sex") String sex,
             @RequestParam(name = "birthDate") String birthDate,
             @RequestParam(name = "address") String address,
             @RequestParam(name = "city") String city,
@@ -80,22 +80,20 @@ public class MemberController {
             @RequestParam(name = "email") String email,
             @RequestParam(name = "phoneNumber") String phoneNumber,
             @RequestParam(name = "admin") String isAdmin,
-            @RequestParam(name = "associationName") String associationName,
             HttpServletRequest request, Model model) {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
         if (subscription != null) {
             if (subscriptionService.isValid(subscription)) {
                 if (firstName.isEmpty()
                         || lastName.isEmpty()
-                        || man.isEmpty()
+                        || sex.isEmpty()
                         || birthDate.isEmpty()
                         || address.isEmpty()
                         || city.isEmpty()
                         || postalCode.isEmpty()
                         || email.isEmpty()
                         || phoneNumber.isEmpty()
-                        || isAdmin.isEmpty()
-                        || associationName.isEmpty()) {
+                        || isAdmin.isEmpty()) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFulfillFields());
                     return constantProperties.getControllerManageMembers();
                 }
@@ -107,7 +105,7 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerManageMembers();
                 }
-                if (!Pattern.compile(regexService.getSex()).matcher(man).find()) {
+                if (!Pattern.compile(regexService.getSex()).matcher(sex).find()) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerManageMembers();
                 }
@@ -139,12 +137,8 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescStatus());
                     return constantProperties.getControllerManageMembers();
                 }
-                if (!Pattern.compile(regexService.getWord()).matcher(associationName).find()) {
-                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationName());
-                    return constantProperties.getControllerManageMembers();
-                }
                 String password = memberService.createRandomPassword();
-                Member member = memberService.create(firstName, lastName, man, birthDate, address, city, postalCode, email, phoneNumber, password);
+                Member member = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
                 Status status = statusService.create(Boolean.parseBoolean(isAdmin), false);
                 Subscription newSubscription = subscriptionService.create(0, 0, 0, false, false, member, status, subscription.getAssociation(), Collections.emptySet());
                 subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), password);
@@ -319,12 +313,17 @@ public class MemberController {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
         if (subscription != null) {
             if (subscriptionService.isValid(subscription)) {
-                Member member = memberService.getByEmail(emailMember);
-                if (member != null) {
-                    memberService.sendEmail(object, body, member, subscription);
+                if (emailMember.equals("all")) {
+                    subscriptionService.sendEmailToAll(object, body, subscription);
                     model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescEmailSend());
                 } else {
-                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescMemberNotExist());
+                    Member member = memberService.getByEmail(emailMember);
+                    if (member != null) {
+                        subscriptionService.sendEmail(object, body, member, subscription);
+                        model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescEmailSend());
+                    } else {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescMemberNotExist());
+                    }
                 }
                 return constantProperties.getControllerContact();
             } else {
