@@ -11,6 +11,7 @@ public class ConstantProperties {
     private static final String CONTROLLER_BILLINGMEMBER = "billingmember";
     private static final String CONTROLLER_BILLINGSUPERADMIN = "billingsuperadmin";
     private static final String CONTROLLER_INDEX = "index";
+    private static final String CONTROLLER_JOIN = "join";
     private static final String CONTROLLER_SIGNUP = "signup";
     private static final String CONTROLLER_LOGIN = "login";
     private static final String CONTROLLER_PASSWORDFORGOTTEN = "passwordforgotten";
@@ -77,6 +78,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_POSTALCODE = "Vous devez rentrer un code postal valide !";
     private static final String ATTRIBUTE_DESC_PRICE = "Vous devez rentrer une description d'association valide !";
     private static final String ATTRIBUTE_DESC_STATUS = "Vous devez choisir un statut valide !";
+    private static final String ATTRIBUTE_DESC_SUBSCRIBED = "Vous êtes déjà abonné à cette association !";
     private static final String ATTRIBUTE_DESC_SUBSCRIPTIONEXPIRED = "Votre abonnement a expiré. Veuillez renouveler votre abonnement !";
 
 
@@ -98,6 +100,10 @@ public class ConstantProperties {
 
     public String getControllerIndex() {
         return CONTROLLER_INDEX;
+    }
+
+    public String getControllerJoin() {
+        return CONTROLLER_JOIN;
     }
 
     public String getControllerSignup() {
@@ -314,6 +320,10 @@ public class ConstantProperties {
 
     public String getAttributeDescStatus() {
         return ATTRIBUTE_DESC_STATUS;
+    }
+
+    public String getAttributeDescSubscribed() {
+        return ATTRIBUTE_DESC_SUBSCRIBED;
     }
 
     public String getAttributeDescSubscriptionExpired() {

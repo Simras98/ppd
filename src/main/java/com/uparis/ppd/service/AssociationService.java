@@ -18,7 +18,7 @@ public class AssociationService {
 
     public Association create(String name, String description, String associationPrice1Month, String associationPrice3Months, String associationPrice12Months) {
         if (getByName(name) == null) {
-            Association association = new Association(formatService.formatWord(name), description, formatService.formatPrice(associationPrice1Month), formatService.formatPrice(associationPrice3Months), formatService.formatPrice(associationPrice12Months));
+            Association association = new Association(name, description, formatService.formatPrice(associationPrice1Month), formatService.formatPrice(associationPrice3Months), formatService.formatPrice(associationPrice12Months));
             update(association);
             return association;
         } else {

@@ -97,7 +97,7 @@ public class ConnectionController {
         }
         Member member = memberService.connect(email, password);
         if (member != null) {
-            Association association = associationService.getByName(formatService.formatWord(associationName));
+            Association association = associationService.getByName(associationName);
             if (association != null) {
                 Subscription subscription = subscriptionService.getSubscription(member, association);
                 if (subscription != null) {
@@ -372,6 +372,47 @@ public class ConnectionController {
         } else {
             model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescEmailExist());
             return constantProperties.getControllerSignupSuperAdmin();
+        }
+    }
+
+    @GetMapping("/join")
+    public String join() {
+        return constantProperties.getControllerJoin();
+    }
+
+    @PostMapping("/joinconfirm")
+    public String joinConfirm(
+            @RequestParam(name = "associationName") String associationName,
+            @RequestParam(name = "email") String email,
+            @RequestParam(name = "password") String password,
+            HttpServletRequest request,
+            Model model) {
+        if (associationName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFulfillFields());
+            return constantProperties.getControllerLogin();
+        }
+        Member member = memberService.connect(email, password);
+        if (member != null) {
+            Association association = associationService.getByName(formatService.formatWord(associationName));
+            if (association != null) {
+                Subscription subscription = subscriptionService.getSubscription(member, association);
+                if (subscription == null) {
+                    Status status = statusService.create(false, false);
+                    Subscription newSubscription = subscriptionService.create(0, 0, 0, false, false, member, status, association, Collections.emptySet());
+                    subscriptionService.notifyWelcome(newSubscription, null, null);
+                    request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), newSubscription);
+                    return constantProperties.getControllerIndex();
+                } else {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscribed());
+                    return constantProperties.getControllerJoin();
+                }
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationNotExist());
+                return constantProperties.getControllerJoin();
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLoginFailed());
+            return constantProperties.getControllerJoin();
         }
     }
 }
