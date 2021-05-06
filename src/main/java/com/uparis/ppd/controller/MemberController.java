@@ -68,29 +68,6 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/managepayments")
-    public String managePayments(HttpServletRequest request, Model model) {
-        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
-        if (subscription != null) {
-            if (subscriptionService.isValid(subscription)) {
-                Object[] transactions = subscriptionService.getTransactions(subscription);
-                model.addAttribute(constantProperties.getAttributeNameTransactions(), transactions);
-                return constantProperties.getControllerManagePayments();
-            } else {
-                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
-                if (subscriptionService.getStatusSuperAdmin(subscription)) {
-                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
-                    return constantProperties.getControllerBillingSuperAdmin();
-                } else {
-                    return constantProperties.getControllerBillingMember();
-                }
-            }
-        } else {
-            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
-            return constantProperties.getControllerLogin();
-        }
-    }
-
     @PostMapping("/addmembersconfirm")
     public String addMemberConfirm(
             @RequestParam(name = "firstName") String firstName,
@@ -231,6 +208,29 @@ public class MemberController {
         HttpHeaders header = new HttpHeaders();
         header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + subscription.getAssociation().getName() + "Members.xlsx");
         return new HttpEntity<>(new ByteArrayResource(in.toByteArray()), header);
+    }
+
+    @GetMapping("/managepayments")
+    public String managePayments(HttpServletRequest request, Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                Object[] transactions = subscriptionService.getTransactions(subscription);
+                model.addAttribute(constantProperties.getAttributeNameTransactions(), transactions);
+                return constantProperties.getControllerManagePayments();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatusSuperAdmin(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
+        }
     }
 
     @GetMapping("/profile")

@@ -24,6 +24,9 @@
         <a href="/login"
            th:classappend="${#httpServletRequest.requestURI == '/login'}"
            th:if="${session.subscription == null}">Connexion</a>
+        <a href="/join"
+           th:classappend="${#httpServletRequest.requestURI == '/join'}"
+           th:if="${session.subscription == null}">Rejoindre</a>
         <a href="/profile"
            th:classappend="${#httpServletRequest.requestURI == '/profile'}"
            th:if="${session.subscription != null}">Profile</a>
