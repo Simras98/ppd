@@ -62,12 +62,20 @@ public class SubscriptionService {
         return members.toArray();
     }
 
+    public Object[] getTransactions(Subscription subscription) {
+        return subscription.getTransactions().toArray();
+    }
+
     public Subscription getSubscription(Member member, Association association) {
         return subscriptionRepository.findByMemberAndAssociation(member, association);
     }
 
-    public boolean getStatus(Subscription subscription) {
+    public boolean getStatusSuperAdmin(Subscription subscription) {
         return subscription.getStatus().isSuperAdmin();
+    }
+
+    public boolean getStatusAdmin(Subscription subscription) {
+        return subscription.getStatus().isAdmin();
     }
 
     public void notifyWelcome(Subscription subscription, Member admin, String password) {
@@ -124,51 +132,52 @@ public class SubscriptionService {
         emailSender.send(message);
     }
 
-    @Scheduled(fixedDelay = 5000)
-    public void notifyPaymentMissing() {
-        List<Subscription> subscriptions = getAll();
-        for (Subscription subscription : subscriptions) {
-            if (!isValid(subscription) && !subscription.isNotified()) {
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom(constantProperties.getOurassoEmail());
-                message.setTo(subscription.getMember().getEmail());
-                message.setSubject("Ourasso : Votre abonnement a expiré !");
-                message.setText(
-                        "Bonjour " + subscription.getMember().getFirstName() + " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n"
-                                + "\n"
-                                + "Votre abonnement a expiré, veuillez le renouveler !" + "\n"
-                                + "\n"
-                                + "Voici l'adresse pour vous connecter : " + "\n"
-                                + "https://ppd-asso.herokuapp.com/login");
-                emailSender.send(message);
-                subscription.setNotified(true);
-                update(subscription);
+    /*
+        @Scheduled(fixedDelay = 5000)
+        public void notifyPaymentMissing() {
+            List<Subscription> subscriptions = getAll();
+            for (Subscription subscription : subscriptions) {
+                if (!isValid(subscription) && !subscription.isNotified()) {
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setFrom(constantProperties.getOurassoEmail());
+                    message.setTo(subscription.getMember().getEmail());
+                    message.setSubject("Ourasso : Votre abonnement a expiré !");
+                    message.setText(
+                            "Bonjour " + subscription.getMember().getFirstName() + " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n"
+                                    + "\n"
+                                    + "Votre abonnement a expiré, veuillez le renouveler !" + "\n"
+                                    + "\n"
+                                    + "Voici l'adresse pour vous connecter : " + "\n"
+                                    + "https://ppd-asso.herokuapp.com/login");
+                    emailSender.send(message);
+                    subscription.setNotified(true);
+                    update(subscription);
+                }
             }
         }
-    }
-
+     */
     public boolean subscribe(Subscription subscription, String duration) {
         long time = System.currentTimeMillis();
         Transaction transaction;
         if (subscription.getStatus().isSuperAdmin()) {
-            transaction = transactionService.create(time, getPrice(subscription));
-            subscription.setStop(time + (60 * 1000));
+            transaction = transactionService.create(time, getPrice(subscription), subscription);
+            subscription.setStop(time + (3600 * 1000));
             // subscription.setStop(time + ((31556952L / 12) * 1000));
         } else {
             switch (duration) {
                 case "1":
-                    transaction = transactionService.create(time, subscription.getAssociation().getPrice1Month());
-                    subscription.setStop(time + (60 * 1000));
+                    transaction = transactionService.create(time, subscription.getAssociation().getPrice1Month(), subscription);
+                    subscription.setStop(time + (3600 * 1000));
                     // subscription.setStop(time + ((31556952L / 12) * 1000));
                     break;
                 case "3":
-                    transaction = transactionService.create(time, subscription.getAssociation().getPrice3Months());
-                    subscription.setStop(time + (60 * 1000));
+                    transaction = transactionService.create(time, subscription.getAssociation().getPrice3Months(), subscription);
+                    subscription.setStop(time + (3600 * 1000));
                     // subscription.setStop(time + ((3 * 31556952L / 12) * 1000));
                     break;
                 case "12":
-                    transaction = transactionService.create(time, subscription.getAssociation().getPrice12Months());
-                    subscription.setStop(time + (60 * 1000));
+                    transaction = transactionService.create(time, subscription.getAssociation().getPrice12Months(), subscription);
+                    subscription.setStop(time + (3600 * 1000));
                     // subscription.setStop(time + ((12 * 31556952L / 12) * 1000));
                     break;
                 default:
@@ -193,16 +202,11 @@ public class SubscriptionService {
             return true;
         }
         if (subscription.isDelayed()) {
-            if (subscription.getDelay() == 0) {
-                return true;
-            }
-            else return System.currentTimeMillis() <= subscription.getDelay();
-        }
-        else if (!subscription.isDelayed()) {
+            return System.currentTimeMillis() <= subscription.getDelay();
+        } else if (!subscription.isDelayed()) {
             if (subscription.getStop() == 0) {
-                return true;
-            }
-            else return System.currentTimeMillis() <= subscription.getStop();
+                return false;
+            } else return System.currentTimeMillis() <= subscription.getStop();
         }
         return true;
     }

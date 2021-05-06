@@ -7,6 +7,7 @@ public class ConstantProperties {
 
     // Controller constants
     private static final String CONTROLLER_MANAGEMEMBERS = "managemembers";
+    private static final String CONTROLLER_MANAGEPAYMENTS = "managepayments";
     private static final String CONTROLLER_BILLINGMEMBER = "billingmember";
     private static final String CONTROLLER_BILLINGSUPERADMIN = "billingsuperadmin";
     private static final String CONTROLLER_INDEX = "index";
@@ -26,6 +27,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_NAME_PRICE = "price";
     private static final String ATTRIBUTE_NAME_SUBSCRIPTION = "subscription";
     private static final String ATTRIBUTE_NAME_SUCCESS = "success";
+    private static final String ATTRIBUTE_NAME_TRANSACTIONS = "transactions";
 
     // Ourrasso prices constants
     private static final double OURASSO_PRICE1 = 9.99;
@@ -78,8 +80,12 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_SUBSCRIPTIONEXPIRED = "Votre abonnement a expiré. Veuillez renouveler votre abonnement !";
 
 
-    public String getControllerAddMember() {
+    public String getControllerManageMembers() {
         return CONTROLLER_MANAGEMEMBERS;
+    }
+
+    public String getControllerManagePayments() {
+        return CONTROLLER_MANAGEPAYMENTS;
     }
 
     public String getControllerBillingMember() {
@@ -140,6 +146,10 @@ public class ConstantProperties {
 
     public String getAttributeNameSuccess() {
         return ATTRIBUTE_NAME_SUCCESS;
+    }
+
+    public String getAttributeNameTransactions() {
+        return ATTRIBUTE_NAME_TRANSACTIONS;
     }
 
     public double getOurassoPrice1() {

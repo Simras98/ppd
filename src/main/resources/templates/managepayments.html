@@ -32,41 +32,12 @@
         <div class="tableau">
             <table>
                 <tr>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Type d'abonnement</th>
-                    <th>Montant</th>
+                    <th>Date</th>
+                    <th>Prix</th>
                 </tr>
-                </tr>
-                <tr>
-                    <td>Li</td>
-                    <td>AIT</td>
-                    <td>1 mois</td>
-                    <td> 200 €</td>
-                </tr>
-                <tr>
-                    <td>Mi</td>
-                    <td>mopIT</td>
-                    <td> 12 mois</td>
-                    <td>2400 €</td>
-                </tr>
-                <tr>
-                    <td>Mi</td>
-                    <td>mopIT</td>
-                    <td> 12 mois</td>
-                    <td>2400 €</td>
-                </tr>
-                <tr>
-                    <td>Mi</td>
-                    <td>mopIT</td>
-                    <td> 12 mois</td>
-                    <td>2400 €</td>
-                </tr>
-                <tr>
-                    <td>Mi</td>
-                    <td>mopIT</td>
-                    <td> 12 mois</td>
-                    <td>2400 €</td>
+                <tr id="transactions" th:each="Transaction : ${transactions}">
+                    <td th:utext="${Transaction.date}"></td>
+                    <td th:utext="${Transaction.price}"></td>
                 </tr>
             </table>
         </div>
