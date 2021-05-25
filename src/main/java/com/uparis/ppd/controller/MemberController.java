@@ -107,7 +107,7 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerManageMembers();
                 }
-                if (!Pattern.compile(regexService.getGender()).matcher(sex).find()) {
+                if (!Pattern.compile(regexService.getSex()).matcher(sex).find()) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerManageMembers();
                 }

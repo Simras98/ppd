@@ -62,7 +62,7 @@ public class RegexService {
     public String getPrice() {
         return PRICE; }
 
-    public String getGender() {
+    public String getSex() {
         return GENDER;
     }
 
