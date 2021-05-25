@@ -62,6 +62,15 @@ public class SubscriptionService {
         return members;
     }
 
+    public List<Status> getStatusByAssociation(Subscription subscription) {
+        List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
+        List<Status> status = new ArrayList<>();
+        for (Subscription sub : subscriptions) {
+            status.add(sub.getStatus());
+        }
+        return status;
+    }
+
     public Object[] getTransactions(Subscription subscription) {
         return subscription.getTransactions().toArray();
     }
@@ -160,23 +169,23 @@ public class SubscriptionService {
         Transaction transaction;
         if (subscription.getStatus().isSuperAdmin()) {
             transaction = transactionService.create(time, getPrice(subscription), subscription);
-            subscription.setStop(time + (3600 * 1000));
+            subscription.setStop(time + (10 * 1000));
             // subscription.setStop(time + ((31556952L / 12) * 1000));
         } else {
             switch (duration) {
                 case "1":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice1Month(), subscription);
-                    subscription.setStop(time + (3600 * 1000));
+                    subscription.setStop(time + (10 * 1000));
                     // subscription.setStop(time + ((31556952L / 12) * 1000));
                     break;
                 case "3":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice3Months(), subscription);
-                    subscription.setStop(time + (3600 * 1000));
+                    subscription.setStop(time + (10 * 1000));
                     // subscription.setStop(time + ((3 * 31556952L / 12) * 1000));
                     break;
                 case "12":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice12Months(), subscription);
-                    subscription.setStop(time + (3600 * 1000));
+                    subscription.setStop(time + (10 * 1000));
                     // subscription.setStop(time + ((12 * 31556952L / 12) * 1000));
                     break;
                 default:
@@ -184,8 +193,12 @@ public class SubscriptionService {
             }
         }
         Set<Transaction> transactions = subscription.getTransactions();
-        transactions.add(transaction);
-        subscription.setTransactions(transactions);
+
+        Set<Transaction> newTransactions = new HashSet<>();
+        newTransactions.addAll(transactions);
+        newTransactions.add(transaction);
+
+        subscription.setTransactions(newTransactions);
         subscription.setStart(time);
         subscription.setDelay(0);
         subscription.setDelayed(false);
@@ -212,7 +225,7 @@ public class SubscriptionService {
 
     public void skipSubscription(Subscription subscription) {
         long time = System.currentTimeMillis();
-        subscription.setDelay(time + (60 * 1000));
+        subscription.setDelay(time + (10 * 1000));
         // subscription.setDelay(time + ((31556952L / 365) * 7) * 1000);
         subscription.setDelayed(true);
         subscription.setStart(0);

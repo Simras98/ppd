@@ -28,6 +28,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_NAME_MEMBERS = "members";
     private static final String ATTRIBUTE_NAME_PRICE = "price";
     private static final String ATTRIBUTE_NAME_SUBSCRIPTION = "subscription";
+    private static final String ATTRIBUTE_NAME_STATUS = "status";
     private static final String ATTRIBUTE_NAME_SUCCESS = "success";
     private static final String ATTRIBUTE_NAME_TRANSACTIONS = "transactions";
 
@@ -154,6 +155,10 @@ public class ConstantProperties {
 
     public String getAttributeNameSubscription() {
         return ATTRIBUTE_NAME_SUBSCRIPTION;
+    }
+
+    public String getAttributeNameStatus() {
+        return ATTRIBUTE_NAME_STATUS;
     }
 
     public String getAttributeNameSuccess() {

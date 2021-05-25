@@ -90,9 +90,9 @@
                 <th>Code postal</th>
                 <th>Email</th>
                 <th>Numéro de téléphone</th>
-                <th>Status</th>
+                <th>Administrateur</th>
             </tr>
-            <tr id="members" th:each="Member : ${members}">
+            <tr id="members" th:each="Member,i : ${members}">
                 <td th:utext="${Member.firstName}"></td>
                 <td th:utext="${#strings.capitalize(Member.lastName)}"></td>
                 <td th:utext="${#strings.capitalize(Member.sex)}"></td>
@@ -102,7 +102,7 @@
                 <td th:utext="${#strings.capitalize(Member.postalCode)}"></td>
                 <td th:utext="${Member.email}"></td>
                 <td th:utext="${#strings.capitalize(Member.phoneNumber)}"></td>
-                <td th:utext="${#strings.capitalize(Member.phoneNumber)}"></td>
+                <td th:utext="${status[i.index].admin}"></td>
             </tr>
         </table>
     </div>

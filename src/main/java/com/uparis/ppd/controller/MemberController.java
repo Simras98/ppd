@@ -51,7 +51,9 @@ public class MemberController {
         if (subscription != null) {
             if (subscriptionService.isValid(subscription)) {
                 List<Member> members = subscriptionService.getMembersByAssociation(subscription);
+                List<Status> status = subscriptionService.getStatusByAssociation(subscription);
                 model.addAttribute(constantProperties.getAttributeNameMembers(), members);
+                model.addAttribute(constantProperties.getAttributeNameStatus(), status);
                 return constantProperties.getControllerManageMembers();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
