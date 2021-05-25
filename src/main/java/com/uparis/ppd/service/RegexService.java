@@ -16,7 +16,7 @@ public class RegexService {
     private static final String PHONE_NUMBER = "(0|\\+33)[1-9]( *[0-9]{2}){4}";
     private static final String POSTAL_CODE = "[0-9]{5}";
     private static final String PRICE = "^[0-9 \\,.€]*$";
-    private static final String GENDER = "^(homme|femme|autre)$";
+    private static final String SEX = "^(homme|femme|autre)$";
     private static final String WORD = "^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$";
 
     public String getAddress() {
@@ -63,7 +63,7 @@ public class RegexService {
         return PRICE; }
 
     public String getSex() {
-        return GENDER;
+        return SEX;
     }
 
     public String getWord() {
