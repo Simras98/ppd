@@ -50,8 +50,10 @@ public class MemberController {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
         if (subscription != null) {
             if (subscriptionService.isValid(subscription)) {
-                Object[] members = subscriptionService.getMembersByAssociation(subscription);
+                List<Member> members = subscriptionService.getMembersByAssociation(subscription);
+                List<Status> status = subscriptionService.getStatusByAssociation(subscription);
                 model.addAttribute(constantProperties.getAttributeNameMembers(), members);
+                model.addAttribute(constantProperties.getAttributeNameStatus(), status);
                 return constantProperties.getControllerManageMembers();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -80,7 +82,6 @@ public class MemberController {
             @RequestParam(name = "email") String email,
             @RequestParam(name = "phoneNumber") String phoneNumber,
             @RequestParam(name = "admin") String isAdmin,
-            @RequestParam(name = "associationName") String associationName,
             HttpServletRequest request, Model model) {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
         if (subscription != null) {
@@ -94,8 +95,7 @@ public class MemberController {
                         || postalCode.isEmpty()
                         || email.isEmpty()
                         || phoneNumber.isEmpty()
-                        || isAdmin.isEmpty()
-                        || associationName.isEmpty()) {
+                        || isAdmin.isEmpty()) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFulfillFields());
                     return constantProperties.getControllerManageMembers();
                 }
@@ -137,10 +137,6 @@ public class MemberController {
                 }
                 if (!Pattern.compile(regexService.getLevel()).matcher(isAdmin).find()) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescStatus());
-                    return constantProperties.getControllerManageMembers();
-                }
-                if (!Pattern.compile(regexService.getWord()).matcher(associationName).find()) {
-                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationName());
                     return constantProperties.getControllerManageMembers();
                 }
                 String password = memberService.createRandomPassword();
@@ -271,6 +267,67 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescError());
                 }
                 return constantProperties.getControllerProfile();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatusSuperAdmin(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
+        }
+    }
+
+    @GetMapping("/contact")
+    public String contact(HttpServletRequest request, Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                List<Member> members = subscriptionService.getMembersByAssociation(subscription);
+                model.addAttribute(constantProperties.getAttributeNameMembers(), members);
+                return constantProperties.getControllerContact();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatusSuperAdmin(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
+        }
+    }
+
+    @PostMapping("/contactconfirm")
+    public String contactConfirm(
+            @RequestParam(name = "object") String object,
+            @RequestParam(name = "body") String body,
+            @RequestParam(name = "emailMember") String emailMember,
+            HttpServletRequest request,
+            Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                if (emailMember.equals("all")) {
+                    subscriptionService.sendEmailToAll(object, body, subscription);
+                    model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescEmailSend());
+                } else {
+                    Member member = memberService.getByEmail(emailMember);
+                    if (member != null) {
+                        subscriptionService.sendEmail(object, body, member, subscription);
+                        model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescEmailSend());
+                    } else {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescMemberNotExist());
+                    }
+                }
+                return constantProperties.getControllerContact();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
                 if (subscriptionService.getStatusSuperAdmin(subscription)) {

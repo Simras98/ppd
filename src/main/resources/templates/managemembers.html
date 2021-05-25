@@ -11,7 +11,7 @@
             rel="stylesheet"
     />
     <link rel="stylesheet" href="css/managemembers.css"/>
-    <title>Gestion des memebres </title>
+    <title>Gestion des membres</title>
 </head>
 <body>
 <div th:insert="fragments/navbar.html :: navbar"></div>
@@ -136,6 +136,7 @@
                     <th>Code postal</th>
                     <th>Email</th>
                     <th>Numéro de téléphone</th>
+                    <th>Administrateur</th>
                 </tr>
                 <tr id="members" th:each="Member : ${members}">
                     <td th:utext="${Member.firstName}"></td>

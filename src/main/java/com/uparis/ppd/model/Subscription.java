@@ -30,7 +30,7 @@ public class Subscription implements Serializable {
     @JoinColumn(name = "association_id")
     private Association association;
 
-    @OneToMany(mappedBy = "subscription")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "subscription", cascade = CascadeType.ALL)
     private Set<Transaction> transactions;
 
     public Subscription() {

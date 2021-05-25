@@ -10,6 +10,7 @@ public class ConstantProperties {
     private static final String CONTROLLER_MANAGEPAYMENTS = "managepayments";
     private static final String CONTROLLER_BILLINGMEMBER = "billingmember";
     private static final String CONTROLLER_BILLINGSUPERADMIN = "billingsuperadmin";
+    private static final String CONTROLLER_CONTACT = "contact";
     private static final String CONTROLLER_INDEX = "index";
     private static final String CONTROLLER_JOIN = "join";
     private static final String CONTROLLER_SIGNUP = "signup";
@@ -27,6 +28,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_NAME_MEMBERS = "members";
     private static final String ATTRIBUTE_NAME_PRICE = "price";
     private static final String ATTRIBUTE_NAME_SUBSCRIPTION = "subscription";
+    private static final String ATTRIBUTE_NAME_STATUS = "status";
     private static final String ATTRIBUTE_NAME_SUCCESS = "success";
     private static final String ATTRIBUTE_NAME_TRANSACTIONS = "transactions";
 
@@ -57,7 +59,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_EMAIL = "Vous devez rentrer une adresse mail valide !";
     private static final String ATTRIBUTE_DESC_EMAILEXIST = "L'adresse email est déjà utilisée !";
     private static final String ATTRIBUTE_DESC_EMAILNOTFOUND = "L'adresse email n'a pas été trouvée !";
-    private static final String ATTRIBUTE_DESC_EMAILSEND = "Un email vous a été envoyé !";
+    private static final String ATTRIBUTE_DESC_EMAILSEND = "Un email a été envoyé !";
     private static final String ATTRIBUTE_DESC_ERROR = "Un problème a eu lieu !";
     private static final String ATTRIBUTE_DESC_EXPIRATIONDATE = "Vous devez rentrer une date d'expiration valide !";
     private static final String ATTRIBUTE_DESC_EXPIRATIONDATEEXPIRED = "Votre carte bancaire a exprirée !";
@@ -68,6 +70,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_LOGINFAILED = "L'adresse email et le mot de passe ne correspondent pas !";
     private static final String ATTRIBUTE_DESC_LOGOUT = "Vous n'êtes pas connecté !";
     private static final String ATTRIBUTE_DESC_MEMBERADDED ="Le membre a bien été ajouté !";
+    private static final String ATTRIBUTE_DESC_MEMBERNOTEXIST ="Le membre n'existe pas !";
     private static final String ATTRIBUTE_DESC_MEMBERSADDED ="Les membres ont bien été ajoutés !";
     private static final String ATTRIBUTE_DESC_NAME = "Vous devez rentrer un nom valide !";
     private static final String ATTRIBUTE_DESC_NOTSUBSCRIBED = "Vous n'êtes pas abonné à cette association !";
@@ -96,6 +99,10 @@ public class ConstantProperties {
 
     public String getControllerBillingSuperAdmin() {
         return CONTROLLER_BILLINGSUPERADMIN;
+    }
+
+    public String getControllerContact() {
+        return CONTROLLER_CONTACT;
     }
 
     public String getControllerIndex() {
@@ -148,6 +155,10 @@ public class ConstantProperties {
 
     public String getAttributeNameSubscription() {
         return ATTRIBUTE_NAME_SUBSCRIPTION;
+    }
+
+    public String getAttributeNameStatus() {
+        return ATTRIBUTE_NAME_STATUS;
     }
 
     public String getAttributeNameSuccess() {
@@ -276,6 +287,10 @@ public class ConstantProperties {
 
     public String getAttributeDescMemberAdded() {
         return ATTRIBUTE_DESC_MEMBERADDED;
+    }
+
+    public String getAttributeDescMemberNotExist() {
+        return ATTRIBUTE_DESC_MEMBERNOTEXIST;
     }
 
     public String getAttributeDescMembersAdded() {

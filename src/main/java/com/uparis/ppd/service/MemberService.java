@@ -2,6 +2,8 @@ package com.uparis.ppd.service;
 
 import com.uparis.ppd.exception.StorageException;
 import com.uparis.ppd.model.Member;
+import com.uparis.ppd.model.Subscription;
+import com.uparis.ppd.properties.ConstantProperties;
 import com.uparis.ppd.repository.MemberRepository;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -26,6 +28,9 @@ public class MemberService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private ConstantProperties constantProperties;
 
     @Autowired
     private FormatService formatService;
