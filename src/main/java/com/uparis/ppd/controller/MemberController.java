@@ -72,7 +72,7 @@ public class MemberController {
     public String addMemberConfirm(
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
-            @RequestParam(name = "man") String man,
+            @RequestParam(name = "sex") String sex,
             @RequestParam(name = "birthDate") String birthDate,
             @RequestParam(name = "address") String address,
             @RequestParam(name = "city") String city,
@@ -87,7 +87,7 @@ public class MemberController {
             if (subscriptionService.isValid(subscription)) {
                 if (firstName.isEmpty()
                         || lastName.isEmpty()
-                        || man.isEmpty()
+                        || sex.isEmpty()
                         || birthDate.isEmpty()
                         || address.isEmpty()
                         || city.isEmpty()
@@ -107,7 +107,7 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerManageMembers();
                 }
-                if (!Pattern.compile(regexService.getGender()).matcher(man).find()) {
+                if (!Pattern.compile(regexService.getGender()).matcher(sex).find()) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerManageMembers();
                 }
@@ -144,7 +144,7 @@ public class MemberController {
                     return constantProperties.getControllerManageMembers();
                 }
                 String password = memberService.createRandomPassword();
-                Member member = memberService.create(firstName, lastName, man, birthDate, address, city, postalCode, email, phoneNumber, password);
+                Member member = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
                 Status status = statusService.create(Boolean.parseBoolean(isAdmin), false);
                 Subscription newSubscription = subscriptionService.create(0, 0, 0, false, false, member, status, subscription.getAssociation(), Collections.emptySet());
                 subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), password);
