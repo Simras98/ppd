@@ -10,6 +10,57 @@ main{
     align-items: center;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
+nav{
+    padding-left: 700px;
+}
+nav ul li{
+    display: inline-flex;
+    list-style: none;
+}
+nav ul li a {
+    color: blueviolet;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0px 20px;
+}
+a{
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding: 8px 0;
+    color: #9b59b6;
+    text-decoration: none;
+}
+a:hover{
+    color: #71b7e6;
+    text-decoration: none;
+}
+a:before, a:after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -2px;
+    background: #71b7e6;
+}
+a:before {
+    left: 0;
+}
+a:after {
+    right: 0;
+    background: #9b59b6;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+a:hover:before {
+    background: #fff;
+    width: 100%;
+    transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+a:hover:after {
+    background: #fff;
+    width: 100%;
+    transition: 0s;
+}
 .container{
     max-width: 700px;
     width:100%;
@@ -54,75 +105,19 @@ form .user-details .gender-details{
     margin-bottom : 15px;
     width : calc(100% /2 - 20px);
 }
-form .user-details .level-details{
-    margin-bottom : 15px;
-    width : calc(100% /2 - 20px);
+form .user-details .level-details {
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
 }
-
-form .gender-details .gender-title {
-    font-weight : 500;
+.user-details .gender-details .details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
-form .level-details .level-title{
-    font-weight : 500;
-}
-
-form .gender-details .category {
-    display : flex;
-    width : 80%;
-    margin: 14px 0;
-    justify-content : space-between;
-}
-form .level-details .category{
-    display : flex;
-    width : 80%;
-    margin: 14px 0;
-    justify-content : space-between;
-}
-.gender-details .category label {
-    display : flex;
-    align-items : center;
-}
-.level-details .category label{
-    display : flex;
-    align-items : center;
-}
-.gender-details .category .dot{
-    height : 18px;
-    width :  18px;
-    background : #d9d9d9;
-    border-radius : 50%;
-    margin-right : 10px;
-    margin-left :5px;
-    border : 5px solid transparent;
-    transition: all 0.3s ease;
-
-}
-.level-details .category .dot{
-    height : 18px;
-    width :  18px;
-    background : #d9d9d9;
-    border-radius : 50%;
-    margin-right: 10px;
-    margin-left : 5px;
-    border : 5px solid transparent;
-    transition: all 0.3s ease;
-
-}
-#dot-1:checked ~ .category  label .one,
-#dot-2:checked ~ .category  label .two,
-#dot-3:checked ~ .category  label .three {
-    border-color : #d9d9d9;
-    background: #9b59b6;
-}
-
-#dot-4:checked ~ .category  label .four,
-#dot-5:checked ~ .category  label .five {
-    border-color : #d9d9d9;
-    background: #9b59b6;
-}
-
-form input[type="radio"]{
-    display: none;
+.user-details .level-details .details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
 form .button{
     height: 35px;
@@ -141,38 +136,36 @@ form .button input{
     letter-spacing: 1px;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
-@media (max-width: 584px) {
+@media only screen and (max-width: 700px) {
     .container{
-        max-width: 100%;
+        width: 100%;
+    }
+    .container form .user-details{
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+    .user-details::-webkit-scrollbar{
+        width: 0;
     }
     form .user-details .input-box{
         margin: 10px 0 5px 0;
         width: 100%;
     }
-    form .gender-details .category {
+    form .user-details .gender-details {
+        margin: 10px 0 5px 0;
         width: 100%;
     }
-    form .level-details .category {
-        width: 100%;
-    }
-    .gender-details .category .dot{
-        width: 100%;
-    }
-    .level-details .category .dot{
+    form .user-details .level-details {
+        margin: 10px 0 5px 0;
         width: 100%;
     }
 }
-@media (max-height: 584px) {
+@media only screen and (height: 650px) {
+    main{
+        height: 100%;
+    }
     .container{
-        max-height: 100%;
-    }
-    form .user-details .input-box{
-        height: 100%;
-    }
-    form .gender-details .category {
-        height: 100%;
-    }
-    form .level-details .category {
         height: 100%;
     }
 }
+

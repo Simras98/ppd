@@ -3,6 +3,7 @@
 <head>
     <!-- Required meta tags -->
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device.width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link
             crossorigin="anonymous"
@@ -10,27 +11,47 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/login.css"/>
     <!-- hCaptcha -->
     <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Rejoindre</title>
 </head>
 <body>
+<header>
+    <img class="logo" src="images/logo.png">
+</header>
 <div th:insert="fragments/navbar.html :: navbar"></div>
-<div>
-    <h1>Rejoindre</h1>
+<main>
+<div class="container">
+    <div class="text">Rejoignez-nous</div>
+    <hr/>
     <p th:text="${error}"></p>
     <form action="/joinconfirm" id="joinConfirm" method="post">
-        <label for="associationName">Association</label>
-        <input id="associationName" name="associationName" placeholder="Entrez le nom de l'association" value="Test" type="text">
-        <label for="email">Email</label>
-        <input id="email" name="email" placeholder="Entrez votre adresse email" value="simonweb98@gmail.com" type="email">
-        <label for="password">Mot de passe</label>
-        <input id="password" name="password" placeholder="Entrez votre mot de passe" value="abcd" type="password">
-        <a href="/signup">Pas encore inscrit ? Inscrivez-vous !</a>
+        <div class="data">
+            <label for="associationName">Association</label>
+            <input id="associationName" name="associationName" placeholder="Entrez le nom de l'association" value="Test" type="text">
+        </div>
+        <div class="data">
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="Entrez votre adresse email" value="simonweb98@gmail.com" type="email">
+        </div>
+        <div class="data">
+            <label for="password">Mot de passe</label>
+            <input id="password" name="password" placeholder="Entrez votre mot de passe" value="abcd" type="password">
+        </div>
+        <div>
         <a href="/passwordforgotten">Mot de passe oublié ?</a>
+        </div>
+        <br/>
+        <div class="connecter">
         <input id="joinButton" type="submit" value="Rejoindre">
+        </div>
+        <div>
+            <a href="/signup">Pas encore inscrit ? Inscrivez-vous !</a>
+        </div>
     </form>
 </div>
+</main>
 <script>
     async function submitForm() {
         const signUpForm = document.querySelector('form');

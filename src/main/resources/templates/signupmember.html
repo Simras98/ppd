@@ -3,6 +3,7 @@
 <head>
     <!-- Required meta tags -->
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device.width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link
             crossorigin="anonymous"
@@ -14,6 +15,7 @@
     <!-- hCaptcha -->
     <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Inscription</title>
+
 </head>
 <body>
 <header>
@@ -21,97 +23,86 @@
 </header>
 <div th:insert="fragments/navbar.html :: navbar"></div>
 <main>
-    <div class="container">
-        <div class="title">Inscrivez-vous!</div>
-        <p th:text="${error}"></p>
-        <form action="/signupmemberconfirm" id="signupMemberConfirm" method="post">
-            <div class="user-details">
-                <div class="input-box">
-                    <label class="details" for="firstName">Prénom</label>
-                    <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez votre prénom" required type="text">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="lastName">Nom</label>
-                    <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez votre nom" required type="text">
-                </div>
-                <div class="gender-details">
-                    <input type="radio" name="sex" value="homme" id="dot-1">
-                    <input type="radio" name="sex" value="femme" id="dot-2">
-                    <input type="radio" name="sex" value="autre" id="dot-3">
-                    <span class="gender-title">Sexe</span>
-                    <div class="category">
-                        <label for="dot-1">
-                            <span class="dot one"></span>
-                            <span class="gender"> Homme </span>
-                        </label>
-                        <label for="dot-2">
-                            <span class="dot two"></span>
-                            <span class="gender"> Femme </span>
-
-                        </label>
-                        <label for="dot-3">
-                            <span class="dot three"></span>
-                            <span class="sex"> Autre </span>
-                        </label>
-                    </div>
-                </div>
-                <div class="input-box">
-                    <label class="details" for="birthDate">Date de naissance</label>
-                    <input id="birthDate" name="birthDate" required type="date">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="associationName">Association</label>
-                    <input id="associationName" name="associationName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez le nom de l'association" required type="text">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="address">Adresse</label>
-                    <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
-                           placeholder="Entrez votre adresse" required type="text">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="city">Ville</label>
-                    <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez votre ville" required type="text">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="postalCode">Code Postal</label>
-                    <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
-                           placeholder="Entrez votre code postal" required type="text">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="email">Email</label>
-                    <input id="email" name="email" placeholder="Entrez votre email" required type="email">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="phoneNumber">Numéro de téléphone</label>
-                    <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
-                           placeholder="Entrez votre numéro de téléphone" required type="tel">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="password">Mot de passe</label>
-                    <input id="password" name="password" placeholder="Entrez votre mot de passe" required
-                           type="password">
-                </div>
-                <div class="input-box">
-                    <label class="details" for="confirmPassword">Confirmation de votre mot de passe</label>
-                    <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
-                           required type="password">
-                </div>
+<div class="container">
+    <div class="title">Inscrivez-vous!</div>
+    <p th:text="${error}"></p>
+    <form action="/signupmemberconfirm" id="signupMemberConfirm" method="post">
+        <div class="user-details">
+        <div class="input-box">
+            <label class="details" for="firstName">Prénom</label>
+            <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez votre prénom" required type="text">
+        </div>
+        <div class="input-box">
+            <label class="details" for="lastName">Nom</label>
+            <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez votre nom" required type="text">
+        </div>
+            <div class="gender-details">
+                <label class="details" >Sexe</label>
+                <input id="homme" name="sex" value="homme" type="radio">    Homme
+                <input id="femme" name="sex" value="femme" type="radio">    Femme
+                <input id="autre" name="sex" value="autre" type="radio">    Autre
             </div>
-            <div data-callback="submitForm"
-                 data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
+            <div class="input-box">
+            <label class="details" for="birthDate">Date de naissance</label>
+            <input id="birthDate" name="birthDate" required type="date">
+        </div>
+            <div class="input-box">
+                <label class="details" for="association">Association</label>
+                <input id="association" name="association" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                       placeholder="Entrez le nom de l'association" required type="text">
             </div>
-            <div>
-                <a href="/login">Déjà inscrit ? Connectez-vous !</a>
+        <div class="input-box">
+            <label class="details" for="address">Adresse</label>
+            <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
+                   placeholder="Entrez votre adresse" required type="text">
+        </div>
+        <div class="input-box">
+            <label class="details" for="city">Ville</label>
+            <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                   placeholder="Entrez votre ville" required type="text">
+        </div>
+        <div class="input-box">
+            <label class="details" for="postalCode">Code Postal</label>
+            <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
+                   placeholder="Entrez votre code postal" required type="text">
+        </div>
+        <div class="input-box">
+            <label class="details" for="email">Email</label>
+            <input id="email" name="email" placeholder="Entrez votre email" required type="email">
+        </div>
+            <div class="input-box">
+                <label class="details" for="phoneNumber">Numéro de téléphone</label>
+                <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
+                       placeholder="Entrez votre numéro de téléphone" required type="tel">
             </div>
-            <div class="button">
-                <input id="signUpButton" type="submit" value="S'inscrire">
+        <div class="input-box">
+            <label class="details" for="password">Mot de passe</label>
+            <input id="password" name="password" placeholder="Entrez votre mot de passe" required type="password">
+        </div>
+        <div class="input-box">
+            <label class="details" for="confirmPassword">Confirmation de votre mot de passe</label>
+            <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
+                   required type="password">
+        </div>
+            <div class="level-details">
+                <label class="details">Niveau</label>
+                <input id="admin" name="admin" type="radio" value="true">  Administrateur
+                <input id="member" name="admin" type="radio" value="false">  Membre
             </div>
-        </form>
-    </div>
+        </div>
+        <div data-callback="submitForm"
+             data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
+        </div>
+        <div>
+        <a href="/login">Déjà inscrit ? Connectez-vous !</a>
+        </div>
+        <div class="button">
+            <input id="signUpButton" type="submit" value="S'inscrire">
+        </div>
+    </form>
+</div>
 </main>
 <script>
     async function submitForm() {

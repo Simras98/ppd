@@ -3,6 +3,57 @@
     float : left;
     margin-right : 20px;
 }
+nav{
+    padding-left: 700px;
+}
+nav ul li{
+    display: inline-flex;
+    list-style: none;
+}
+nav ul li a {
+    color: blueviolet;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0px 20px;
+}
+a{
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding: 8px 0;
+    color: #9b59b6;
+    text-decoration: none;
+}
+a:hover{
+    color: #71b7e6;
+    text-decoration: none;
+}
+a:before, a:after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -2px;
+    background: #71b7e6;
+}
+a:before {
+    left: 0;
+}
+a:after {
+    right: 0;
+    background: #9b59b6;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+a:hover:before {
+    background: #fff;
+    width: 100%;
+    transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+a:hover:after {
+    background: #fff;
+    width: 100%;
+    transition: 0s;
+}
 main{
     display: grid;
     height: 100vh;
@@ -16,7 +67,6 @@ main .head{
     display: flex;
     flex-wrap: wrap;
     position: center;
-
 }
 .container{
     height: 200px;
@@ -30,7 +80,6 @@ main .head{
 .container .link-box{
     position: center;
 }
-
 .container .link-box .link{
     margin-left: 38px;
     font-weight: 500;
@@ -46,21 +95,31 @@ main .head{
     width: 55%;
     margin-left: 25%;
 }
-@media (max-width: 684px) {
-    main{
-        width: 100%;
-    }
+@media (max-width: 700px) {
     .cont{
         width: 100%;
+        margin: 20px 0 5px 0;
+        align-content: space-between;
     }
     .container{
-        width: 100%;
+        width: 40%;
+        align-content: space-between;
     }
-
+    .container .link-box{
+        position: center;
+    }
     .container .link-box .link{
-        width: 100%;
+        margin-left: 12px;
+        font-weight: 500;
+    }
+    .container .link-box .image1{
+        height: 100%;
+        width: 80px;
+        margin-left: 0.1%;
     }
     .container .link-box .image{
-        width: 100%;
+        height: 100%;
+        width: 75px;
+        margin-left: 1%;
     }
 }

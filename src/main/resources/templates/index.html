@@ -3,6 +3,7 @@
 <head>
     <!-- Required meta tags -->
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device.width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link
             crossorigin="anonymous"
@@ -10,10 +11,97 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/homepage.css"/>
     <title>Accueil</title>
 </head>
 <body>
-<div th:insert="fragments/navbar.html :: navbar"></div>
-<div th:insert="fragments/navbar.html :: sidebar"></div>
-<h1>Accueil</h1>
+<header>
+    <img class="logo" src="images/logo.png">
+    <div class="nav" th:insert="fragments/navbar.html :: navbar"></div>
+</header>
+<main>
+    <div class="cont">
+        <div class="head">
+            <img class="homeimg" src="images/homeimg.png">
+        </div>
+        <h4 class="title">Découvrez nos fonctionalités</h4>
+        <br>
+        <div class="container">
+            <div class="sub-cont">
+                <img class="image" src="images/manageteam.png">
+                <h6 class="descriptions"> Gestion des adhésion</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/paiement.png">
+                <h6 class="description"> Paiement en ligne</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/communications.png">
+                <h6 class="descriptions"> communication</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/ticket.png">
+                <h6 class="description"> Billetterie</h6>
+            </div>
+        </div>
+        <h4 class="title1">Nos formules</h4>
+        <br>
+        <div class="container">
+            <div class="sub-cont">
+                <img class="image" src="images/baby.png">
+                <h6 class="descriptions"> Bébé Asso</h6>
+                <h7 class="description1"> 30 personnes</h7>
+                <h6 class="price1"> Gratuit</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/up-man.png">
+                <h6 class="descriptions"> Jeune Asso</h6>
+                <h7 class="description1"> 200 personnes</h7>
+                <h6 class="price"> 10€</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/man.png">
+                <h6 class="descriptionS"> Homme Asso</h6>
+                <h7 class="description1"> 500 personnes</h7>
+                <h6 class="price"> 20€</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/grandfather.png">
+                <h6 class="descriptions"> Vieux Asso</h6>
+                <h7 class="description1"> Plus de 500</h7>
+                <h6 class="price"> 50€</h6>
+            </div>
+        </div>
+        <h4 class="title">Avantages de notre solution</h4>
+        <br>
+        <div class="container">
+            <div class="sub-cont">
+                <img class="image" src="images/logiciel.png">
+                <h6 class="description2"> Toutes vos fonctionnalités dans un seul logiciel</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/multiscreen.png">
+                <h6 class="description3"> Logiciel responsive</h6>
+            </div>
+            <div class="sub-cont">
+                <img class="image" src="images/global.png">
+                <h6 class="desc1"> Accessible partout</h6>
+            </div>
+        </div>
+        <div class="cont-social">
+            <div>
+                <h6 class="description-bottom"> Contactez nous</h6>
+                <img class="imageenvlope" src="images/envelope.png">
+                <a class="link" href="https://mail.google.com/mail/u/0/#inbox">masters@mi.parisdescartes.fr</a>
+            </div>
+            <div>
+                <h6 class="description-bottom"> Suivez nous</h6>
+                <a href="https://www.facebook.com/etudiants.aparisdescartes/"><img class="image-social" src="images/facebook.png"></a>
+                <a href="https://math-info.u-paris.fr/"><img class="image-social" src="images/instagram.png"></a>
+                <a href="https://math-info.u-paris.fr/"><img class="image-social" src="images/twitter.png"> </a>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
+</html>
