@@ -31,21 +31,21 @@
         <li>  <a href="/profile"
                  th:classappend="${#httpServletRequest.requestURI == '/profile'}"
                  th:if="${session.subscription != null}">Profile</a> </li>
-        <li><a href="/contact"
+        <!--<li><a href="/contact"
                th:classappend="${#httpServletRequest.requestURI == '/contact'}"
-               th:if="${session.subscription != null}">Contact</a> </li>
-        <li> <a href="/managepayments"
+               th:if="${session.subscription != null}">Contact</a> </li>-->
+        <!--<li> <a href="/managepayments"
             th:classappend="${#httpServletRequest.requestURI == '/managepayments'}"
-            th:if="${session.subscription != null}">Historique de paiements</a> </li>
+            th:if="${session.subscription != null}">Historique de paiements</a> </li>-->
         <li> <a href="/billingmember"
                 th:classappend="${#httpServletRequest.requestURI == '/billingmember'}"
                 th:if="${session.subscription != null && session.subscription.status.superAdmin == False && session.subscription.stop == 0}">Paiement</a> </li>
-        <li><a href="/billingsuperadmin"
-               th:classappend="${#httpServletRequest.requestURI == '/billingsuperadmin'}"
-               th:if="${session.subscription != null && session.subscription.status.superAdmin == True && session.subscription.stop == 0}">Paiement</a></li>
-        <li><a href="/managemembers"
-             th:classappend="${#httpServletRequest.requestURI == '/managemembers'}"
-             th:if="${session.subscription != null && session.subscription.status.admin == True}">Gestion des membres</a></li>
+         <li><a href="/billingsuperadmin"
+                th:classappend="${#httpServletRequest.requestURI == '/billingsuperadmin'}"
+                th:if="${session.subscription != null && session.subscription.status.superAdmin == True && session.subscription.stop == 0}">Paiement</a></li>
+         <!--<li><a href="/managemembers"
+              th:classappend="${#httpServletRequest.requestURI == '/managemembers'}"
+              th:if="${session.subscription != null && session.subscription.status.admin == True}">Gestion des membres</a></li>-->
         <li> <a href="/logout"
                 th:classappend="${#httpServletRequest.requestURI == '/logout'}"
                 th:if="${session.subscription != null}">Déconnexion</a></li>

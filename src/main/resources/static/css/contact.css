@@ -6,7 +6,6 @@
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
 }
-
 body{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
@@ -62,11 +61,9 @@ body{
     font-size: 1.5rem;
     padding-right: 1rem;
 }
-
 header h1{
     color: white;
     margin-left: 30px;
-
 }
 h1{
     font-size: 2.6vw;
@@ -78,9 +75,7 @@ h1{
 main{
     justify-content: space-between;
 }
-
 .formulaire{
-
     padding : 20px 30px;
     max-width : 600px;
     width: 100%;
@@ -89,28 +84,22 @@ main{
     margin-left: 250px;
     margin-right: 20px;
     margin-top: 70px;
-
-
 }
 .formulaire form .user-details{
     display : block;
     flex-wrap : wrap;
     justify-content : space-between;
     margin : 20px 0 12px 0;
-
 }
 form .user-details .input-box{
     margin-bottom : 15px;
     width : calc(100% /2 - 20px);
-
-
 }
 .user-details .input-box .details {
     display : block;
     margin-bottom : 10px;
     font-size : 15px;
     font-weight : 550;
-
 }
 .user-details .input-box input {
     height : 45px;
@@ -122,9 +111,8 @@ form .user-details .input-box{
     font-size : 16px;
     border-bottom-width: 2px;
     transition : all 0.3s ease;
-
-
-}.user-details .input-box textarea {
+}
+.user-details .input-box textarea {
     height : 90px;
     width: 100%;
     outline : none;
@@ -134,24 +122,27 @@ form .user-details .input-box{
     font-size : 16px;
     border-bottom-width: 2px;
     transition : all 0.3s ease;
-
 }
 .user-details .input-box input:focus,
 .user-details .input-box input:valid{
     border-color : #9b59b6;
 }
-form  .input-button1 input{
+form .input-button1{
+    height: 35px;
+    margin: 25px 0;
+}
+.input-button1 input{
+    height: 100%;
+    width: 20%;
+    margin-left: 45%;
     outline: none;
     color:#fff;
     border:none;
-    font-size: 15px;
-    padding: 10px;
+    font-size: 18px;
     font-weight: 500;
     border-radius: 5px;
+    letter-spacing: 1px;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
-    margin-left: 330px;
-
-
 }
 nav{
     float: right;
@@ -219,19 +210,17 @@ a:hover:after {
         margin: 10px 0 5px 0;
         width: 100%;
     }
-
     .user-details .gender-details .details {
         margin: 10px 0 5px 0;
         width: 100%;
     }
-
     .user-details .level-details .details {
         margin: 10px 0 5px 0;
         width: 100%;
     }
-
-    .form .input-button1 input {
-        margin: 10px 0 5px 0;
-        width: 100%;
+    form .input-button1 input{
+        height: 100%;
+        width: 900px;
+        margin-left: 60px;
     }
 }

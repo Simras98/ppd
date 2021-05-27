@@ -56,39 +56,45 @@ form .ab-details .ab-title {
     font-size : 15px;
     font-weight : 600;
 }
-
 form .ab-details .type {
     display : flex;
     width : 80%;
     margin: 14px 0;
     justify-content : space-between;
 }
-form  .input-button1 input{
+form .button{
+    height: 45px;
+    margin: 35px 0;
+}
+.input-button1 input{
+    height: 100%;
+    width: 30%;
+    margin-left: 35%;
     outline: none;
     color:#fff;
     border:none;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
-    padding: 10px;
     border-radius: 5px;
+    letter-spacing: 1px;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
-    margin-left: 280px;
 }
 .input-button2 input{
+    height: 100%;
+    width: 40%;
+    margin-left: 30%;
     outline: none;
     color:#fff;
     border:none;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
-    padding: 10px;
     border-radius: 5px;
+    letter-spacing: 1px;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
-    margin-left: 250px;
 }
 nav{
-    padding-left: 900px;
+    padding-left: 700px;
 }
-
 nav ul li{
     display: inline-flex;
     list-style: none;
@@ -159,6 +165,16 @@ a:hover:after {
     form .ab-details .type{
         margin: 10px 0 5px 0;
         width: 100%;
+    }
+    .input-button1 input{
+        height: 100%;
+        width: 60%;
+        margin-left: 60px;
+    }
+    .input-button2 input{
+        height: 100%;
+        width: 75%;
+        margin-left: 30px;
     }
 
 }

@@ -21,9 +21,7 @@ body{
 }
 .main-content{
     margin-left: 245px;
-
 }
-
 a{
     position: relative;
     display: block;
@@ -36,7 +34,6 @@ a:hover{
     color: #fff;
     text-decoration: none;
 }
-
 a:before, a:after {
     content: '';
     position: absolute;
@@ -45,7 +42,6 @@ a:before, a:after {
     bottom: -2px;
     background: #fff;
 }
-
 a:before {
     left: 0;
 }
@@ -54,13 +50,11 @@ a:after {
     background: #fff;
     transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-
 a:hover:before {
     background: #fff;
     width: 100%;
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-
 a:hover:after {
     background: transparent;
     width: 100%;
@@ -111,18 +105,14 @@ header{
     display: flex;
     justify-content: space-between;
 }
-
 header h1{
     color: white;
     margin-left: 30px;
-
 }
 .logo{
     width: 100px;
     height: 100px;
 }
-
-
 nav ul li{
     display: inline-flex;
     list-style: none;
@@ -135,7 +125,7 @@ nav ul li a {
 }
 .card {
     background: #fff;
-    border-radius: 6px;
+    border-radius: 2px;
     display: inline-block;
     height: 250px;
     margin: 1rem;
@@ -144,14 +134,46 @@ nav ul li a {
 }
 .card_2 {
     background: #fff;
-    border-radius: 6px;
+    border-radius: 2px;
     display: inline-block;
     height: 250px;
     margin: 1rem;
     position: relative;
     width: 640px;
 }
-
+#case_3{
+    position:absolute;left: 90px; top:10px;
+}
+#case_2_text{
+    position:relative;right: 20px; top:0px;
+}
+#case_4_text{
+    position:relative;right: 25px; top:0px;
+}
+#case_3_text{
+    position:relative;right: 20px; top:0px;
+}
+#case_5{
+    position:absolute;left: 250px; top:10px;
+}
+#case_4{
+    position:absolute;left: 100px; top:10px;
+}
+#case_5_text{
+    position:relative;right: 10px; top:0px;
+}
+#case_sup{
+    position:relative;left : 50px;
+}
+#case_2_text{
+    position:relative;right: 20px; top:0px;
+}
+#case_1_text{
+    position:relative;right: 15px; top:0px;
+}
+#modele_case_1{
+    position:absolute;left: 110px; top:10px;
+}
 .card-1 {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -163,10 +185,7 @@ nav ul li a {
 .image_member{
     height: 100px;
     width: 100px;
-    max-width: 100px;
-    min-width: 20px;
 }
-
 #member_count_number{
     text-align: center;
     font-size :3vw;
@@ -176,4 +195,3 @@ nav ul li a {
     text-align: center;
     font-size :2vw;
 }
-
