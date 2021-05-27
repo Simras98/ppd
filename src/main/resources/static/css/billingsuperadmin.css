@@ -1,0 +1,150 @@
+.logo{
+    width : 100px;
+    height: 100px;
+    float : left;
+    margin-right : 20px;
+
+}
+main {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
+.formulaire{
+    padding : 20px 30px;
+    max-width : 800px;
+    width: 100%;
+    background:#fff;
+    border-radius : 5px;
+    justify-content: center;
+}
+.formulaire .titre{
+    font-size: 20px;
+}
+.formulaire form .user-details{
+    display : flex;
+    flex-wrap : wrap;
+    justify-content : space-between;
+    margin : 20px 0 12px 0;
+}
+form .user-details .input-box{
+    margin-bottom : 15px;
+    width : calc(100% /2 - 20px);
+}
+.user-details .input-box .details {
+    display : block;
+    margin-bottom : 10px;
+    font-size : 15px;
+    font-weight : 600;
+}
+.user-details .input-box input {
+    height : 45px;
+    width: 100%;
+    outline : none;
+    border-radius:5px;
+    border:1px solid #ccc;
+    padding-left : 15px;
+    font-size : 16px;
+    border-bottom-width: 2px;
+    transition : all 0.3s ease;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+    border-color : #9b59b6;
+}
+form  .input-button input{
+    outline: none;
+    color:#fff;
+    border:none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 5px;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+    margin-left: 280px;
+}
+nav{
+    padding-left: 700px;
+}
+nav ul li{
+    display: inline-flex;
+    list-style: none;
+}
+nav ul li a {
+    color: blueviolet;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0px 20px;
+}
+a{
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding: 8px 0;
+    color: #9b59b6;
+    text-decoration: none;
+}
+a:hover{
+    color: #71b7e6;
+    text-decoration: none;
+}
+a:before, a:after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -2px;
+    background: #71b7e6;
+}
+a:before {
+    left: 0;
+}
+a:after {
+    right: 0;
+    background: #9b59b6;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+a:hover:before {
+    background: #fff;
+    width: 100%;
+    transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+a:hover:after {
+    background: #fff;
+    width: 100%;
+    transition: 0s;
+}
+@media only screen and (max-width: 700px) {
+    .formulaire {
+        width: 95%;
+    }
+
+    nav {
+        max-width: 100%;
+        padding-left: 30px;
+    }
+
+    .formulaire form .user-details {
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+
+    .user-details::-webkit-scrollbar {
+        width: 0;
+    }
+
+    form .user-details .input-box {
+        margin: 10px 0 5px 0;
+        width: 100%;
+    }
+}
+@media only screen and (height: 650px) {
+    main{
+        height: 100%;
+    }
+    .formulaire{
+        height: 100%;
+    }
+}

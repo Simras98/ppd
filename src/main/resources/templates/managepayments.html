@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device.width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link
+            crossorigin="anonymous"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/managepayments.css"/>
+    <title>Paiements</title>
+
+</head>
+<body>
+<div th:insert="fragments/navbar.html :: navbar"></div>
+<div class="sidebar">
+    <div class="siderbar-logo">
+        <img class="logo" src="images/logo.png"/>
+    </div>
+    <div class="sidebar-menu">
+        <ul>
+            <li>
+                <a href="dashbord" class="act" ><span class="tab-bord"></span><span> Tableau de bord</span></a>
+            </li>
+            <li>
+                <a href="managemembers" class="act"><span class="G-member"></span><span> Gestion des membres</span></a>
+            </li>
+            <li>
+                <a href="" class="act"><span class="bill"></span><span> Billetterie</span></a>
+            </li>
+            <li>
+                <a href=""class="act"><span class="coll"></span><span> Collectes</span></a>
+            </li>
+            <li>
+                <a href="managepayments"class="active"><span class="pai"></span><span> Paiement</span></a>
+            </li>
+            <li>
+                <a href="contact"class="act"><span class="comm"></span><span> Communication </span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="main-content">
+    <header>
+        <h1> Paiement</h1>
+    </header>
+    <main>
+        <p th:text="${success}"></p>
+        <p th:text="${error}"></p>
+        <div class="tableau">
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Prix</th>
+                </tr>
+                <tr id="transactions" th:each="Transaction : ${transactions}">
+                    <td th:utext="${Transaction.date}"></td>
+                    <td th:utext="${Transaction.price}"></td>
+                </tr>
+            </table>
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+</html>

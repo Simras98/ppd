@@ -68,7 +68,7 @@ main{
 }
 .cont .title{
     padding-left: 500px;
-    color: white;
+    color: #ffffff;
     font-style: italic;
     box-shadow: 0 1px 3px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.28);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -78,7 +78,7 @@ box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
 }
 .cont .title1{
     padding-left: 560px;
-    color: white;
+    color:#ffffff;
     font-style: italic;
     box-shadow: 0 1px 3px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.28);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -148,7 +148,6 @@ box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
      margin-left: 20px;
      font-size: 13px;
      font-style: italic;
-
  }
 .sub-cont .description3{
     margin-left: 30px;
@@ -165,4 +164,59 @@ box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
 }
 .sub-cont .price1 {
     margin-left: 25px;
+}
+@media only screen and (max-width: 700px) {
+    nav{
+        margin-left: 37px;
+    }
+    .head .homeimg{
+        width: 98vw;
+    }
+    main{
+        width: 98vw;
+        height: 381vw;
+    }
+    .title{
+        width: 9vw;
+        padding-left: 10em;
+        height: 10vw;
+    }
+    .title1{
+        width: 10vw;
+        height: 10vw;
+    }
+    .cont .container{
+        width: 98vw;
+        margin: 10px 0 5px 0;
+    }
+    .container .sub-cont{
+        width: 40vw;
+        margin: 10px 0 5px 0;
+        align-content: space-between;
+    }
+     .imageenvlope{
+        width: 30px;
+        display: inline;
+        justify-content: space-between;
+    }
+     .image-social{
+        padding: 5px 10px;
+    }
+    .cont-social{
+        width: 95vw;
+    }
+    .description-bottom{
+        width: 30vw;
+    }
+    .cont-social .description-bottom{
+        padding-left: 25px;
+    }
+}
+@media only screen and (height: 650px) {
+    main{
+        height: 100%;
+    }
+    .container{
+        height: 100%;
+    }
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device.width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link
+            crossorigin="anonymous"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/index.css"/>
+    <title>Accueil</title>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="siderbar-logo">
+        <img class="logo" src="images/logo.png"/>
+    </div>
+    <div class="sidebar-menu">
+        <ul>
+            <li>
+                <a href="index" class="active" ><span class="tab-bord"></span><span> Tableau de bord</span></a>
+            </li>
+            <li>
+                <a href="managemembers" class="act"><span class="G-member"></span><span> Gestion des membres</span></a>
+            </li>
+            <li>
+                <a href="" class="act"><span class="bill"></span><span> Billetterie</span></a>
+            </li>
+            <li>
+                <a href=""class="act"><span class="coll"></span><span> Collectes</span></a>
+            </li>
+            <li>
+                <a href="managepayments"class="act"><span class="pai"></span><span> Paiement</span></a>
+            </li>
+            <li>
+                <a href="contact"class="act"><span class="comm"></span><span> Communication </span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="main-content">
+    <header>
+        <h1> Tableau de bord</h1>
+        <div class="navbar" th:insert="fragments/navbar.html :: navbar"></div>
+    </header>
+    <div style="position:relative;left : 50px">
+        <div class="card card-1">
+            <div  style="position:absolute;left: 110px; top:10px">
+                <img class = "image_member" src="images/user.png"  />
+                <div style="position:relative;right: 15px; top:0px">
+                    <p id = "member_count_number">3</p>
+                    <p id = "member_count"> Membres</p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-1">
+            <div  style="position:absolute;left: 110px; top:10px">
+                <img class = "image_member" src="images/donnant.png"  />
+                <div style="position:relative;right: 20px; top:0px">
+                    <p id = "member_count_number">3 €</p>
+                    <p id="member_count">de collectes</p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-1">
+            <div  style="position:absolute;left: 90px; top:10px">
+                <img class = "image_member" src="images/paiement.png"  />
+                <div style="position:relative;right: 20px; top:0px">
+                    <p id = "member_count_number">3 €</p>
+                    <p id="member_count">de paiements</p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-1">
+            <div style="position:absolute;left: 100px; top:10px">
+                <img class = "image_member" src="images/verifie.png"  />
+                <div style="position:relative;right: 25px; top:0px">
+                    <p id = "member_count">Abonnement</p>
+                    <p id="member_count_number">valide</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card_2 card-1">
+            <div style="position:absolute;left: 250px; top:10px">
+                <img class = "image_member" src="images/new_member.png"  />
+                <div style="position:relative;right: 10px; top:0px">
+
+                    <p id = "member_count_number">3</p>
+                    <p id = "member_count">durant ce mois</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>

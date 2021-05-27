@@ -4,7 +4,7 @@
     margin-right : 20px;
 }
 nav{
-    margin-left: 290px;
+    margin-left: 700px;
 }
 nav ul li{
     display: inline-flex;
@@ -64,6 +64,13 @@ main .head{
 }
 @media only screen and (max-width: 700px) {
     .container{
-        width: 100%;
+        max-width: 100%;
+    }
+    nav{
+        max-width: 100%;
+        margin-left: 30px;
+    }
+    main .head{
+        max-width: 100%;
     }
 }

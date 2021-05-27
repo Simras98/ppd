@@ -101,25 +101,29 @@ main .head{
         margin: 20px 0 5px 0;
         align-content: space-between;
     }
+    nav{
+        max-width: 100%;
+        padding-left: 30px;
+    }
     .container{
-        width: 40%;
+        width: 48%;
         align-content: space-between;
     }
     .container .link-box{
         position: center;
     }
     .container .link-box .link{
-        margin-left: 12px;
+        margin-left: 8px;
         font-weight: 500;
     }
     .container .link-box .image1{
         height: 100%;
-        width: 80px;
-        margin-left: 0.1%;
+        width: 70px;
+        margin-left: 0.01%;
     }
     .container .link-box .image{
         height: 100%;
         width: 75px;
-        margin-left: 1%;
+        margin-left: 0.01%;
     }
 }
