@@ -1,28 +1,24 @@
 package com.uparis.ppd.service;
 
-import com.uparis.ppd.exception.StorageException;
-import com.uparis.ppd.model.Member;
-import com.uparis.ppd.model.Subscription;
+import com.uparis.ppd.model.*;
 import com.uparis.ppd.properties.ConstantProperties;
-import com.uparis.ppd.repository.MemberRepository;
+import com.uparis.ppd.repository.SubscriptionRepository;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
+import java.text.DateFormat;
 import java.util.*;
 
 import javax.mail.Message;
@@ -30,162 +26,406 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 @Service
-public class MemberService {
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+public class SubscriptionService {
 
     @Autowired
     private ConstantProperties constantProperties;
-
-    @Autowired
-    private FormatService formatService;
-
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Qualifier("getJavaMailSender")
     @Autowired
     private JavaMailSender emailSender;
 
-    @Value("${spring.mail.username}")
-    private String ourassoEmail;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
 
-    public Member create(String firstName, String lastName, String sex, String birthDate, String address, String city, String postalCode, String email, String phoneNumber, String password) {
-        if (getByEmail(email) == null) {
-            if (password == null) {
-                password = createRandomPassword();
-            }
-            Member member = new Member(formatService.formatWord(firstName), formatService.formatWord(lastName), formatService.formatWord(sex), birthDate, formatService.formatWord(address), formatService.formatWord(city), postalCode, email, phoneNumber, bCryptPasswordEncoder.encode(password));
-            update(member);
-            return member;
-        } else {
-            return null;
+    @Autowired
+    private TransactionService transactionService;
+
+    public Subscription create(long start, long end, long delay, boolean delayed, boolean notified, Member member, Status status, Association association, Set<Transaction> transactions) {
+        Subscription subscription = new Subscription(start, end, delay, delayed, notified, member, status, association, transactions);
+        update(subscription);
+        return subscription;
+    }
+
+    public void update(Subscription subscription) {
+        subscriptionRepository.save(subscription);
+    }
+
+    public List<Subscription> getAll() {
+        return subscriptionRepository.findAll();
+    }
+
+    public List<Subscription> getSubscriptionsByAssociation(Association association) {
+        return subscriptionRepository.findByAssociation(association);
+    }
+
+    public List<Member> getMembersByAssociation(Subscription subscription) {
+        List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
+        List<Member> members = new ArrayList<>();
+        for (Subscription sub : subscriptions) {
+            members.add(sub.getMember());
         }
+        return members;
     }
 
-    public void update(Member member) {
-        memberRepository.save(member);
-    }
-
-    public List<Member> getAll() {
-        return memberRepository.findAll();
-    }
-
-    public Member getByEmail(String email) {
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByEmail(email));
-        return member.orElse(null);
-    }
-
-    public List<Member> getBySearch(String keyword) {
-        if (keyword != null) {
-            return memberRepository.search(keyword);
-        } else {
-            return memberRepository.findAll();
+    public List<Status> getStatusByAssociation(Subscription subscription) {
+        List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
+        List<Status> status = new ArrayList<>();
+        for (Subscription sub : subscriptions) {
+            status.add(sub.getStatus());
         }
+        return status;
     }
 
-    public int getNumberOfPasswords(MultipartFile file) {
-        try {
-            XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-            XSSFSheet worksheet = workbook.getSheetAt(0);
-            return worksheet.getPhysicalNumberOfRows();
-        } catch (IOException e) {
-            throw new StorageException("impossible de lire le fichier " + file, e);
-        }
+    public Object[] getTransactions(Subscription subscription) {
+        return subscription.getTransactions().toArray();
     }
 
-    public List<Member> createFromFile(MultipartFile file, List<String> passwords) {
-        try {
-            XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-            XSSFSheet worksheet = workbook.getSheetAt(0);
-            List<Member> members = new ArrayList<>();
-            for (int i = 0; i < worksheet.getPhysicalNumberOfRows(); i++) {
-                if (i > 0) {
-                    XSSFRow row = worksheet.getRow(i);
-                    members.add(create(row.getCell(0).getStringCellValue(),
-                            row.getCell(1).getStringCellValue(),
-                            row.getCell(2).getStringCellValue(),
-                            row.getCell(3).getStringCellValue(),
-                            row.getCell(4).getStringCellValue(),
-                            row.getCell(5).getStringCellValue(),
-                            String.valueOf(row.getCell(6).getNumericCellValue()).substring(0, String.valueOf(row.getCell(6).getNumericCellValue()).length() - 2),
-                            row.getCell(7).getStringCellValue(),
-                            row.getCell(8).getStringCellValue(),
-                            passwords.get(i)));
-                }
-            }
-            return members;
-        } catch (IOException e) {
-            throw new StorageException("impossible de lire le fichier " + file, e);
-        }
-    }
-    public Member connect(String email, String password) {
-        Member member = getByEmail(email);
-        if (member != null && bCryptPasswordEncoder.matches(password, member.getPassword())) {
-            return member;
-        } else {
-            return null;
-        }
+    public Subscription getSubscription(Member member, Association association) {
+        return subscriptionRepository.findByMemberAndAssociation(member, association);
     }
 
-public void resetPassword(String email) {
-		
+    public boolean getStatusSuperAdmin(Subscription subscription) {
+        return subscription.getStatus().isSuperAdmin();
+    }
+
+    public boolean getStatusAdmin(Subscription subscription) {
+        return subscription.getStatus().isAdmin();
+    }
+
+    public void notifyWelcome(Subscription subscription, Member admin, String password) {
+		String customMessage = null;
+		String textTemp;
+
+		if (admin != null) {
+			customMessage =
+
+					"<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
+							+ subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso ! <br>"
+							+ admin.getFirstName() + " " + admin.getLastName() + " vous a rajouté à l'association "
+							+ subscription.getAssociation().getName() + ".<br>"
+							+ "Voici votre mot de passe que nous vous invitons à changer une fois connecté : "
+							+ password + "<br>"
+							+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+							+ "<br><br>" + "Cordialement, l'équipe Ourasso<p>";
+			textTemp = com.uparis.ppd.service.FormatService
+					.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
+
+		} else if (subscription.getStatus().isSuperAdmin()) {
+			customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
+					+ " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "<br>"
+					+ "Vous venez de créer et rejoindre l'association " + subscription.getAssociation().getName() + "."
+					+ "<br>"
+					+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+					+ "<br><br>" + "Cordialement, l'équipe Ourasso</p>";
+			textTemp = com.uparis.ppd.service.FormatService
+					.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
+		} else {
+			customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
+					+ " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
+					+ "Vous venez de rejoindre l'association " + subscription.getAssociation().getName() + ". <br>"
+					+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+					+ "<br><br>" + "Cordialement, l'équipe Ourasso</p>";
+			textTemp = com.uparis.ppd.service.FormatService
+					.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
+		}
+
+		final String messageText = textTemp;
 
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-			
 			public void prepare(MimeMessage mimeMessage) throws Exception {
-				mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-				mimeMessage.setFrom(new InternetAddress(ourassoEmail));
-				mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
+				mimeMessage.setRecipient(Message.RecipientType.TO,
+						new InternetAddress(subscription.getMember().getEmail()));
+				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+				mimeMessage.setSubject("Ourasso : Bienvenue chez Ourasso !");
 
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-				Member member = getByEmail(email);
-				String newPassword = createRandomPassword();
-				member.setPassword(bCryptPasswordEncoder.encode(newPassword));
-				update(member);
-				String CustomMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
-						+ "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
-						+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
-						+"<br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
-				String messageText = com.uparis.ppd.service.FormatService.mailTemplateGenerator(member.getFirstName(), CustomMessage,
-						"OurAsso");
+
 				helper.setText(messageText, true);
 
 			}
+
 		};
+
+		emailSender.send(preparator);
+
+	}
+    
+    public void notifyPaymentSuccessfull(Subscription subscription) {
+		Date date = new Date(subscription.getStop());
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM,
+				new Locale("FR", "fr"));
+		String shortDate = (dateFormat.format(date)).substring(0, (dateFormat.format(date)).length() - 10).trim();
+		
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				mimeMessage.setRecipient(Message.RecipientType.TO,
+						new InternetAddress(subscription.getMember().getEmail()));
+				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+				mimeMessage.setSubject("Ourasso : Merci de vous être abonné(e) !");
+
+				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				String customMessage =
+
+						"<p style=\"text-align: center;\">Merci de vous être abonné(e), ce dernier arrivera à expiration le "
+								+ shortDate + "." + "<br>Voici votre numéro d'adhésion : "
+								+ "<div style=\" border-bottom-left-radius: 15px;\n"
+								+ "  border-bottom-right-radius: 15px;\n" + "  border-top-right-radius: 15px;\n"
+								+ "  border-top-left-radius: 15px;\n" + "  box-sizing: border-box;\n"
+								+ "  background: linear-gradient(135deg,#71b7e6,#9b59b6);\n" + "  font-weight : bold;\n" + "  font-size : 20px;\n"
+								+ "  color: white;width:auto;text-align:center;padding:15px;\">\n" + "<p>"
+								+ String.format("%010d", subscription.getMember().getId()) + "</p>\n" + "</div>"
+								+ "<br></p>"
+								+ " <br> <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+
+				String message = com.uparis.ppd.service.FormatService.mailTemplateGenerator(
+						subscription.getMember().getFirstName(), customMessage, "OurAsso");
+				helper.setText(message, true);
+
+			}
+		};
+
 		emailSender.send(preparator);
 	}
 
-    public List<String> createRandomPasswords(int number) {
-        List<String> passwords = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            passwords.add(createRandomPassword());
+   
+
+    
+       @Scheduled(fixedDelay = 5000)
+	public void notifyPaymentMissing() {
+		List<Subscription> subscriptions = getAll();
+		for (Subscription subscription : subscriptions) {
+			if (!isValid(subscription) && !subscription.isNotified()) {
+				MimeMessagePreparator preparator = new MimeMessagePreparator() {
+					public void prepare(MimeMessage mimeMessage) throws Exception {
+						mimeMessage.setRecipient(Message.RecipientType.TO,
+								new InternetAddress(subscription.getMember().getEmail()));
+						mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+						mimeMessage.setSubject("Ourasso : Votre abonnement a expiré !");
+
+						MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+						String customMessage =
+
+								"<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
+										+ subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
+										+ "Votre abonnement a expiré, veuillez le renouveler !" + "\n" + "<br>"
+										+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
+										+ " <br> <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+
+						String message = com.uparis.ppd.service.FormatService.mailTemplateGenerator(
+								subscription.getMember().getFirstName(), customMessage, "OurAsso");
+						helper.setText(message, true);
+
+					}
+				};
+				emailSender.send(preparator);
+
+
+				subscription.setNotified(true);
+				update(subscription);
+			}
+		}
+	}
+
+     
+    public boolean subscribe(Subscription subscription, String duration) {
+        long time = System.currentTimeMillis();
+        Transaction transaction;
+        if (subscription.getStatus().isSuperAdmin()) {
+            transaction = transactionService.create(time, getPrice(subscription), subscription);
+            subscription.setStop(time + (10 * 1000));
+            // subscription.setStop(time + ((31556952L / 12) * 1000));
+        } else {
+            switch (duration) {
+                case "1":
+                    transaction = transactionService.create(time, subscription.getAssociation().getPrice1Month(), subscription);
+                    subscription.setStop(time + (10 * 1000));
+                    // subscription.setStop(time + ((31556952L / 12) * 1000));
+                    break;
+                case "3":
+                    transaction = transactionService.create(time, subscription.getAssociation().getPrice3Months(), subscription);
+                    subscription.setStop(time + (10 * 1000));
+                    // subscription.setStop(time + ((3 * 31556952L / 12) * 1000));
+                    break;
+                case "12":
+                    transaction = transactionService.create(time, subscription.getAssociation().getPrice12Months(), subscription);
+                    subscription.setStop(time + (10 * 1000));
+                    // subscription.setStop(time + ((12 * 31556952L / 12) * 1000));
+                    break;
+                default:
+                    return false;
+            }
         }
-        return passwords;
+        Set<Transaction> transactions = subscription.getTransactions();
+
+        Set<Transaction> newTransactions = new HashSet<>();
+        newTransactions.addAll(transactions);
+        newTransactions.add(transaction);
+
+        subscription.setTransactions(newTransactions);
+        subscription.setStart(time);
+        subscription.setDelay(0);
+        subscription.setDelayed(false);
+        subscription.setNotified(false);
+        update(subscription);
+        notifyPaymentSuccessfull(subscription);
+        return true;
     }
 
-    public String createRandomPassword() {
-        SecureRandom random = null;
-        try {
-            random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            e.printStackTrace();
-        }
-        byte[] bytes = new byte[8];
-        assert random != null;
-        random.nextBytes(bytes);
-        Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-        return encoder.encodeToString(bytes);
-    }
-
-    public boolean editPassword(String email, String oldPassword, String newPassword, String confirmNewPassword) {
-        Member member = connect(email, oldPassword);
-        if (member != null && newPassword.equals(confirmNewPassword)) {
-            member.setPassword(bCryptPasswordEncoder.encode(newPassword));
-            update(member);
+    public boolean isValid(Subscription subscription) {
+        List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
+        if (subscription.getStatus().isSuperAdmin() && subscriptions.size() < constantProperties.getOurassoSize1()) {
             return true;
         }
-        return false;
+        if (subscription.isDelayed()) {
+            return System.currentTimeMillis() <= subscription.getDelay();
+        } else if (!subscription.isDelayed()) {
+            if (subscription.getStop() == 0) {
+                return false;
+            } else return System.currentTimeMillis() <= subscription.getStop();
+        }
+        return true;
+    }
+
+    public void skipSubscription(Subscription subscription) {
+        long time = System.currentTimeMillis();
+        subscription.setDelay(time + (10 * 1000));
+        // subscription.setDelay(time + ((31556952L / 365) * 7) * 1000);
+        subscription.setDelayed(true);
+        subscription.setStart(0);
+        subscription.setStop(0);
+        subscription.setNotified(false);
+        update(subscription);
+    }
+
+    public double getPrice(Subscription subscription) {
+        List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
+        double price = 0;
+        if (constantProperties.getOurassoSize1() < subscriptions.size() && subscriptions.size() < constantProperties.getOurassoSize2()) {
+            price = constantProperties.getOurassoPrice1();
+        }
+        if (constantProperties.getOurassoSize2() < subscriptions.size() && subscriptions.size() < constantProperties.getOurassoSize3()) {
+            price = constantProperties.getOurassoPrice2();
+        }
+        if (subscriptions.size() > constantProperties.getOurassoSize3()) {
+            price = constantProperties.getOurassoPrice3();
+        }
+        return price;
+    }
+
+    public ByteArrayOutputStream exportMembers(Subscription subscription) {
+        List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
+        List<Member> members = new ArrayList<>();
+        for (Subscription sub : subscriptions) {
+            members.add(sub.getMember());
+        }
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Membres assos");
+        XSSFRow header = sheet.createRow(0);
+
+        XSSFCell headerCell = header.createCell(0);
+        headerCell.setCellValue("Prenom");
+
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Nom");
+
+        headerCell = header.createCell(2);
+        headerCell.setCellValue("Sexe");
+
+        headerCell = header.createCell(3);
+        headerCell.setCellValue("Date de naissance");
+
+        headerCell = header.createCell(4);
+        headerCell.setCellValue("Adresse");
+
+        headerCell = header.createCell(5);
+        headerCell.setCellValue("Ville");
+
+        headerCell = header.createCell(6);
+        headerCell.setCellValue("Code postal");
+
+        headerCell = header.createCell(7);
+        headerCell.setCellValue("Adresse email");
+
+        headerCell = header.createCell(8);
+        headerCell.setCellValue("Téléphone");
+
+        headerCell = header.createCell(9);
+        headerCell.setCellValue("Admin");
+
+        for (int i = 0; i < members.size(); i++) {
+            XSSFRow row = sheet.createRow(i + 1);
+            XSSFCell cell = row.createCell(0);
+            cell.setCellValue(members.get(i).getFirstName());
+            cell = row.createCell(1);
+            cell.setCellValue(members.get(i).getLastName());
+            cell = row.createCell(2);
+            cell.setCellValue(members.get(i).getSex());
+            cell = row.createCell(3);
+            cell.setCellValue(members.get(i).getBirthDate());
+            cell = row.createCell(4);
+            cell.setCellValue(members.get(i).getAddress());
+            cell = row.createCell(5);
+            cell.setCellValue(members.get(i).getCity());
+            cell = row.createCell(6);
+            cell.setCellValue(members.get(i).getPostalCode());
+            cell = row.createCell(7);
+            cell.setCellValue(members.get(i).getEmail());
+            cell = row.createCell(8);
+            cell.setCellValue(members.get(i).getPhoneNumber());
+            cell = row.createCell(9);
+            cell.setCellValue(String.valueOf(subscriptions.get(i).getStatus().isAdmin()));
+        }
+        for (int i = 0; i < 10; i++) {
+            sheet.autoSizeColumn(i);
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            workbook.write(byteArrayOutputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return byteArrayOutputStream;
+    }
+
+    public void sendEmailToAll(String object, String body, Subscription subscription) {
+        List<Member> members = getMembersByAssociation(subscription);
+        for (Member member : members) {
+            sendEmail(object, body, member, subscription);
+        }
+    }
+
+    public void sendEmail(String object, String body, Member member, Subscription subscription) {
+         
+        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				mimeMessage.setRecipient(Message.RecipientType.TO,
+						new InternetAddress(member.getEmail()));
+				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+				mimeMessage.setSubject(object);
+
+				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				String customMessage =
+
+						"<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + ", " +
+				                subscription.getMember().getFirstName() + " " + subscription.getMember().getLastName() + " vous a envoyé un message :" + "<br>"
+				                + "\n"
+				                + body + "\n"
+				                + "\n"
+				                + "<br>Cordialement, l'équipe Ourasso<br></p>";
+
+				String message = com.uparis.ppd.service.FormatService.mailTemplateGenerator(
+						member.getFirstName(), customMessage, "OurAsso");
+				helper.setText(message, true);
+
+			}
+		};
+
+		emailSender.send(preparator);
     }
 }
