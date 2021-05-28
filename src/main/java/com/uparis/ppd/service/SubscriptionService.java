@@ -107,7 +107,7 @@ public class SubscriptionService {
 							+ "Voici votre mot de passe que nous vous invitons à changer une fois connecté : "
 							+ password + "<br>"
 							+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
-							+ "<br><br>" + "Cordialement, l'équipe Ourasso<p>";
+							+ "<br>" + "Cordialement, l'équipe Ourasso<p>";
 			textTemp = com.uparis.ppd.service.FormatService
 					.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
 
@@ -117,7 +117,7 @@ public class SubscriptionService {
 					+ "Vous venez de créer et rejoindre l'association " + subscription.getAssociation().getName() + "."
 					+ "<br>"
 					+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
-					+ "<br><br>" + "Cordialement, l'équipe Ourasso</p>";
+					+ "<br>" + "Cordialement, l'équipe Ourasso</p>";
 			textTemp = com.uparis.ppd.service.FormatService
 					.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
 		} else {
@@ -125,7 +125,7 @@ public class SubscriptionService {
 					+ " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
 					+ "Vous venez de rejoindre l'association " + subscription.getAssociation().getName() + ". <br>"
 					+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
-					+ "<br><br>" + "Cordialement, l'équipe Ourasso</p>";
+					+ "<br>" + "Cordialement, l'équipe Ourasso</p>";
 			textTemp = com.uparis.ppd.service.FormatService
 					.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
 		}
@@ -176,7 +176,7 @@ public class SubscriptionService {
 								+ "  color: white;width:auto;text-align:center;padding:15px;\">\n" + "<p>"
 								+ String.format("%010d", subscription.getMember().getId()) + "</p>\n" + "</div>"
 								+ "<br></p>"
-								+ " <br> <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+								+ " <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
 
 				String message = com.uparis.ppd.service.FormatService.mailTemplateGenerator(
 						subscription.getMember().getFirstName(), customMessage, "OurAsso");
@@ -210,7 +210,7 @@ public class SubscriptionService {
 										+ subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
 										+ "Votre abonnement a expiré, veuillez le renouveler !" + "\n" + "<br>"
 										+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
-										+ " <br> <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+										+ " <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
 
 						String message = com.uparis.ppd.service.FormatService.mailTemplateGenerator(
 								subscription.getMember().getFirstName(), customMessage, "OurAsso");
