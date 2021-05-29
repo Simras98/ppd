@@ -35,6 +35,9 @@
                 th:classappend="${#httpServletRequest.requestURI == '/billingsuperadmin'}"
                 th:if="${session.subscription != null && session.subscription.status.superAdmin == True && session.subscription.stop == 0}">Paiement</a></li>
         <li> <a href="/logout"
+                th:classappend="${#httpServletRequest.requestURI == '/profile'}"
+                th:if="${session.subscription != null}">Profile</a></li>
+        <li> <a href="/logout"
                 th:classappend="${#httpServletRequest.requestURI == '/logout'}"
                 th:if="${session.subscription != null}">Déconnexion</a></li>
     </ul>
