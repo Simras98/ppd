@@ -20,8 +20,6 @@ public class StatusService {
     @Autowired
     private StatusRepository statusRepository;
 
-    @Autowired
-    private FormatService formatService;
 
     public Status create(boolean admin, boolean superAdmin) {
         Status status = new Status(admin, superAdmin);

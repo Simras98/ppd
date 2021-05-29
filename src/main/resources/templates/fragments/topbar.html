@@ -10,15 +10,15 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             rel="stylesheet"
     />
-    <title>Navbar</title>
+    <title>topbar</title>
 </head>
 <body>
-<div th:fragment="navbar">
-    <nav id="navbar">
+<div th:fragment="topbar">
+    <nav id="topbar">
     <ul>
         <li> <a href="/"
-                th:classappend="${#httpServletRequest.requestURI == '/' || #httpServletRequest.requestURI == '/index'}">
-            Accueil</a> </li>
+                th:classappend="${#httpServletRequest.requestURI == '/index'}"
+                th:if="${session.subscription == null}">Accueil</a> </li>
         <li><a href="/signup"
                th:classappend="${#httpServletRequest.requestURI == '/signup'}"
                th:if="${session.subscription == null}">Inscription</a> </li>
@@ -28,24 +28,12 @@
         <li> <a href="/join"
                 th:classappend="${#httpServletRequest.requestURI == '/join'}"
                 th:if="${session.subscription == null}">Rejoindre</a> </li>
-        <li>  <a href="/profile"
-                 th:classappend="${#httpServletRequest.requestURI == '/profile'}"
-                 th:if="${session.subscription != null}">Profile</a> </li>
-        <!--<li><a href="/contact"
-               th:classappend="${#httpServletRequest.requestURI == '/contact'}"
-               th:if="${session.subscription != null}">Contact</a> </li>-->
-        <!--<li> <a href="/managepayments"
-            th:classappend="${#httpServletRequest.requestURI == '/managepayments'}"
-            th:if="${session.subscription != null}">Historique de paiements</a> </li>-->
         <li> <a href="/billingmember"
                 th:classappend="${#httpServletRequest.requestURI == '/billingmember'}"
                 th:if="${session.subscription != null && session.subscription.status.superAdmin == False && session.subscription.stop == 0}">Paiement</a> </li>
          <li><a href="/billingsuperadmin"
                 th:classappend="${#httpServletRequest.requestURI == '/billingsuperadmin'}"
                 th:if="${session.subscription != null && session.subscription.status.superAdmin == True && session.subscription.stop == 0}">Paiement</a></li>
-         <!--<li><a href="/managemembers"
-              th:classappend="${#httpServletRequest.requestURI == '/managemembers'}"
-              th:if="${session.subscription != null && session.subscription.status.admin == True}">Gestion des membres</a></li>-->
         <li> <a href="/logout"
                 th:classappend="${#httpServletRequest.requestURI == '/logout'}"
                 th:if="${session.subscription != null}">Déconnexion</a></li>

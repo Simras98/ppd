@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <!-- Bootstrap CSS -->
+    <link
+            crossorigin="anonymous"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/dashboard.css"/>
+    <title>Tableau de bord</title>
+</head>
+<body>
+<div class="main-content">
+    <header>
+        <h1>Tableau de bord</h1>
+        <div class="topbar" th:insert="fragments/topbar.html :: topbar"></div>
+        <div class="sidebar" th:insert="fragments/sidebar.html :: sidebar"></div>
+    </header>
+    <div id="case_sup">
+        <div class="card card-1">
+            <div id="modele_case_1">
+                <img class="image_member" src="images/user.png"/>
+                <div id="case_1_text">
+                    <p id="member_count_number">3</p>
+                    <p id="member_count"> Membres</p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-1">
+            <div id="modele_case_1">
+                <img class="image_member" src="images/donnant.png"/>
+                <div id="case_2_text">
+                    <p id="member_count_number">3 €</p>
+                    <p id="member_count">de collectes</p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-1">
+            <div id="case_3">
+                <img class="image_member" src="images/paiement.png"/>
+                <div id="case_3_text">
+                    <p id="member_count_number">3 €</p>
+                    <p id="member_count">de paiements</p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-1">
+            <div id="case_4">
+                <img class="image_member" src="images/verifie.png"/>
+                <div id="case_4_text">
+                    <p id="member_count">Abonnement</p>
+                    <p id="member_count_number">valide</p>
+                </div>
+            </div>
+        </div>
+        <div class="card_2 card-1">
+            <div id="case_5">
+                <img class="image_member" src="images/new_member.png"/>
+                <div id=case_5_text>
+                    <p id="member_count_number">3</p>
+                    <p id="member_count">durant ce mois</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

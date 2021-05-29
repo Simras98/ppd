@@ -14,15 +14,12 @@
     <link rel="stylesheet" href="css/billingsuperadmin.css"/>
     <title>Paiement</title>
     <link rel="stylesheet" href="../static/css/billingsuperadmin.css">
-
-
 </head>
 <body>
-
 <header>
     <img class="logo" src="images/logo.png"/>
 </header>
-<div th:insert="fragments/navbar.html :: navbar"></div>
+<div th:insert="fragments/topbar.html :: topbar"></div>
 <main>
     <div class=formulaire>
         <div class="titre"><strong>Effectuer un paiement</strong></div>
@@ -51,7 +48,8 @@
                 </div>
                 <div class="input-box">
                     <label class="details" for="cryptogram">Cryptogramme</label>
-                    <input id="cryptogram" name="cryptogram" pattern="[0-9]{3}" placeholder="Entrez votre cryptogramme de carte"
+                    <input id="cryptogram" name="cryptogram" pattern="[0-9]{3}"
+                           placeholder="Entrez votre cryptogramme de carte"
                            required type="text">
                 </div>
                 <div class="input-box">

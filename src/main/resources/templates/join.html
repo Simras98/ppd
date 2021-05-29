@@ -20,36 +20,39 @@
 <header>
     <img class="logo" src="images/logo.png">
 </header>
-<div th:insert="fragments/navbar.html :: navbar"></div>
+<div th:insert="fragments/topbar.html :: topbar"></div>
 <main>
-<div class="container">
-    <div class="text">Rejoignez-nous</div>
-    <hr/>
-    <p th:text="${error}"></p>
-    <form action="/joinconfirm" id="joinConfirm" method="post">
-        <div class="data">
-            <label for="associationName">Association</label>
-            <input id="associationName" name="associationName" placeholder="Entrez le nom de l'association" value="Test" type="text">
-        </div>
-        <div class="data">
-            <label for="email">Email</label>
-            <input id="email" name="email" placeholder="Entrez votre adresse email" value="simonweb98@gmail.com" type="email">
-        </div>
-        <div class="data">
-            <label for="password">Mot de passe</label>
-            <input id="password" name="password" placeholder="Entrez votre mot de passe" value="abcd" type="password">
-        </div>
-        <div>
-        <a href="/passwordforgotten">Mot de passe oublié ?</a>
-        </div>
-        <br/>
-        <div class="connecter">
-        <input id="joinButton" type="submit" value="Rejoindre">
-        </div>
-        <div>
-            <a href="/signup">Pas encore inscrit ? Inscrivez-vous !</a>
-        </div>
-    </form>
+    <div class="container">
+        <div class="text">Rejoignez-nous</div>
+        <hr/>
+        <p th:text="${error}"></p>
+        <form action="/joinconfirm" id="joinConfirm" method="post">
+            <div class="data">
+                <label for="associationName">Association</label>
+                <input id="associationName" name="associationName" placeholder="Entrez le nom de l'association"
+                       value="Test" type="text">
+            </div>
+            <div class="data">
+                <label for="email">Email</label>
+                <input id="email" name="email" placeholder="Entrez votre adresse email" value="simonweb98@gmail.com"
+                       type="email">
+            </div>
+            <div class="data">
+                <label for="password">Mot de passe</label>
+                <input id="password" name="password" placeholder="Entrez votre mot de passe" value="abcd"
+                       type="password">
+            </div>
+            <div>
+                <a href="/passwordforgotten">Mot de passe oublié ?</a>
+            </div>
+            <br/>
+            <div class="connecter">
+                <input id="joinButton" type="submit" value="Rejoindre">
+            </div>
+            <div>
+                <a href="/signup">Pas encore inscrit ? Inscrivez-vous !</a>
+            </div>
+        </form>
 </div>
 </main>
 <script>

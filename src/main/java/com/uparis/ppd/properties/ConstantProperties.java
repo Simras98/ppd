@@ -11,6 +11,7 @@ public class ConstantProperties {
     private static final String CONTROLLER_BILLINGMEMBER = "billingmember";
     private static final String CONTROLLER_BILLINGSUPERADMIN = "billingsuperadmin";
     private static final String CONTROLLER_CONTACT = "contact";
+    private static final String CONTROLLER_DASHBOARD = "dashboard";
     private static final String CONTROLLER_INDEX = "index";
     private static final String CONTROLLER_JOIN = "join";
     private static final String CONTROLLER_SIGNUP = "signup";
@@ -103,6 +104,10 @@ public class ConstantProperties {
 
     public String getControllerContact() {
         return CONTROLLER_CONTACT;
+    }
+
+    public String getControllerDashboard() {
+        return CONTROLLER_DASHBOARD;
     }
 
     public String getControllerIndex() {

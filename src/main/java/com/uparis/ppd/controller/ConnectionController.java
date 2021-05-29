@@ -103,7 +103,7 @@ public class ConnectionController {
                 if (subscription != null) {
                     request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
                     if (subscriptionService.isValid(subscription)) {
-                        return constantProperties.getControllerIndex();
+                        return constantProperties.getControllerDashboard();
                     } else {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
                         if (subscriptionService.getStatusSuperAdmin(subscription)) {
@@ -244,7 +244,7 @@ public class ConnectionController {
                 Subscription subscription = subscriptionService.create(0, 0, 0, false, false, member, status, association, Collections.emptySet());
                 subscriptionService.notifyWelcome(subscription, null, null);
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
-                return constantProperties.getControllerIndex();
+                return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationNotExist());
                 return constantProperties.getControllerSignupMember();
@@ -364,7 +364,7 @@ public class ConnectionController {
                 // Subscription subscription = subscriptionService.create(System.currentTimeMillis(), System.currentTimeMillis() + ((31556952L / 12) * 1000), 0, false, false, superAdmin, status, association, Collections.emptySet());
                 subscriptionService.notifyWelcome(subscription, null, null);
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
-                return constantProperties.getControllerIndex();
+                return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationExist());
                 return constantProperties.getControllerSignupSuperAdmin();
@@ -401,7 +401,7 @@ public class ConnectionController {
                     Subscription newSubscription = subscriptionService.create(0, 0, 0, false, false, member, status, association, Collections.emptySet());
                     subscriptionService.notifyWelcome(newSubscription, null, null);
                     request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), newSubscription);
-                    return constantProperties.getControllerIndex();
+                    return constantProperties.getControllerDashboard();
                 } else {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscribed());
                     return constantProperties.getControllerJoin();

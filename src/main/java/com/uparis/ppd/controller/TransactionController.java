@@ -72,7 +72,7 @@ public class TransactionController {
             }
             if (subscriptionService.subscribe(subscription, duration)) {
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
-                return constantProperties.getControllerIndex();
+                return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPaymentFailed());
                 return constantProperties.getControllerBillingMember();
@@ -124,7 +124,7 @@ public class TransactionController {
             }
             if (subscriptionService.subscribe(subscription, null)) {
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
-                return constantProperties.getControllerIndex();
+                return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPaymentFailed());
                 return constantProperties.getControllerBillingSuperAdmin();
@@ -141,7 +141,7 @@ public class TransactionController {
         if (subscription != null) {
             subscriptionService.skipSubscription(subscription);
             request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
-            return constantProperties.getControllerIndex();
+            return constantProperties.getControllerDashboard();
         }
         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
         return constantProperties.getControllerLogin();

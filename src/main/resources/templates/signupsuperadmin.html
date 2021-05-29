@@ -15,133 +15,133 @@
     <!-- hCaptcha -->
     <script async defer src="https://hcaptcha.com/1/api.js"></script>
     <title>Inscription</title>
-
-
 </head>
 <body>
 <header>
     <img class="logo" src="Images/logo.png">
 </header>
-<div th:insert="fragments/navbar.html :: navbar"></div>
+<div th:insert="fragments/topbar.html :: topbar"></div>
 <main>
-<div class="container">
-    <div class="title">Inscrivez-vous!</div>
-    <p th:text="${error}"></p>
-    <form action="/signupsuperadminconfirm" id="signupSuperAdminConfirm" method="post">
-        <div class="user-details">
-        <div class="input-box">
-            <label class="details" for="firstName">Prénom</label>
-            <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez votre prénom" required type="text">
-        </div>
-        <div class="input-box">
-            <label class="details" for="lastName">Nom</label>
-            <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez votre nom" required type="text">
-        </div>
-            <div class="gender-details">
-                <label class="details" >Sexe</label>
-                <input id="homme" name="sex" value="homme" type="radio">    Homme
-                <input id="femme" name="sex" value="femme" type="radio">    Femme
-                <input id="autre" name="sex" value="autre" type="radio">    Autre
-            </div>
-        <div class="input-box">
-            <label class="details" for="birthDate">Date de naissance</label>
-            <input id="birthDate" name="birthDate" required type="date">
-        </div>
-        <div class="input-box">
-            <label class="details" for="address">Adresse</label>
-            <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
-                   placeholder="Entrez votre adresse" required type="text">
-        </div>
-        <div class="input-box">
-            <label class="details" for="city">Ville</label>
-            <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                   placeholder="Entrez votre ville" required type="text">
-        </div>
-        <div class="input-box">
-            <label class="details" for="postalCode">Code Postal</label>
-            <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
-                   placeholder="Entrez votre code postal" required type="text">
-        </div>
-        <div class="input-box">
-            <label class="details" for="email">Email</label>
-            <input id="email" name="email" placeholder="Entrez votre email" required type="email">
-        </div>
-        <div class="input-box">
-            <label class="details" for="phoneNumber">Numéro de téléphone</label>
-            <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
-                   placeholder="Entrez votre numéro de téléphone" required type="tel">
-        </div>
-        <div class="input-box">
-            <label class="details" for="password">Mot de passe</label>
-            <input id="password" name="password" placeholder="Entrez votre mot de passe" required type="password">
-        </div>
-        <div class="input-box">
-            <label class="details" for="confirmPassword">Confirmation de votre mot de passe</label>
-            <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
-                   required type="password">
-        </div>
-            <div class="input-box"></div>
-            <div class="input-box">
-                <label class="details" for="associationName">Nom de votre association</label>
-                <input id="associationName" name="associationName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                       placeholder="Entrez le nom de votre association" required type="text">
-            </div>
-            <div class="input-box">
-                <label class="details" for="associationDescription">Description de votre association</label>
-                <input id="associationDescription" name="associationDescription" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                       placeholder="Entrez la description de votre association" required type="text">
-            </div>
-            <div class="input-box">
-                <label class="details" for="city">Choisissez la tarification de votre association</label>
+    <div class="container">
+        <div class="title">Inscrivez-vous!</div>
+        <p th:text="${error}"></p>
+        <form action="/signupsuperadminconfirm" id="signupSuperAdminConfirm" method="post">
+            <div class="user-details">
+                <div class="input-box">
+                    <label class="details" for="firstName">Prénom</label>
+                    <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez votre prénom" required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="lastName">Nom</label>
+                    <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez votre nom" required type="text">
+                </div>
+                <div class="gender-details">
+                    <label class="details">Sexe</label>
+                    <input id="homme" name="sex" value="homme" type="radio"> Homme
+                    <input id="femme" name="sex" value="femme" type="radio"> Femme
+                    <input id="autre" name="sex" value="autre" type="radio"> Autre
+                </div>
+                <div class="input-box">
+                    <label class="details" for="birthDate">Date de naissance</label>
+                    <input id="birthDate" name="birthDate" required type="date">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="address">Adresse</label>
+                    <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
+                           placeholder="Entrez votre adresse" required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="city">Ville</label>
+                    <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez votre ville" required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="postalCode">Code Postal</label>
+                    <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
+                           placeholder="Entrez votre code postal" required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="email">Email</label>
+                    <input id="email" name="email" placeholder="Entrez votre email" required type="email">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="phoneNumber">Numéro de téléphone</label>
+                    <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
+                           placeholder="Entrez votre numéro de téléphone" required type="tel">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="password">Mot de passe</label>
+                    <input id="password" name="password" placeholder="Entrez votre mot de passe" required
+                           type="password">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="confirmPassword">Confirmation de votre mot de passe</label>
+                    <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
+                           required type="password">
+                </div>
+                <div class="input-box"></div>
+                <div class="input-box">
+                    <label class="details" for="associationName">Nom de votre association</label>
+                    <input id="associationName" name="associationName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez le nom de votre association" required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="associationDescription">Description de votre association</label>
+                    <input id="associationDescription" name="associationDescription"
+                           pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez la description de votre association" required type="text">
+                </div>
+                <div class="input-box">
+                    <label class="details" for="city">Choisissez la tarification de votre association</label>
                     <label>Abonnement 1 mois</label>
                     <input id="associationPrice1Month" name="associationPrice1Month" pattern="^[0-9 \,.€]*$"
                            placeholder="Entrez le prix pour 1 mois" required type="text">
-                <div>
-                    <label>Abonnement 3 mois</label>
-                    <input id="associationPrice3Months" name="associationPrice3Months" pattern="^[0-9 \,.€]*$"
-                           placeholder="Entrez le prix pour 3 mois" required type="text">
+                    <div>
+                        <label>Abonnement 3 mois</label>
+                        <input id="associationPrice3Months" name="associationPrice3Months" pattern="^[0-9 \,.€]*$"
+                               placeholder="Entrez le prix pour 3 mois" required type="text">
+                    </div>
+                    <div>
+                        <label>Abonnement 12 mois</label>
+                        <input id="associationPrice12Months" name="associationPrice12Months" pattern="^[0-9 \,.€]*$"
+                               placeholder="Entrez le prix pour 12 mois" required type="text">
+                    </div>
                 </div>
-                <div>
-                    <label>Abonnement 12 mois</label>
-                    <input id="associationPrice12Months" name="associationPrice12Months" pattern="^[0-9 \,.€]*$"
-                           placeholder="Entrez le prix pour 12 mois" required type="text">
-                </div>
-            </div>
-            <div class="price-details">
-                <label class="details"> Prix en fonction de la taille de votre association </label>
+                <div class="price-details">
+                    <label class="details"> Prix en fonction de la taille de votre association </label>
 
-                <div class="category">
-                    <span class="price"> -30 membres </span>
-                    <span> 0€ </span>
-                </div>
-                <div class="category">
-                    <span class="price"> -200 membres</span>
-                    <span> 9,99€ </span>
-                </div>
-                <div class="category">
-                    <span class="price"> -500 membres</span>
-                    <span > 19,99€ </span>
-                </div>
-                <div class="category">
-                    <span class="price"> +500 membres</span>
-                    <span> 49,99€ </span>
+                    <div class="category">
+                        <span class="price"> -30 membres </span>
+                        <span> 0€ </span>
+                    </div>
+                    <div class="category">
+                        <span class="price"> -200 membres</span>
+                        <span> 9,99€ </span>
+                    </div>
+                    <div class="category">
+                        <span class="price"> -500 membres</span>
+                        <span> 19,99€ </span>
+                    </div>
+                    <div class="category">
+                        <span class="price"> +500 membres</span>
+                        <span> 49,99€ </span>
+                    </div>
                 </div>
             </div>
-        </div>
             <div data-callback="submitForm"
                  data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
             </div>
-        </br>
+            </br>
             <div>
                 <a href="/login">Déjà inscrit ? Connectez-vous !</a>
             </div>
             <div class="button">
                 <input id="signUpButton" type="submit" value="S'inscrire">
             </div>
-    </form>
-</div>
+        </form>
+    </div>
 </main>
 <script>
     async function submitForm() {

@@ -18,7 +18,7 @@
 <header>
     <img class="logo" src="images/logo.png"/>
 </header>
-<div th:insert="fragments/navbar.html :: navbar"></div>
+<div th:insert="fragments/topbar.html :: topbar"></div>
 <main>
     <div class=formulaire>
         <div class="titre"><strong>Effectuer un paiement</strong></div>
@@ -33,14 +33,15 @@
                            required type="text">
                 </div>
                 <div class="input-box">
-                    <label  class="details" for="expirationDate">Date d'expiration</label>
+                    <label class="details" for="expirationDate">Date d'expiration</label>
                     <input id="expirationDate" name="expirationDate" pattern="[0-9]{2}/[0-9]{2}"
                            placeholder="date d'expiration de carte au format MM/AA" required
                            type="text">
                 </div>
                 <div class="input-box">
                     <label class="details" for="cryptogram">Cryptogramme</label>
-                    <input id="cryptogram" name="cryptogram" pattern="[0-9]{3}" placeholder="Entrez votre cryptogramme de carte"
+                    <input id="cryptogram" name="cryptogram" pattern="[0-9]{3}"
+                           placeholder="Entrez votre cryptogramme de carte"
                            required type="text">
                 </div>
                 <div class="input-box">
@@ -48,16 +49,14 @@
                     <input id="name" name="name" placeholder="Entrez le nom présent sur la carte bancaire"
                            required type="text">
                 </div>
-
             </div>
-
             <div class="ab-details">
                 <span class="ab-title">Choisissez votre abonnement</span>
                 <div class="type">
                     <div id="price1">
                         <span class="ab">Abonnement 1 mois</span>
                         <p th:text="${session.subscription.association.price1Month}"></p>
-                        <input id="month1" name="duration" value="1"  type="radio">
+                        <input id="month1" name="duration" value="1" type="radio">
                     </div>
                     <div id="price3">
                         <span class="ab">Abonnement 3 mois</span>
@@ -78,7 +77,8 @@
         </form>
         <div class="input-button2">
             <form action="/billingskip" method="post">
-                <input th:disabled="${session.subscription.delayed}" type="submit" value="Effectuer le paiement plus tard">
+                <input th:disabled="${session.subscription.delayed}" type="submit"
+                       value="Effectuer le paiement plus tard">
             </form>
         </div>
     </div>
