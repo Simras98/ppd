@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +24,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.*;
+
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class MemberService {
@@ -114,26 +120,6 @@ public class MemberService {
             throw new StorageException("impossible de lire le fichier " + file, e);
         }
     }
-
-    public void resetPassword(String email) {
-        Member member = getByEmail(email);
-        String newPassword = createRandomPassword();
-        member.setPassword(bCryptPasswordEncoder.encode(newPassword));
-        update(member);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(ourassoEmail);
-        message.setTo(email);
-        message.setSubject("Ourasso : Votre nouveau mot de passe");
-        message.setText(
-                "Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
-                        + "\n"
-                        + "Voici votre nouveau mot de passe : " + newPassword + "\n"
-                        + "\n"
-                        + "Voici l'adresse pour vous connecter : " + "\n"
-                        + "https://ppd-asso.herokuapp.com/login");
-        emailSender.send(message);
-    }
-
     public Member connect(String email, String password) {
         Member member = getByEmail(email);
         if (member != null && bCryptPasswordEncoder.matches(password, member.getPassword())) {
@@ -142,6 +128,34 @@ public class MemberService {
             return null;
         }
     }
+
+public void resetPassword(String email) {
+		
+
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+				mimeMessage.setFrom(new InternetAddress(ourassoEmail));
+				mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
+
+				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				Member member = getByEmail(email);
+				String newPassword = createRandomPassword();
+				member.setPassword(bCryptPasswordEncoder.encode(newPassword));
+				update(member);
+				String CustomMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
+						+ "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
+						+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
+						+"<br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+				String messageText = com.uparis.ppd.service.FormatService.mailTemplateGenerator(member.getFirstName(), CustomMessage,
+						"OurAsso");
+				helper.setText(messageText, true);
+
+			}
+		};
+		emailSender.send(preparator);
+	}
 
     public List<String> createRandomPasswords(int number) {
         List<String> passwords = new ArrayList<>();
