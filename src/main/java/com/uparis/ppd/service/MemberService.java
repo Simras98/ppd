@@ -2,6 +2,8 @@ package com.uparis.ppd.service;
 
 import com.uparis.ppd.exception.StorageException;
 import com.uparis.ppd.model.Member;
+import com.uparis.ppd.model.Subscription;
+import com.uparis.ppd.properties.ConstantProperties;
 import com.uparis.ppd.repository.MemberRepository;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -9,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -16,23 +19,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Message;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class MemberService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private ConstantProperties constantProperties;
 
     @Autowired
     private FormatService formatService;
@@ -126,23 +130,29 @@ public class MemberService {
     }
 
 public void resetPassword(String email) {
+		
+
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
 				mimeMessage.setFrom(new InternetAddress(ourassoEmail));
 				mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
+
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				Member member = getByEmail(email);
 				String newPassword = createRandomPassword();
 				member.setPassword(bCryptPasswordEncoder.encode(newPassword));
 				update(member);
-				String CustomMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
+				String customMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
 						+ "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
 						+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
 						+"<br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
-				String messageText = com.uparis.ppd.service.FormatService.mailTemplateGenerator(member.getFirstName(), CustomMessage,
+                FormatService serviceF = new FormatService();
+				String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
 						"OurAsso");
 				helper.setText(messageText, true);
+
 			}
 		};
 		emailSender.send(preparator);
