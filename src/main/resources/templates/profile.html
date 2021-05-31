@@ -37,11 +37,10 @@
                         <input id="lastName" name="lastName" placeholder="Entrez votre nom" type="text"
                                th:value="${session.subscription.member.lastName}" disabled>
                     </div>
-                    <div class="gender-details">
-                        <label class="details">Sexe</label>
-                        <input id="homme" name="sex" value="homme" type="radio"> Homme
-                        <input id="femme" name="sex" value="femme" type="radio"> Femme
-                        <input id="autre" name="sex" value="autre" type="radio"> Autre
+                    <div class="input-box">
+                        <label class="details" for="sex">Sexe</label>
+                        <input id="sex" name="sex" placeholder="Entrez votre sexe" type="text"
+                               th:value="${session.subscription.member.sex}" disabled>
                     </div>
                     <div class="input-box">
                         <label class="details" for="birthDate">Date de naissance</label>
@@ -75,7 +74,7 @@
                                th:value="${session.subscription.member.phoneNumber}" disabled>
                     </div>
                     <div class="input-box">
-                        <label class="details" for="admin">Niveau</label>
+                        <label class="details" for="admin">Administrateur</label>
                         <input id="admin" name="admin" placeholder="Entrez votre niveau" type="text"
                                th:value="${session.subscription.status.admin}" disabled>
                     </div>
