@@ -25,8 +25,8 @@
             <div id="modele_case_1">
                 <img class="image_member" src="images/user.png"/>
                 <div id="case_1_text">
-                    <p id="member_count_number">3</p>
-                    <p id="member_count"> Membres</p>
+                    <p id="member_count_number" th:text="${session.members.size()}"></p>
+                    <p id="member_count">Membres</p>
                 </div>
             </div>
         </div>
@@ -40,20 +40,11 @@
             </div>
         </div>
         <div class="card card-1">
-            <div id="case_3">
-                <img class="image_member" src="images/paiement.png"/>
-                <div id="case_3_text">
-                    <p id="member_count_number">3 €</p>
-                    <p id="member_count">de paiements</p>
-                </div>
-            </div>
-        </div>
-        <div class="card card-1">
             <div id="case_4">
                 <img class="image_member" src="images/verifie.png"/>
                 <div id="case_4_text">
-                    <p id="member_count">Abonnement</p>
-                    <p id="member_count_number">valide</p>
+                    <p id="member_count_number" th:text="${session.date}"></p>
+                    <p id="member_count">Avant expiration</p>
                 </div>
             </div>
         </div>

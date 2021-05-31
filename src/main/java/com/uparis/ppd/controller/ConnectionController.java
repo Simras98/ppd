@@ -103,6 +103,8 @@ public class ConnectionController {
                 if (subscription != null) {
                     request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
                     if (subscriptionService.isValid(subscription)) {
+                        request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
+                        request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
                         return constantProperties.getControllerDashboard();
                     } else {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());

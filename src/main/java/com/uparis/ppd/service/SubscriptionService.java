@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.mail.Message;
@@ -59,6 +60,16 @@ public class SubscriptionService {
         return subscriptionRepository.findByAssociation(association);
     }
 
+    public Subscription getSpecificSubscriptionByAssociation(Association association, Member member) {
+        List<Subscription> subscriptions = subscriptionRepository.findByAssociation(association);
+        for (Subscription sub : subscriptions) {
+            if(sub.getMember() == member){
+                return sub;
+            }
+        }
+        return null;
+    }
+
     public List<Member> getMembersByAssociation(Subscription subscription) {
         List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
         List<Member> members = new ArrayList<>();
@@ -91,6 +102,17 @@ public class SubscriptionService {
 
     public boolean getStatusAdmin(Subscription subscription) {
         return subscription.getStatus().isAdmin();
+    }
+
+    public String convertLongToDateString(Subscription subscription) {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+        if(subscription.isDelayed()){
+            calendar.setTimeInMillis(subscription.getDelay());
+        } else {
+            calendar.setTimeInMillis(subscription.getStop());
+        }
+        return formatter.format(calendar.getTime());
     }
 
     public void notifyWelcome(Subscription subscription, Member admin, String password) {
@@ -277,6 +299,7 @@ public class SubscriptionService {
     public boolean isValid(Subscription subscription) {
         List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
         if (subscription.getStatus().isSuperAdmin() && subscriptions.size() < constantProperties.getOurassoSize1()) {
+            subscription.setStop(System.currentTimeMillis());
             return true;
         }
         if (subscription.isDelayed()) {
