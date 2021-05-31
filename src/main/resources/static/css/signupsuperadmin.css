@@ -1,17 +1,17 @@
 .logo{
-    width : 100px;
+    width : 9%;
     float : left;
     margin-right : 20px;
 }
 main{
     display: flex;
-    height: 195vh;
+    height: 220vh;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 nav{
-    padding-left: 700px;
+    padding-left: 50%;
 }
 nav ul li{
     display: inline-flex;
@@ -20,7 +20,7 @@ nav ul li{
 nav ul li a {
     color: blueviolet;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.8vw;
     padding: 0px 20px;
 }
 a{
@@ -41,7 +41,7 @@ a:before, a:after {
     width: 0%;
     height: 2px;
     bottom: -2px;
-    background: #71b7e6;
+    background:#9b59b6;
 }
 a:before {
     left: 0;
@@ -57,12 +57,12 @@ a:hover:before {
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:after {
-    background: #9b59b6;
+    background:#71b7e6;
     width: 100%;
     transition: 0s;
 }
 .container{
-    max-width: 800px;
+    max-width: 700px;
     width:100%;
     background: #ffff;
     padding: 25px 30px;
@@ -143,8 +143,11 @@ form .button input{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 @media only screen and (max-width: 700px) {
+    main{
+        height: 160vh;
+    }
     .container{
-        width: 95%;
+        width: 90%;
     }
     nav{
         max-width: 100%;
@@ -170,14 +173,7 @@ form .button input{
         width: 100%;
     }
 }
-@media only screen and (height: 650px) {
-    main{
-        height: 100%;
-    }
-    .container{
-        height: 100%;
-    }
-}
+
 
 
 

@@ -1,10 +1,10 @@
 .logo{
-    width : 100px;
+    width : 9%;
     float : left;
     margin-right : 20px;
 }
 nav{
-    padding-left: 700px;
+    padding-left: 50%;
 }
 nav ul li{
     display: inline-flex;
@@ -13,7 +13,7 @@ nav ul li{
 nav ul li a {
     color: blueviolet;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.8vw;
     padding: 0px 20px;
 }
 a{
@@ -34,7 +34,7 @@ a:before, a:after {
     width: 0%;
     height: 2px;
     bottom: -2px;
-    background: #71b7e6;
+    background:#9b59b6;
 }
 a:before {
     left: 0;
@@ -45,12 +45,12 @@ a:after {
     transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:before {
-    background: #fff;
+    background: #9b59b6;
     width: 100%;
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:after {
-    background: #fff;
+    background:#71b7e6;
     width: 100%;
     transition: 0s;
 }
@@ -61,6 +61,7 @@ main{
 }
 main .head{
     padding-left: 20px;
+    font-size: 3vw;
     color: white;
 }
 .cont{
@@ -82,20 +83,19 @@ main .head{
 }
 .container .link-box .link{
     margin-left: 38px;
-    font-weight: 500;
+    font-size: 1.2vw;
 }
 .container .link-box .image1{
     height: 100%;
     width: 80px;
     margin-left: 18%;
-
 }
 .container .link-box .image{
     height: 100%;
-    width: 55%;
+    width: 70px;
     margin-left: 25%;
 }
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
     .cont{
         width: 100%;
         margin: 20px 0 5px 0;
@@ -106,7 +106,7 @@ main .head{
         padding-left: 30px;
     }
     .container{
-        width: 48%;
+        width: 40%;
         align-content: space-between;
     }
     .container .link-box{
@@ -114,7 +114,8 @@ main .head{
     }
     .container .link-box .link{
         margin-left: 8px;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: bold;
     }
     .container .link-box .image1{
         height: 100%;
