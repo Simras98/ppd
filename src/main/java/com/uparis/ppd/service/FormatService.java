@@ -26,8 +26,8 @@ public class FormatService {
         return Double.parseDouble(priceWithoutEuroAndSpaceAndComma);
     }
     
-    public static String mailTemplateGenerator(String to, String message, String from) {
-        return "\r\n"
+    public String mailTemplateGenerator(String to, String message, String from) {
+        String text = "\r\n"
           + "  <body link=\"#00a5b5\" vlink=\"#00a5b5\" alink=\"#00a5b5\" style=background-image:linear-gradient(135deg,#71b7e6,#9b59b6)>\r\n"
           + "\r\n"
           + "<style>\r\n"
@@ -189,5 +189,7 @@ public class FormatService {
           + "  </table>\r\n"
           + "  </body>\r\n"
           + "";
-    }
+        
+        return text;
+      }
 }

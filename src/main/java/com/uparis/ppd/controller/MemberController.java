@@ -282,6 +282,102 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/profileedit")
+    public String profileEdit(
+            @RequestParam(name = "firstName") String firstName,
+            @RequestParam(name = "lastName") String lastName,
+            @RequestParam(name = "birthDate") String birthDate,
+            @RequestParam(name = "address") String address,
+            @RequestParam(name = "city") String city,
+            @RequestParam(name = "postalCode") String postalCode,
+            @RequestParam(name = "email") String email,
+            @RequestParam(name = "phoneNumber") String phoneNumber,
+            HttpServletRequest request,
+            Model model) {
+        Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
+        if (subscription != null) {
+            if (subscriptionService.isValid(subscription)) {
+                Member member = memberService.getByEmail(subscription.getMember().getEmail());
+                if(!firstName.isEmpty()) {
+                    if (!Pattern.compile(regexService.getWord()).matcher(firstName).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFirstname());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setFirstName(firstName);
+                }
+                if(!lastName.isEmpty()) {
+                    if (!Pattern.compile(regexService.getWord()).matcher(lastName).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setLastName(lastName);
+                }
+                if(!birthDate.isEmpty()) {
+                    if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescBirthdate());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setBirthDate(birthDate);
+                }
+                if(!address.isEmpty()) {
+                    if (!Pattern.compile(regexService.getAddress()).matcher(address).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAddress());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setAddress(address);
+                }
+                if(!city.isEmpty()) {
+                    if (!Pattern.compile(regexService.getWord()).matcher(city).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescCity());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setCity(city);
+                }
+                if(!postalCode.isEmpty()) {
+                    if (!Pattern.compile(regexService.getPostalCode()).matcher(postalCode).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPostalCode());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setPostalCode(postalCode);
+                }
+                if(!email.isEmpty()) {
+                    if (!Pattern.compile(regexService.getEmail()).matcher(email).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescEmail());
+                        return constantProperties.getControllerProfile();
+                    }
+                    if(memberService.getByEmail(email) != null){
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescEmailExist());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setEmail(email);
+                }
+                if(!phoneNumber.isEmpty()) {
+                    if (!Pattern.compile(regexService.getPhoneNumber()).matcher(phoneNumber).find()) {
+                        model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPhoneNumber());
+                        return constantProperties.getControllerProfile();
+                    }
+                    member.setPhoneNumber(phoneNumber);
+                }
+                memberService.update(member);
+                Subscription updatedSubscription = subscriptionService.getSpecificSubscriptionByAssociation(subscription.getAssociation(), member);
+                request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), updatedSubscription);
+                model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescProfileChanged());
+                return constantProperties.getControllerProfile();
+            } else {
+                model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
+                if (subscriptionService.getStatusSuperAdmin(subscription)) {
+                    model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                    return constantProperties.getControllerBillingSuperAdmin();
+                } else {
+                    return constantProperties.getControllerBillingMember();
+                }
+            }
+        } else {
+            model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());
+            return constantProperties.getControllerLogin();
+        }
+    }
+
     @GetMapping("/contact")
     public String contact(HttpServletRequest request, Model model) {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());

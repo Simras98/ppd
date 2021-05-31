@@ -26,6 +26,7 @@ public class ConstantProperties {
 
     // Attribute constants
     private static final String ATTRIBUTE_NAME_ERROR = "error";
+    private static final String ATTRIBUTE_NAME_DATE = "date";
     private static final String ATTRIBUTE_NAME_MEMBERS = "members";
     private static final String ATTRIBUTE_NAME_PRICE = "price";
     private static final String ATTRIBUTE_NAME_SUBSCRIPTION = "subscription";
@@ -80,6 +81,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_PHONENUMBER = "Vous devez rentrer un numéro de téléphone valide !";
     private static final String ATTRIBUTE_DESC_PASSWORDCHANGED = "Mot de passe modifié avec succès !";
     private static final String ATTRIBUTE_DESC_POSTALCODE = "Vous devez rentrer un code postal valide !";
+    private static final String ATTRIBUTE_DESC_PROFILECHANGED = "Votre profil a été modifié avec succès !";
     private static final String ATTRIBUTE_DESC_PRICE = "Vous devez rentrer une description d'association valide !";
     private static final String ATTRIBUTE_DESC_STATUS = "Vous devez choisir un statut valide !";
     private static final String ATTRIBUTE_DESC_SUBSCRIBED = "Vous êtes déjà abonné à cette association !";
@@ -148,6 +150,10 @@ public class ConstantProperties {
 
     public String getAttributeNameError() {
         return ATTRIBUTE_NAME_ERROR;
+    }
+
+    public String getAttributeNameDate() {
+        return ATTRIBUTE_NAME_DATE;
     }
 
     public String getAttributeNameMembers() {
@@ -328,6 +334,10 @@ public class ConstantProperties {
 
     public String getAttributeDescPostalCode() {
         return ATTRIBUTE_DESC_POSTALCODE;
+    }
+
+    public String getAttributeDescProfileChanged() {
+        return ATTRIBUTE_DESC_PROFILECHANGED;
     }
 
     public String getAttributeDescPrice() {
