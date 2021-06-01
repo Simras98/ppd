@@ -9,22 +9,19 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import javax.mail.Message;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 @Service
 public class SubscriptionService {
@@ -42,8 +39,11 @@ public class SubscriptionService {
     @Autowired
     private TransactionService transactionService;
 
-    public Subscription create(long start, long end, long delay, boolean delayed, boolean notified, Member member, Status status, Association association, Set<Transaction> transactions) {
-        Subscription subscription = new Subscription(start, end, delay, delayed, notified, member, status, association, transactions);
+    @Autowired
+    private FormatService formatService;
+
+    public Subscription create(long join, long start, long end, long delay, boolean delayed, boolean notified, Member member, Status status, Association association, Set<Transaction> transactions) {
+        Subscription subscription = new Subscription(join, start, end, delay, delayed, notified, member, status, association, transactions);
         update(subscription);
         return subscription;
     }
@@ -63,7 +63,7 @@ public class SubscriptionService {
     public Subscription getSpecificSubscriptionByAssociation(Association association, Member member) {
         List<Subscription> subscriptions = subscriptionRepository.findByAssociation(association);
         for (Subscription sub : subscriptions) {
-            if(sub.getMember() == member){
+            if (sub.getMember() == member) {
                 return sub;
             }
         }
@@ -75,6 +75,21 @@ public class SubscriptionService {
         List<Member> members = new ArrayList<>();
         for (Subscription sub : subscriptions) {
             members.add(sub.getMember());
+        }
+        return members;
+    }
+
+    public List<Member> getMembersByAssociationInLastMonth(Subscription subscription) {
+        List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
+        List<Member> members = new ArrayList<>();
+        Calendar nowDate = Calendar.getInstance();
+        Calendar date = Calendar.getInstance();
+        nowDate.set(Calendar.DAY_OF_MONTH, 1);
+        for (Subscription sub : subscriptions) {
+            date.setTimeInMillis(subscription.getArrived());
+            if (!date.after(nowDate)) {
+                members.add(sub.getMember());
+            }
         }
         return members;
     }
@@ -107,7 +122,7 @@ public class SubscriptionService {
     public String convertLongToDateString(Subscription subscription) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
-        if(subscription.isDelayed()){
+        if (subscription.isDelayed()) {
             calendar.setTimeInMillis(subscription.getDelay());
         } else {
             calendar.setTimeInMillis(subscription.getStop());
@@ -116,142 +131,104 @@ public class SubscriptionService {
     }
 
     public void notifyWelcome(Subscription subscription, Member admin, String password) {
-		String customMessage = null;
-		String textTemp;
-
-		if (admin != null) {
-			customMessage =
-
-					"<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
-							+ subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso ! <br>"
-							+ admin.getFirstName() + " " + admin.getLastName() + " vous a rajouté à l'association "
-							+ subscription.getAssociation().getName() + ".<br>"
-							+ "Voici votre mot de passe que nous vous invitons à changer une fois connecté : "
-							+ password + "<br>"
-							+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
-							+ "<br>" + "Cordialement, l'équipe Ourasso<p>";
-
-
-            FormatService serviceF = new FormatService();
-             textTemp = serviceF.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
-
+        String customMessage;
+        String textTemp;
+        if (admin != null) {
+            customMessage =
+                    "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
+                            + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso ! <br>"
+                            + admin.getFirstName() + " " + admin.getLastName() + " vous a rajouté à l'association "
+                            + subscription.getAssociation().getName() + ".<br>"
+                            + "Voici votre mot de passe que nous vous invitons à changer une fois connecté : "
+                            + password + "<br>"
+                            + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                            + "<br>" + "Cordialement, l'équipe Ourasso<p>";
+            textTemp = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
         } else if (subscription.getStatus().isSuperAdmin()) {
-			customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
-					+ " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "<br>"
-					+ "Vous venez de créer et rejoindre l'association " + subscription.getAssociation().getName() + "."
-					+ "<br>"
-					+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
-					+ "<br>" + "Cordialement, l'équipe Ourasso</p>";
-            FormatService serviceF = new FormatService();
-            textTemp = serviceF.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
-		} else {
-			customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
-					+ " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
-					+ "Vous venez de rejoindre l'association " + subscription.getAssociation().getName() + ". <br>"
-					+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
-					+ "<br>" + "Cordialement, l'équipe Ourasso</p>";
-            FormatService serviceF = new FormatService();
-            textTemp = serviceF.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
-		}
+            customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
+                    + " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "<br>"
+                    + "Vous venez de créer et rejoindre l'association " + subscription.getAssociation().getName() + "."
+                    + "<br>"
+                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                    + "<br>" + "Cordialement, l'équipe Ourasso</p>";
+            textTemp = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
+        } else {
+            customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
+                    + " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
+                    + "Vous venez de rejoindre l'association " + subscription.getAssociation().getName() + ". <br>"
+                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                    + "<br>" + "Cordialement, l'équipe Ourasso</p>";
+            textTemp = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
+        }
+        final String messageText = textTemp;
+        MimeMessagePreparator preparator = mimeMessage -> {
+            mimeMessage.setRecipient(Message.RecipientType.TO,
+                    new InternetAddress(subscription.getMember().getEmail()));
+            mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+            mimeMessage.setSubject("Ourasso : Bienvenue chez Ourasso !");
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            helper.setText(messageText, true);
+        };
+        emailSender.send(preparator);
 
-		final String messageText = textTemp;
+    }
 
-		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-				mimeMessage.setRecipient(Message.RecipientType.TO,
-						new InternetAddress(subscription.getMember().getEmail()));
-				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
-				mimeMessage.setSubject("Ourasso : Bienvenue chez Ourasso !");
-
-				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-
-				helper.setText(messageText, true);
-
-			}
-
-		};
-
-		emailSender.send(preparator);
-
-	}
-    
     public void notifyPaymentSuccessfull(Subscription subscription) {
-		Date date = new Date(subscription.getStop());
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM,
-				new Locale("FR", "fr"));
-		String shortDate = (dateFormat.format(date)).substring(0, (dateFormat.format(date)).length() - 10).trim();
-		
-		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-				mimeMessage.setRecipient(Message.RecipientType.TO,
-						new InternetAddress(subscription.getMember().getEmail()));
-				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
-				mimeMessage.setSubject("Ourasso : Merci de vous être abonné(e) !");
-
-				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-				String customMessage =
-
-						"<p style=\"text-align: center;\">Merci de vous être abonné(e), ce dernier arrivera à expiration le "
-								+ shortDate + "." + "<br>Voici votre numéro d'adhésion : "
-								+ "<div style=\" border-bottom-left-radius: 15px;\n"
-								+ "  border-bottom-right-radius: 15px;\n" + "  border-top-right-radius: 15px;\n"
-								+ "  border-top-left-radius: 15px;\n" + "  box-sizing: border-box;\n"
-								+ "  background: linear-gradient(135deg,#71b7e6,#9b59b6);\n" + "  font-weight : bold;\n" + "  font-size : 20px;\n"
-								+ "  color: white;width:auto;text-align:center;padding:15px;\">\n" + "<p>"
-								+ String.format("%010d", subscription.getMember().getId()) + "</p>\n" + "</div>"
-								+ "<br></p>"
-								+ " <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
-
-                FormatService serviceF = new FormatService();
-                String messageText = serviceF.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
-				helper.setText(messageText, true);
-
-			}
-		};
-
-		emailSender.send(preparator);
-	}
-
-   
-
-    
-       @Scheduled(fixedDelay = 5000)
-	public void notifyPaymentMissing() {
-		List<Subscription> subscriptions = getAll();
-		for (Subscription subscription : subscriptions) {
-			if (!isValid(subscription) && !subscription.isNotified()) {
-				MimeMessagePreparator preparator = new MimeMessagePreparator() {
-					public void prepare(MimeMessage mimeMessage) throws Exception {
-						mimeMessage.setRecipient(Message.RecipientType.TO,
-								new InternetAddress(subscription.getMember().getEmail()));
-						mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
-						mimeMessage.setSubject("Ourasso : Votre abonnement a expiré !");
-
-						MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-						String customMessage =
-
-								"<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
-										+ subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
-										+ "Votre abonnement a expiré, veuillez le renouveler !" + "\n" + "<br>"
-										+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
-										+ " <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
-                        FormatService serviceF = new FormatService();
-                        String messageText = serviceF.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
-
-						helper.setText(messageText, true);
-
-					}
-				};
-				emailSender.send(preparator);
+        Date date = new Date(subscription.getStop());
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM,
+                new Locale("FR", "fr"));
+        String shortDate = (dateFormat.format(date)).substring(0, (dateFormat.format(date)).length() - 10).trim();
+        MimeMessagePreparator preparator = mimeMessage -> {
+            mimeMessage.setRecipient(Message.RecipientType.TO,
+                    new InternetAddress(subscription.getMember().getEmail()));
+            mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+            mimeMessage.setSubject("Ourasso : Merci de vous être abonné(e) !");
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            String customMessage =
+                    "<p style=\"text-align: center;\">Merci de vous être abonné(e), ce dernier arrivera à expiration le "
+                            + shortDate + "." + "<br>Voici votre numéro d'adhésion : "
+                            + "<div style=\" border-bottom-left-radius: 15px;\n"
+                            + "  border-bottom-right-radius: 15px;\n" + "  border-top-right-radius: 15px;\n"
+                            + "  border-top-left-radius: 15px;\n" + "  box-sizing: border-box;\n"
+                            + "  background: linear-gradient(135deg,#71b7e6,#9b59b6);\n" + "  font-weight : bold;\n" + "  font-size : 20px;\n"
+                            + "  color: white;width:auto;text-align:center;padding:15px;\">\n" + "<p>"
+                            + String.format("%010d", subscription.getMember().getId()) + "</p>\n" + "</div>"
+                            + "<br></p>"
+                            + " <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+            String messageText = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
+            helper.setText(messageText, true);
+        };
+        emailSender.send(preparator);
+    }
 
 
-				subscription.setNotified(true);
-				update(subscription);
-			}
-		}
-	}
+    @Scheduled(fixedDelay = 5000)
+    public void notifyPaymentMissing() {
+        List<Subscription> subscriptions = getAll();
+        for (Subscription subscription : subscriptions) {
+            if (!isValid(subscription) && !subscription.isNotified()) {
+                MimeMessagePreparator preparator = mimeMessage -> {
+                    mimeMessage.setRecipient(Message.RecipientType.TO,
+                            new InternetAddress(subscription.getMember().getEmail()));
+                    mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+                    mimeMessage.setSubject("Ourasso : Votre abonnement a expiré !");
+                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                    String customMessage =
+                            "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
+                                    + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
+                                    + "Votre abonnement a expiré, veuillez le renouveler !" + "\n" + "<br>"
+                                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
+                                    + " <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+                    String messageText = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
+                    helper.setText(messageText, true);
+                };
+                emailSender.send(preparator);
+                subscription.setNotified(true);
+                update(subscription);
+            }
+        }
+    }
 
-     
     public boolean subscribe(Subscription subscription, String duration) {
         long time = System.currentTimeMillis();
         Transaction transaction;
@@ -426,32 +403,24 @@ public class SubscriptionService {
     }
 
     public void sendEmail(String object, String body, Member member, Subscription subscription) {
-         
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-				mimeMessage.setRecipient(Message.RecipientType.TO,
-						new InternetAddress(member.getEmail()));
-				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
-				mimeMessage.setSubject(object);
 
-				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-				String customMessage =
-
-						"<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + ", " +
-				                subscription.getMember().getFirstName() + " " + subscription.getMember().getLastName() + " vous a envoyé un message :" + "<br>"
-				                + "\n"
-				                + body + "\n"
-				                + "\n"
-				                + "<br>Cordialement, l'équipe Ourasso<br></p>";
-
-                FormatService serviceF = new FormatService();
-                String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
-                        "OurAsso");
-				helper.setText(messageText, true);
-
-			}
-		};
-
-		emailSender.send(preparator);
+        MimeMessagePreparator preparator = mimeMessage -> {
+            mimeMessage.setRecipient(Message.RecipientType.TO,
+                    new InternetAddress(member.getEmail()));
+            mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+            mimeMessage.setSubject(object);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            String customMessage =
+                    "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + ", " +
+                            subscription.getMember().getFirstName() + " " + subscription.getMember().getLastName() + " vous a envoyé un message :" + "<br>"
+                            + "\n"
+                            + body + "\n"
+                            + "\n"
+                            + "<br>Cordialement, l'équipe Ourasso<br></p>";
+            String messageText = formatService.mailTemplateGenerator(member.getFirstName(), customMessage,
+                    "OurAsso");
+            helper.setText(messageText, true);
+        };
+        emailSender.send(preparator);
     }
 }

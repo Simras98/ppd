@@ -51,6 +51,7 @@ public class OurassoController {
             if (subscriptionService.isValid(subscription)) {
                 subscriptionService.update((subscription));
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());

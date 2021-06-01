@@ -12,6 +12,7 @@ public class Subscription implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private long arrived;
     private long start;
     private long stop;
     private long delay;
@@ -36,7 +37,8 @@ public class Subscription implements Serializable {
     public Subscription() {
     }
 
-    public Subscription(long start, long stop, long delay, boolean delayed, boolean notified, Member member, Status status, Association association, Set<Transaction> transactions) {
+    public Subscription(long arrived, long start, long stop, long delay, boolean delayed, boolean notified, Member member, Status status, Association association, Set<Transaction> transactions) {
+        this.arrived = arrived;
         this.start = start;
         this.stop = stop;
         this.delay = delay;
@@ -54,6 +56,14 @@ public class Subscription implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getArrived() {
+        return arrived;
+    }
+
+    public void setArrived(long arrived) {
+        this.arrived = arrived;
     }
 
     public long getStart() {

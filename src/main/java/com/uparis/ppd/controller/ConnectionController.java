@@ -105,6 +105,8 @@ public class ConnectionController {
                     if (subscriptionService.isValid(subscription)) {
                         request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
                         request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
+                        request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
+                        request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                         return constantProperties.getControllerDashboard();
                     } else {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -243,9 +245,13 @@ public class ConnectionController {
             if (association != null) {
                 member = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
                 Status status = statusService.create(false, false);
-                Subscription subscription = subscriptionService.create(0, 0, 0, false, false, member, status, association, Collections.emptySet());
+                Subscription subscription = subscriptionService.create(System.currentTimeMillis(),0, 0, 0, false, false, member, status, association, Collections.emptySet());
                 subscriptionService.notifyWelcome(subscription, null, null);
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+                request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationNotExist());
@@ -362,10 +368,15 @@ public class ConnectionController {
                 superAdmin = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
                 Status status = statusService.create(true, true);
                 association = associationService.create(associationName, associationDescription, association1MonthPrice, association3MonthPrice, association12MonthPrice);
-                Subscription subscription = subscriptionService.create(System.currentTimeMillis(), System.currentTimeMillis() + (60 * 1000), 0, false, false, superAdmin, status, association, Collections.emptySet());
+                long currentTime = System.currentTimeMillis();
+                Subscription subscription = subscriptionService.create(currentTime, currentTime, currentTime + (60 * 1000), 0, false, false, superAdmin, status, association, Collections.emptySet());
                 // Subscription subscription = subscriptionService.create(System.currentTimeMillis(), System.currentTimeMillis() + ((31556952L / 12) * 1000), 0, false, false, superAdmin, status, association, Collections.emptySet());
                 subscriptionService.notifyWelcome(subscription, null, null);
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+                request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationExist());
@@ -400,9 +411,12 @@ public class ConnectionController {
                 Subscription subscription = subscriptionService.getSubscription(member, association);
                 if (subscription == null) {
                     Status status = statusService.create(false, false);
-                    Subscription newSubscription = subscriptionService.create(0, 0, 0, false, false, member, status, association, Collections.emptySet());
+                    Subscription newSubscription = subscriptionService.create(System.currentTimeMillis(),0, 0, 0, false, false, member, status, association, Collections.emptySet());
                     subscriptionService.notifyWelcome(newSubscription, null, null);
                     request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), newSubscription);
+                    request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
+                    request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
+                    request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
                     return constantProperties.getControllerDashboard();
                 } else {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscribed());

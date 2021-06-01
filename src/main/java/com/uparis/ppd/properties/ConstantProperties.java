@@ -28,6 +28,8 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_NAME_ERROR = "error";
     private static final String ATTRIBUTE_NAME_DATE = "date";
     private static final String ATTRIBUTE_NAME_MEMBERS = "members";
+    private static final String ATTRIBUTE_NAME_MEMBERSINMONTH = "membersinmonth";
+    private static final String ATTRIBUTE_NAME_PAGE = "page";
     private static final String ATTRIBUTE_NAME_PRICE = "price";
     private static final String ATTRIBUTE_NAME_SUBSCRIPTION = "subscription";
     private static final String ATTRIBUTE_NAME_STATUS = "status";
@@ -158,6 +160,14 @@ public class ConstantProperties {
 
     public String getAttributeNameMembers() {
         return ATTRIBUTE_NAME_MEMBERS;
+    }
+
+    public String getAttributeNameMembersInMonth() {
+        return ATTRIBUTE_NAME_MEMBERSINMONTH;
+    }
+
+    public String getAttributeNamePage() {
+        return ATTRIBUTE_NAME_PAGE;
     }
 
     public String getAttributeNamePrice() {
