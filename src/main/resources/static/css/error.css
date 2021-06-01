@@ -1,23 +1,24 @@
 .logo{
-    width : 100px;
+    width : 9%;
     float : left;
     margin-right : 20px;
 }
 nav{
-    margin-left: 700px;
+    padding-left: 50%;
 }
 nav ul li{
     display: inline-flex;
     list-style: none;
 }
 nav ul li a {
-    color:darkorchid;
+    color: blueviolet;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.8vw;
     padding: 0px 20px;
 }
 a{
     position: relative;
+    display: block;
     cursor: pointer;
     padding: 8px 0;
     color: #9b59b6;
@@ -33,7 +34,7 @@ a:before, a:after {
     width: 0%;
     height: 2px;
     bottom: -2px;
-    background: #71b7e6;
+    background:#9b59b6;
 }
 a:before {
     left: 0;
@@ -44,12 +45,12 @@ a:after {
     transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:before {
-    background: #fff;
+    background: #9b59b6;
     width: 100%;
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:after {
-    background: #fff;
+    background:#71b7e6;
     width: 100%;
     transition: 0s;
 }
@@ -63,14 +64,14 @@ main .head{
     color: white;
 }
 @media only screen and (max-width: 700px) {
+    main{
+        height: 95vh;
+    }
     .container{
-        max-width: 100%;
+        width: 95%;
     }
     nav{
         max-width: 100%;
-        margin-left: 30px;
-    }
-    main .head{
-        max-width: 100%;
+        padding-left: 40px;
     }
 }

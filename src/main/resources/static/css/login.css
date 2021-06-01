@@ -1,10 +1,10 @@
 .logo{
-    width : 100px;
+    width : 9%;
     float : left;
     margin-right : 20px;
 }
 nav{
-    padding-left: 700px;
+    padding-left: 50%;
 }
 nav ul li{
     display: inline-flex;
@@ -13,7 +13,7 @@ nav ul li{
 nav ul li a {
     color: blueviolet;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.8vw;
     padding: 0px 20px;
 }
 a{
@@ -21,21 +21,20 @@ a{
     display: block;
     cursor: pointer;
     padding: 8px 0;
-    color:#9b59b6;
+    color: #9b59b6;
     text-decoration: none;
 }
 a:hover{
     color: #71b7e6;
     text-decoration: none;
 }
-
 a:before, a:after {
     content: '';
     position: absolute;
     width: 0%;
     height: 2px;
     bottom: -2px;
-    background: #71b7e6;
+    background:#9b59b6;
 }
 a:before {
     left: 0;
@@ -46,12 +45,12 @@ a:after {
     transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:before {
-    background: #fff;
+    background: #9b59b6;
     width: 100%;
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:after {
-    background: #fff;
+    background:#71b7e6;
     width: 100%;
     transition: 0s;
 }
