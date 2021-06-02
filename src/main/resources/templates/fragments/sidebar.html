@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <!-- Required meta tags -->
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-  <!-- Bootstrap CSS -->
-  <link
-          crossorigin="anonymous"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-          rel="stylesheet"
-  />
-  <title>sidebar</title>
+    <!-- Required meta tags -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <!-- Bootstrap CSS -->
+    <link
+            crossorigin="anonymous"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            rel="stylesheet"
+    />
+    <title>sidebar</title>
 </head>
 <body>
 <div th:fragment="sidebar">
@@ -19,9 +19,7 @@
             <img class="logo" src="images/logo.png"/>
         </div>
         <div class="sidebar-menu">
-
             <div th:if="${#strings.equals(#request.getParameter('error'), 'badCredentialsException')}"></div>
-
             <ul>
                 <li>
                     <a href="/dashboard" th:class="${#strings.equals(page, 'dashboard')} ? active : act"><span class="tab-bord"></span><span>Tableau de bord</span></a>

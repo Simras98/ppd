@@ -15,32 +15,35 @@
 <body>
 <div th:fragment="topbar">
     <nav id="topbar">
-    <ul>
-        <li> <a href="/"
-                th:classappend="${#httpServletRequest.requestURI == '/index'}"
-                th:if="${session.subscription == null}">Accueil</a> </li>
-        <li><a href="/signup"
-               th:classappend="${#httpServletRequest.requestURI == '/signup'}"
-               th:if="${session.subscription == null}">Inscription</a> </li>
-        <li><a href="/login"
-               th:classappend="${#httpServletRequest.requestURI == '/login'}"
-               th:if="${session.subscription == null}">Connexion</a> </li>
-        <li> <a href="/join"
-                th:classappend="${#httpServletRequest.requestURI == '/join'}"
-                th:if="${session.subscription == null}">Rejoindre</a> </li>
-        <li> <a href="/billingmember"
-                th:classappend="${#httpServletRequest.requestURI == '/billingmember'}"
-                th:if="${session.subscription != null && session.subscription.status.superAdmin == False && session.subscription.stop == 0}">Paiement</a> </li>
-         <li><a href="/billingsuperadmin"
-                th:classappend="${#httpServletRequest.requestURI == '/billingsuperadmin'}"
-                th:if="${session.subscription != null && session.subscription.status.superAdmin == True && session.subscription.stop == 0}">Paiement</a></li>
-        <li> <a href="/profile"
-                th:classappend="${#httpServletRequest.requestURI == '/profile'}"
-                th:if="${session.subscription != null}">Profile</a></li>
-        <li> <a href="/logout"
-                th:classappend="${#httpServletRequest.requestURI == '/logout'}"
-                th:if="${session.subscription != null}">Déconnexion</a></li>
-    </ul>
+        <ul>
+            <li>
+                <a href="/"
+                   th:classappend="${#httpServletRequest.requestURI == '/index'}"
+                   th:if="${session.subscription == null}">Accueil</a></li>
+            <li><a href="/signup"
+                   th:classappend="${#httpServletRequest.requestURI == '/signup'}"
+                   th:if="${session.subscription == null}">Inscription</a></li>
+            <li><a href="/login"
+                   th:classappend="${#httpServletRequest.requestURI == '/login'}"
+                   th:if="${session.subscription == null}">Connexion</a></li>
+            <li><a href="/join"
+                   th:classappend="${#httpServletRequest.requestURI == '/join'}"
+                   th:if="${session.subscription == null}">Rejoindre</a></li>
+            <li><a href="/billingmember"
+                   th:classappend="${#httpServletRequest.requestURI == '/billingmember'}"
+                   th:if="${session.subscription != null && session.subscription.status.superAdmin == False && session.subscription.stop == 0}">Paiement</a>
+            </li>
+            <li><a href="/billingsuperadmin"
+                   th:classappend="${#httpServletRequest.requestURI == '/billingsuperadmin'}"
+                   th:if="${session.subscription != null && session.subscription.status.superAdmin == True && session.subscription.stop == 0}">Paiement</a>
+            </li>
+            <li><a href="/profile"
+                   th:classappend="${#httpServletRequest.requestURI == '/profile'}"
+                   th:if="${session.subscription != null}">Profile</a></li>
+            <li><a href="/logout"
+                   th:classappend="${#httpServletRequest.requestURI == '/logout'}"
+                   th:if="${session.subscription != null}">Déconnexion</a></li>
+        </ul>
     </nav>
 </div>
 </body>
