@@ -71,6 +71,12 @@ main{
 .container .text{
     font-size: 20px;
     font-weight: 500;
+    padding-left: 65px;
+}
+.container .textj{
+    font-size: 20px;
+    font-weight: 500;
+    padding-left: 75px;
 }
 .container form{
     margin-top: -20px;
@@ -101,8 +107,26 @@ form .connecter input{
     font-size: 15px;
     font-weight: 500;
     padding: 10px;
+    margin-left: 90px;
     border-radius: 5px;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
+form .connect input{
+    outline: none;
+    color:#fff;
+    border:none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px;
+    margin-left: 105px;
+    border-radius: 5px;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
+form .pass{
+    margin-left: 70px;
+}
+form .sign{
+    margin-left: 25px;
 }
 @media only screen and (max-width: 700px) {
     .container{

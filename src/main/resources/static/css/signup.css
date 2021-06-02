@@ -60,7 +60,8 @@ main{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 main .head{
-    padding-left: 20px;
+    padding-top: 60px;
+    margin-left: 26vw;
     font-size: 3vw;
     color: white;
 }

@@ -10,7 +10,7 @@ body{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .sidebar{
-    width: 245px;
+    width: 18%;
     position: fixed;
     left: 0;
     top: 0;
@@ -18,7 +18,7 @@ body{
     background: white;
 }
 .main-content{
-    margin-left: 245px;
+    margin-left: 20%;
 }
 .siderbar-logo{
     padding-left: 2rem;
@@ -67,23 +67,23 @@ h1{
 }
 header h1{
     color: white;
-    margin-left: 30px;
+    margin-left: 1%;
 }
 .logo{
-    width: 100px;
-    height: 100px;
+    width: 65%;
+    margin-right: 7%;
+
 }
 main{
     justify-content: space-between;
 }
 
 .formulaire{
-    padding : 20px 30px;
-    max-width : 800px;
-    width: 100%;
+    padding : 2% 5%;
+    max-width : 70%;
     background:#fff;
     border-radius : 5px;
-    margin-left: 100px;
+    margin-left: 150px;
     margin-right: 20px;
 }
 .formulaire .title{
@@ -136,32 +136,32 @@ form .user-details .input-box{
     font-weight : 550;
     margin-right: 300px;
 }
-form  .input-button1 input{
+.input-button1 input{
+    height: 110%;
+    width: 60%;
+    margin-left: 250px;
     outline: none;
     color:#fff;
     border:none;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
-    padding: 10px;
     border-radius: 5px;
+    letter-spacing: 1px;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
-    margin-left: 330px;
 }
 .input-button2{
     display: flex;
     justify-content : space-between;
-
 }
 .tableau{
     display:block;
     justify-content: space-between;
     padding: 1rem;
-    padding-left: -2px;
 }
 table{
-    width: 600px;
+    width: 80%;
     box-shadow: -1px 12px 12px -6px rgba(0,0,0,0.5);
-    margin-left: -2px;
+
 }
 table, td, th{
     padding: 15px;
@@ -250,30 +250,42 @@ a:hover:after {
 }
 @media (max-width: 700px) {
     .formulaire{
-        width: 100%;
+        max-width: 115%;
+        min-width: 65%;
+        margin-left: 10%;
     }
-    form .user-details .input-box{
+    .formulaire {
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+    .formulaire::-webkit-scrollbar {
+        width: 0;
+    }
+    form .user-details .input-box {
         margin: 10px 0 5px 0;
         width: 100%;
     }
-    .user-details .gender-details .details{
-        margin: 10px 0 5px 0;
-        width: 100%;
+    .input-button1 input {
+        height: 100%;
+        width: 80%;
+        margin-left: 30px;
     }
-    .user-details .level-details .details{
-        margin: 10px 0 5px 0;
-        width: 100%;
-    }
-    .table{
-        max-width: 100%;
-    }
-    form  .input-button1 input{
-        margin: 10px 0 5px 0;
-        width: 100%;
 
+    form .input-button2 input {
+        height: 100%;
+        width: 80%;
     }
-    .input-button2{
-        margin: 10px 0 5px 0;
-        width: 100%;
+
+    .tableau table {
+        width: 20%;
+        height: 40%;
+    }
+
+    .tableau {
+        max-height: 700px;
+        overflow-y: scroll;
+    }
+    .tableau::-webkit-scrollbar {
+        width: 0;
     }
 }

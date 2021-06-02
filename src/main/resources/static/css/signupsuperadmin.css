@@ -69,6 +69,7 @@ a:hover:after {
     border-radius: 5px;
 }
 .container .title{
+    padding-left: 210px;
     font-size: 25px;
     font-weight: 500;
 }
@@ -124,6 +125,9 @@ form .price-details .category{
     width : 80%;
     margin: 14px;
     justify-content : space-between;
+}
+form .login{
+    padding-left: 210px;
 }
 form .button{
     height: 35px;
