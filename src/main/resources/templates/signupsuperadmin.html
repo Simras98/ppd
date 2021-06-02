@@ -3,7 +3,6 @@
 <head>
     <!-- Required meta tags -->
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-    <meta name="viewport" content="width=device.width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link
             crossorigin="anonymous"
@@ -108,6 +107,7 @@
                            placeholder="Confirmez votre mot de passe"
                            type="password" required>
                 </div>
+                <div class="input-box"></div>
                 <div class="input-box">
                     <label class="details" for="associationName">Nom de votre association</label>
                     <input id="associationName"
@@ -124,30 +124,32 @@
                            placeholder="Entrez la description de votre association"
                            type="text" required>
                 </div>
-                <div class="input-box">
-                    <label class="details" for="city">Choisissez la tarification de votre association</label>
-                    <label>Abonnement 1 mois</label>
-                    <input id="associationPrice1Month"
-                           name="associationPrice1Month"
-                           pattern="^[0-9 \,.€]*$"
-                           placeholder="Entrez le prix pour 1 mois"
-                           type="text" required>
-                    <div>
-                        <label>Abonnement 3 mois</label>
-                        <input id="associationPrice3Months"
-                               name="associationPrice3Months"
-                               pattern="^[0-9 \,.€]*$"
-                               placeholder="Entrez le prix pour 3 mois"
-                               type="text" required>
-                    </div>
-                    <div>
-                        <label>Abonnement 12 mois</label>
-                        <input id="associationPrice12Months"
-                               name="associationPrice12Months"
-                               pattern="^[0-9 \,.€]*$"
-                               placeholder="Entrez le prix pour 12 mois"
-                               type="text" required>
-                    </div>
+                    <div class="input-box">
+                        <label class="details" for="city">Choisissez la tarification de votre association</label>
+                        <div>
+                            <label>Abonnement 1 mois</label>
+                            <input id="associationPrice1Month"
+                                   name="associationPrice1Month"
+                                   pattern="^[0-9 \,.€]*$"
+                                   placeholder="Entrez le prix pour 1 mois"
+                                   type="text" required>
+                        </div>
+                        <div>
+                            <label>Abonnement 3 mois</label>
+                            <input id="associationPrice3Months"
+                                   name="associationPrice3Months"
+                                   pattern="^[0-9 \,.€]*$"
+                                   placeholder="Entrez le prix pour 3 mois"
+                                   type="text" required>
+                        </div>
+                        <div>
+                            <label>Abonnement 12 mois</label>
+                            <input id="associationPrice12Months"
+                                   name="associationPrice12Months"
+                                   pattern="^[0-9 \,.€]*$"
+                                   placeholder="Entrez le prix pour 12 mois"
+                                   type="text" required>
+                        </div>
                 </div>
                 <div class="price-details">
                     <label class="details">Prix en fonction de la taille de votre association</label>
