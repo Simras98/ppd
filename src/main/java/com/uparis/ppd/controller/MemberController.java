@@ -54,7 +54,7 @@ public class MemberController {
                 List<Status> status = subscriptionService.getStatusByAssociation(subscription);
                 model.addAttribute(constantProperties.getAttributeNameMembers(), members);
                 model.addAttribute(constantProperties.getAttributeNameStatus(), status);
-                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManageMembers());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManageMembers());
                 return constantProperties.getControllerManageMembers();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -146,6 +146,7 @@ public class MemberController {
                 Subscription newSubscription = subscriptionService.create(System.currentTimeMillis(), 0, 0, 0, false, false, member, status, subscription.getAssociation(), Collections.emptySet());
                 subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), password);
                 model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescMemberAdded());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManageMembers());
                 return constantProperties.getControllerManageMembers();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -162,7 +163,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/addmembersfromfileconfirm")
+    @PostMapping("/addmemberfromfileconfirm")
     public String addMemberFromFileConfirm(
             @RequestParam(name = "file") MultipartFile file,
             HttpServletRequest request,
@@ -182,6 +183,7 @@ public class MemberController {
                     subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), passwords.get(i));
                 }
                 model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescMembersAdded());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManageMembers());
                 return constantProperties.getControllerManageMembers();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -214,7 +216,7 @@ public class MemberController {
             if (subscriptionService.isValid(subscription)) {
                 Object[] transactions = subscriptionService.getTransactions(subscription);
                 model.addAttribute(constantProperties.getAttributeNameTransactions(), transactions);
-                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManagePayments());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManagePayments());
                 return constantProperties.getControllerManagePayments();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -387,7 +389,7 @@ public class MemberController {
             if (subscriptionService.isValid(subscription)) {
                 List<Member> members = subscriptionService.getMembersByAssociation(subscription);
                 model.addAttribute(constantProperties.getAttributeNameMembers(), members);
-                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerContact());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerContact());
                 return constantProperties.getControllerContact();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -426,6 +428,7 @@ public class MemberController {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescMemberNotExist());
                     }
                 }
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerContact());
                 return constantProperties.getControllerContact();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());

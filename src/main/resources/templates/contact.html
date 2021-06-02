@@ -11,17 +11,20 @@
             rel="stylesheet"
     />
     <link rel="stylesheet" href="css/contact.css"/>
-    <title>Contact</title>
+    <title>Communication</title>
 </head>
 <body>
 <div class="main-content">
     <header>
-        <h1>Contact</h1>
+        <h1>Communication</h1>
         <div class="topbar" th:insert="fragments/topbar.html :: topbar"></div>
         <div class="sidebar" th:insert="fragments/sidebar.html :: sidebar"></div>
     </header>
     <main>
         <div class="formulaire">
+            <div class="title"><strong>Formulaire de contact</strong></div>
+            <p th:text="${success}"></p>
+            <p th:text="${error}"></p>
             <form action="/contactconfirm" id="contactConfirm" method="post">
                 <div class="user-details">
                     <div class="input-box">

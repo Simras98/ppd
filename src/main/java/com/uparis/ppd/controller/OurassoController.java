@@ -24,6 +24,7 @@ public class OurassoController {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
         if (subscription != null) {
             if (subscriptionService.isValid(subscription)) {
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -51,7 +52,7 @@ public class OurassoController {
             if (subscriptionService.isValid(subscription)) {
                 subscriptionService.update((subscription));
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
-                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -63,6 +64,7 @@ public class OurassoController {
                 }
             }
         } else {
+            model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
             return constantProperties.getControllerDashboard();
         }
     }

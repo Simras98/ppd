@@ -106,7 +106,7 @@ public class ConnectionController {
                         request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
                         request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
                         request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
-                        request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
+                        model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                         return constantProperties.getControllerDashboard();
                     } else {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
@@ -251,7 +251,7 @@ public class ConnectionController {
                 request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
                 request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
                 request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
-                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationNotExist());
@@ -376,7 +376,7 @@ public class ConnectionController {
                 request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
                 request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
                 request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
-                request.getSession().setAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAssociationExist());
@@ -417,6 +417,7 @@ public class ConnectionController {
                     request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
                     request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
                     request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
+                    model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
                     return constantProperties.getControllerDashboard();
                 } else {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscribed());

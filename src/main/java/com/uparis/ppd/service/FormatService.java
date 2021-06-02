@@ -174,7 +174,7 @@ public class FormatService {
           + "                <tr>\r\n"
           + "                  <td class=\"inside-footer\" align=\"center\" valign=\"middle\" style=\"border-collapse: collapse;border: 0;margin: 0;padding: 20px;-webkit-text-size-adjust: none;color: #555559;font-family: Arial, sans-serif;font-size: 12px;line-height: 16px;vertical-align: middle;text-align: center;width: 580px;\">\r\n"
           + "<div id=\"address\" class=\"mktEditable\">\r\n"
-          + "                    <b>OurAssos</b><br>\r\n"
+          + "                    <b>OurAsso</b><br>\r\n"
           + "                            Projet Université de Paris<br>\r\n"
           + "\r\n"
           + "</div>\r\n"
