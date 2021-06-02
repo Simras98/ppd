@@ -80,34 +80,37 @@ main{
     justify-content: space-between;
 }
 .formulaire{
-    padding : 20px 30px;
-    max-width : 600px;
-    width: 100%;
+    padding : 2% 5%;
+    max-width : 50%;
+    width: 50%;
     background:#fff;
     border-radius : 5px;
-    margin-left: 250px;
-    margin-right: 20px;
-    margin-top: 70px;
+    margin-left: 25%;
+    margin-top: 5%;
+}
+.formulaire .title{
+    font-size: 20px;
+    margin-left: 27%;
 }
 .formulaire form .user-details{
     display : block;
     flex-wrap : wrap;
     justify-content : space-between;
-    margin : 20px 0 12px 0;
+    margin : 30px 0 12px 10%;
 }
 form .user-details .input-box{
-    margin-bottom : 15px;
+    margin-bottom : 20px;
     width : calc(100% /2 - 20px);
 }
 .user-details .input-box .details {
     display : block;
-    margin-bottom : 10px;
-    font-size : 15px;
+    margin-bottom : 20px;
+    font-size : 18px;
     font-weight : 550;
 }
 .user-details .input-box input {
     height : 45px;
-    width: 100%;
+    width: 200%;
     outline : none;
     border-radius:5px;
     border:1px solid #ccc;
@@ -117,8 +120,8 @@ form .user-details .input-box{
     transition : all 0.3s ease;
 }
 .user-details .input-box textarea {
-    height : 90px;
-    width: 100%;
+    height : 120px;
+    width: 200%;
     outline : none;
     border-radius:5px;
     border:1px solid #ccc;
@@ -131,14 +134,22 @@ form .user-details .input-box{
 .user-details .input-box input:valid{
     border-color : #9b59b6;
 }
+.user-details .dropdown select{
+    height: 35px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    color: dimgrey;
+    font-size: 17px;
+
+}
 form .input-button1{
     height: 35px;
     margin: 25px 0;
 }
 .input-button1 input{
     height: 100%;
-    width: 20%;
-    margin-left: 45%;
+    width: 40%;
+    margin-left: 25%;
     outline: none;
     color:#fff;
     border:none;
@@ -203,7 +214,9 @@ a:hover:after {
 @media (max-width: 400px) {
 
     .formulaire {
-        max-width: 100%;
+        max-width: 90%;
+        min-width: 65%;
+        margin-left: 10%;
     }
 
     form .user-details .input-box {

@@ -18,7 +18,9 @@ body{
     background: white;
 }
 .main-content{
-    margin-left: 20%;
+    width: 75%;
+    height: 100%;
+
 }
 .siderbar-logo{
     padding-left: 2rem;
@@ -70,24 +72,28 @@ header h1{
     margin-left: 1%;
 }
 .logo{
-    width: 65%;
-    margin-right: 7%;
-
+    width: 100px;
+    height: 100px;
 }
 main{
     justify-content: space-between;
 }
-
+.main-content{
+    margin-left: 245px;
+    height: 100%;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
 .formulaire{
-    padding : 2% 5%;
+    padding : 1% 1.5%;
     max-width : 70%;
     background:#fff;
     border-radius : 5px;
-    margin-left: 150px;
+    margin-left: 15%;
     margin-right: 20px;
 }
 .formulaire .title{
     font-size: 20px;
+    margin-left: 35%;
 }
 .formulaire form .user-details{
     display : flex;
@@ -156,15 +162,15 @@ form .user-details .input-box{
 .tableau{
     display:block;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 3%;
+    margin-left: 1%;
 }
 table{
-    width: 80%;
+    width: 70%;
     box-shadow: -1px 12px 12px -6px rgba(0,0,0,0.5);
-
 }
 table, td, th{
-    padding: 15px;
+    padding: 2vw;
     border: 1px solid slategrey;
     border-collapse: collapse;
     text-align: center;
@@ -249,7 +255,7 @@ a:hover:after {
     transition: 0s;
 }
 @media (max-width: 700px) {
-    .formulaire{
+    .formulaire {
         max-width: 115%;
         min-width: 65%;
         margin-left: 10%;
@@ -258,13 +264,16 @@ a:hover:after {
         max-height: 450px;
         overflow-y: scroll;
     }
+
     .formulaire::-webkit-scrollbar {
         width: 0;
     }
+
     form .user-details .input-box {
         margin: 10px 0 5px 0;
         width: 100%;
     }
+
     .input-button1 input {
         height: 100%;
         width: 80%;
@@ -277,15 +286,18 @@ a:hover:after {
     }
 
     .tableau table {
-        width: 20%;
-        height: 40%;
+        max-width: 4%;
+        min-width: 2%;
+        margin-left: 5%;
     }
-
     .tableau {
         max-height: 700px;
         overflow-y: scroll;
     }
     .tableau::-webkit-scrollbar {
         width: 0;
+    }
+    .main-content{
+        width: 100%;
     }
 }

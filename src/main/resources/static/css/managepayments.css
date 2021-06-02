@@ -10,17 +10,16 @@ body{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .sidebar{
-    width: 245px;
+    width: 18%;
     position: fixed;
     left: 0;
     top: 0;
     height: 100%;
     background: white;
-
 }
 .main-content{
     margin-left: 245px;
-    height: 609px;
+    height: 900px;
 }
 .siderbar-logo{
     padding-left: 2rem;
@@ -67,7 +66,6 @@ header{
 h1{
     font-size: 2.6vw;
 }
-
 header h1{
     color: white;
     padding-left:20px;
@@ -86,11 +84,9 @@ main h2{
     display:block;
     justify-content: space-between;
     padding: 1rem;
-    padding-left: 105px;
-    margin-left: 50px;
+    margin-left: 17%;
 }
 table{
-
     width: 600px;
     box-shadow: -1px 12px 12px -6px rgba(0,0,0,0.5);
     margin-left: 50px;
@@ -150,7 +146,6 @@ a:hover{
     color: #fff;
     text-decoration: none;
 }
-
 a:before, a:after {
     content: '';
     position: absolute;
@@ -159,7 +154,6 @@ a:before, a:after {
     bottom: -2px;
     background: #fff;
 }
-
 a:before {
     left: 0;
 }
@@ -168,13 +162,11 @@ a:after {
     background: #fff;
     transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-
 a:hover:before {
     background: #fff;
     width: 100%;
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-
 a:hover:after {
     background: transparent;
     width: 100%;

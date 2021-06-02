@@ -42,7 +42,7 @@
                                   placeholder="Votre message"
                                   type="text" required></textarea>
                     </div>
-                    <div th:object="${session.member}">
+                    <div class="dropdown" th:object="${session.member}">
                         <select id="emailMember" name="emailMember">
                             <option value="">Choisir un membre</option>
                             <option value="all">Tous les membres</option>
