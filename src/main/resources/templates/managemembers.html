@@ -31,13 +31,19 @@
                 <div class="user-details">
                     <div class="input-box">
                         <label class="details" for="firstName">Prénom</label>
-                        <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                               placeholder="Entrez le prénom" required type="text">
+                        <input id="firstName"
+                               name="firstName"
+                               pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                               placeholder="Entrez le prénom"
+                               type="text" required>
                     </div>
                     <div class="input-box">
                         <label class="details" for="lastName">Nom</label>
-                        <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                               placeholder="Entrez le nom" required type="text">
+                        <input id="lastName"
+                               name="lastName"
+                               pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                               placeholder="Entrez le nom"
+                               type="text" required>
                     </div>
                     <div class="gender-details">
                         <label class="details">Sexe</label>
@@ -47,31 +53,48 @@
                     </div>
                     <div class="input-box">
                         <label class="details" for="birthDate">Date de naissance</label>
-                        <input id="birthDate" name="birthDate" required type="date">
+                        <input id="birthDate"
+                               name="birthDate"
+                               type="date" required>
                     </div>
                     <div class="input-box">
                         <label class="details" for="address">Adresse</label>
-                        <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
-                               placeholder="Entrez l'adresse" required type="text">
+                        <input id="address"
+                               name="address"
+                               pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
+                               placeholder="Entrez l'adresse"
+                               type="text" required>
                     </div>
                     <div class="input-box">
                         <label class="details" for="city">Ville</label>
-                        <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                               placeholder="Entrez la ville" required type="text">
+                        <input id="city"
+                               name="city"
+                               pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                               placeholder="Entrez la ville"
+                               type="text" required>
                     </div>
                     <div class="input-box">
                         <label class="details" for="postalCode">Code Postal</label>
-                        <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
-                               placeholder="Entrez le code postal" required type="text">
+                        <input id="postalCode"
+                               name="postalCode"
+                               pattern="[0-9]{5}"
+                               placeholder="Entrez le code postal"
+                               type="text" required>
                     </div>
                     <div class="input-box">
                         <label class="details" for="email">Email</label>
-                        <input id="email" name="email" placeholder="Entrez l'email" required type="email">
+                        <input id="email"
+                               name="email"
+                               placeholder="Entrez l'email"
+                               type="email" required>
                     </div>
                     <div class="input-box">
                         <label class="details" for="phoneNumber">Numéro de téléphone</label>
-                        <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
-                               placeholder="Entrez le numéro de téléphone" required type="tel">
+                        <input id="phoneNumber"
+                               name="phoneNumber"
+                               pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
+                               placeholder="Entrez le numéro de téléphone"
+                               type="tel" required>
                     </div>
 
                     <div class="level-details">
@@ -90,9 +113,14 @@
             <div class="input-button2">
                 <form action="/addmemberfromfileconfirm" id="addMemberFromFileConfirm" method="post"
                       enctype="multipart/form-data">
-                    <input type="file" id="file" name="file"
+                    <input id="file"
+                           name="file"
+                           type="file"
                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                    <input id="addMemberFromFileButton" name='addMemberFromFileButton' type='submit' value="Ajouter"/>
+                    <input id="addMemberFromFileButton"
+                           name="addMemberFromFileButton"
+                           type="submit"
+                           value="Ajouter"/>
                 </form>
                 <form action="/receivemembersfromfile" method="get">
                     <button type="submit">Exporter</button>
@@ -113,7 +141,7 @@
                     <th>Numéro de téléphone</th>
                     <th>Administrateur</th>
                 </tr>
-                <tr id="members" th:each="Member,i : ${members}">
+                <tr id="members" th:each="Member,i : ${session.members}">
                     <td th:utext="${Member.firstName}"></td>
                     <td th:utext="${#strings.capitalize(Member.lastName)}"></td>
                     <td th:utext="${#strings.capitalize(Member.sex)}"></td>
@@ -123,7 +151,7 @@
                     <td th:utext="${#strings.capitalize(Member.postalCode)}"></td>
                     <td th:utext="${Member.email}"></td>
                     <td th:utext="${#strings.capitalize(Member.phoneNumber)}"></td>
-                    <td th:utext="${status[i.index].admin}"></td>
+                    <td th:utext="${session.status[i.index].admin}"></td>
                 </tr>
             </table>
         </div>

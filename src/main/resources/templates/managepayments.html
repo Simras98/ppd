@@ -30,7 +30,7 @@
                     <th>Date</th>
                     <th>Prix</th>
                 </tr>
-                <tr id="transactions" th:each="Transaction : ${transactions}">
+                <tr id="transactions" th:each="Transaction : ${session.transactions}">
                     <td th:utext="${Transaction.date}"></td>
                     <td th:utext="${Transaction.price}"></td>
                 </tr>

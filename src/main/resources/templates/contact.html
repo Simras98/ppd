@@ -11,32 +11,42 @@
             rel="stylesheet"
     />
     <link rel="stylesheet" href="css/contact.css"/>
-    <title>Contact</title>
+    <title>Communication</title>
 </head>
 <body>
 <div class="main-content">
     <header>
-        <h1>Contact</h1>
+        <h1>Communication</h1>
         <div class="topbar" th:insert="fragments/topbar.html :: topbar"></div>
         <div class="sidebar" th:insert="fragments/sidebar.html :: sidebar"></div>
     </header>
     <main>
         <div class="formulaire">
+            <div class="title"><strong>Formulaire de contact</strong></div>
+            <p th:text="${success}"></p>
+            <p th:text="${error}"></p>
             <form action="/contactconfirm" id="contactConfirm" method="post">
                 <div class="user-details">
                     <div class="input-box">
                         <label class="details" for="object">Objet</label>
-                        <input id="object" name="object" placeholder="Entrez l'objet du mail" required type="text">
+                        <input id="object"
+                               name="object"
+                               placeholder="Entrez l'objet du mail"
+                               type="text" required>
                     </div>
                     <div class="input-box">
-                        <textarea id="body" name="body" rows="5" cols="33" required
-                                  placeholder="Votre message"></textarea>
+                        <textarea id="body"
+                                  name="body"
+                                  rows="5"
+                                  cols="33"
+                                  placeholder="Votre message"
+                                  type="text" required></textarea>
                     </div>
-                    <div th:object="${member}">
+                    <div th:object="${session.member}">
                         <select id="emailMember" name="emailMember">
                             <option value="">Choisir un membre</option>
                             <option value="all">Tous les membres</option>
-                            <option th:each="member : ${members}"
+                            <option th:each="member : ${session.members}"
                                     th:value="${member.email}"
                                     th:text="${member.firstName}+' '+${member.lastName}"></option>
                         </select>

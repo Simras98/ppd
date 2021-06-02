@@ -72,6 +72,10 @@ public class TransactionController {
             }
             if (subscriptionService.subscribe(subscription, duration)) {
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
+                request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPaymentFailed());
@@ -124,6 +128,10 @@ public class TransactionController {
             }
             if (subscriptionService.subscribe(subscription, null)) {
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerDashboard());
+                request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
                 return constantProperties.getControllerDashboard();
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPaymentFailed());
@@ -140,7 +148,10 @@ public class TransactionController {
         Subscription subscription = (Subscription) request.getSession().getAttribute(constantProperties.getAttributeNameSubscription());
         if (subscription != null) {
             subscriptionService.skipSubscription(subscription);
-            request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+            model.addAttribute(constantProperties.getAttributeNameSubscription(), subscription);
+            request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));
+            request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), subscriptionService.getMembersByAssociation(subscription));
+            request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(subscription));
             return constantProperties.getControllerDashboard();
         }
         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLogout());

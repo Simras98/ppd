@@ -23,19 +23,25 @@
 <div th:insert="fragments/topbar.html :: topbar"></div>
 <main>
     <div class="container">
-        <div class="title">Inscrivez-vous!</div>
+        <div class="title"><strong>Inscrivez-vous !</strong></div>
         <p th:text="${error}"></p>
         <form action="/signupmemberconfirm" id="signupMemberConfirm" method="post">
             <div class="user-details">
                 <div class="input-box">
                     <label class="details" for="firstName">Prénom</label>
-                    <input id="firstName" name="firstName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez votre prénom" required type="text">
+                    <input id="firstName"
+                           name="firstName"
+                           pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez votre prénom"
+                           type="text" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="lastName">Nom</label>
-                    <input id="lastName" name="lastName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez votre nom" required type="text">
+                    <input id="lastName"
+                           name="lastName"
+                           pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez votre nom"
+                           type="text" required>
                 </div>
                 <div class="gender-details">
                     <label class="details">Sexe</label>
@@ -45,46 +51,70 @@
                 </div>
                 <div class="input-box">
                     <label class="details" for="birthDate">Date de naissance</label>
-                    <input id="birthDate" name="birthDate" required type="date">
+                    <input id="birthDate"
+                           name="birthDate"
+                           type="date" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="associationName">Association</label>
-                    <input id="associationName" name="associationName" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez le nom de l'association" required type="text">
+                    <input id="associationName"
+                           name="associationName"
+                           pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez le nom de l'association"
+                           type="text" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="address">Adresse</label>
-                    <input id="address" name="address" pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
-                           placeholder="Entrez votre adresse" required type="text">
+                    <input id="address"
+                           name="address"
+                           pattern='^[^<>%$§!?°"£\+€`*:;,()[]]*=$'
+                           placeholder="Entrez votre adresse"
+                           type="text" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="city">Ville</label>
-                    <input id="city" name="city" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
-                           placeholder="Entrez votre ville" required type="text">
+                    <input id="city"
+                           name="city"
+                           pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                           placeholder="Entrez votre ville"
+                           type="text" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="postalCode">Code Postal</label>
-                    <input id="postalCode" name="postalCode" pattern="[0-9]{5}"
-                           placeholder="Entrez votre code postal" required type="text">
+                    <input id="postalCode"
+                           name="postalCode"
+                           pattern="[0-9]{5}"
+                           placeholder="Entrez votre code postal"
+                           type="text" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="email">Email</label>
-                    <input id="email" name="email" placeholder="Entrez votre email" required type="email">
+                    <input id="email"
+                           name="email"
+                           placeholder="Entrez votre email"
+                           type="email" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="phoneNumber">Numéro de téléphone</label>
-                    <input id="phoneNumber" name="phoneNumber" pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
-                           placeholder="Entrez votre numéro de téléphone" required type="tel">
+                    <input id="phoneNumber"
+                           name="phoneNumber"
+                           pattern="^(\+33|0033|0)([0-7])[0-9]{8}$"
+                           placeholder="Entrez votre numéro de téléphone"
+                           type="tel" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="password">Mot de passe</label>
-                    <input id="password" name="password" placeholder="Entrez votre mot de passe" required
-                           type="password">
+                    <input id="password"
+                           name="password"
+                           placeholder="Entrez votre mot de passe"
+                           type="password" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="confirmPassword">Confirmation de votre mot de passe</label>
-                    <input id="confirmPassword" name="confirmPassword" placeholder="Confirmez votre mot de passe"
-                           required type="password">
+                    <input id="confirmPassword"
+                           name="confirmPassword"
+                           placeholder="Confirmez votre mot de passe"
+                           type="password" required>
                 </div>
                 <div class="level-details">
                     <label class="details">Niveau</label>
