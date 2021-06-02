@@ -140,7 +140,7 @@
                     <th>Numéro de téléphone</th>
                     <th>Administrateur</th>
                 </tr>
-                <tr id="members" th:each="Member,i : ${members}">
+                <tr id="members" th:each="Member,i : ${session.members}">
                     <td th:utext="${Member.firstName}"></td>
                     <td th:utext="${#strings.capitalize(Member.lastName)}"></td>
                     <td th:utext="${#strings.capitalize(Member.sex)}"></td>
@@ -150,7 +150,7 @@
                     <td th:utext="${#strings.capitalize(Member.postalCode)}"></td>
                     <td th:utext="${Member.email}"></td>
                     <td th:utext="${#strings.capitalize(Member.phoneNumber)}"></td>
-                    <td th:utext="${status[i.index].admin}"></td>
+                    <td th:utext="${session.status[i.index].admin}"></td>
                 </tr>
             </table>
         </div>

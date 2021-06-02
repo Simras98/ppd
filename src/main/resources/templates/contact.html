@@ -42,11 +42,11 @@
                                   placeholder="Votre message"
                                   type="text" required></textarea>
                     </div>
-                    <div th:object="${member}">
+                    <div th:object="${session.member}">
                         <select id="emailMember" name="emailMember">
                             <option value="">Choisir un membre</option>
                             <option value="all">Tous les membres</option>
-                            <option th:each="member : ${members}"
+                            <option th:each="member : ${session.members}"
                                     th:value="${member.email}"
                                     th:text="${member.firstName}+' '+${member.lastName}"></option>
                         </select>

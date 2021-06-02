@@ -22,10 +22,13 @@
             <div th:if="${#strings.equals(#request.getParameter('error'), 'badCredentialsException')}"></div>
             <ul>
                 <li>
-                    <a href="/dashboard" th:class="${#strings.equals(page, 'dashboard')} ? active : act"><span class="tab-bord"></span><span>Tableau de bord</span></a>
+                    <a href="/dashboard"
+                       th:class="${#strings.equals(page, 'dashboard')} ? active : act"><span class="tab-bord"></span><span>Tableau de bord</span></a>
                 </li>
                 <li>
-                    <a href="/managemembers" th:class="${#strings.equals(page, 'managemembers')} ? active : act"><span class="G-member"></span><span>Gestion des membres</span></a>
+                    <a href="/managemembers"
+                       th:if="${session.subscription.status.admin == True}"
+                       th:class="${#strings.equals(page, 'managemembers')} ? active : act"><span class="G-member"></span><span>Gestion des membres</span></a>
                 </li>
                 <li>
                     <a class="act"><span class="bill"></span><span>Billetterie</span></a>
@@ -34,10 +37,12 @@
                     <a class="act"><span class="coll"></span><span>Collectes</span></a>
                 </li>
                 <li>
-                    <a href="/managepayments" th:class="${#strings.equals(page, 'managepayments')} ? active : act"><span class="pai"></span><span>Paiements</span></a>
+                    <a href="/managepayments"
+                       th:class="${#strings.equals(page, 'managepayments')} ? active : act"><span class="pai"></span><span>Paiements</span></a>
                 </li>
                 <li>
-                    <a href="/contact" th:class="${#strings.equals(page, 'contact')} ? active : act"><span class="comm"></span><span>Communication</span></a>
+                    <a href="/contact"
+                       th:class="${#strings.equals(page, 'contact')} ? active : act"><span class="comm"></span><span>Communication</span></a>
                 </li>
             </ul>
         </div>

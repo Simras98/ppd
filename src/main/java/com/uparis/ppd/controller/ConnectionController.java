@@ -111,7 +111,7 @@ public class ConnectionController {
                     } else {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
                         if (subscriptionService.getStatusSuperAdmin(subscription)) {
-                            model.addAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
+                            request.getSession().setAttribute(constantProperties.getAttributeNamePrice(), subscriptionService.getPrice(subscription));
                             return constantProperties.getControllerBillingSuperAdmin();
                         } else {
                             return constantProperties.getControllerBillingMember();

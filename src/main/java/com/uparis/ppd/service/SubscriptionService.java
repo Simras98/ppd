@@ -82,12 +82,14 @@ public class SubscriptionService {
     public List<Member> getMembersByAssociationInLastMonth(Subscription subscription) {
         List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
         List<Member> members = new ArrayList<>();
-        Calendar nowDate = Calendar.getInstance();
         Calendar date = Calendar.getInstance();
+
+        Calendar nowDate = Calendar.getInstance();
+        nowDate.add(Calendar.DAY_OF_MONTH, -1);
         nowDate.set(Calendar.DAY_OF_MONTH, 1);
         for (Subscription sub : subscriptions) {
             date.setTimeInMillis(subscription.getArrived());
-            if (!date.after(nowDate)) {
+            if (date.after(nowDate)) {
                 members.add(sub.getMember());
             }
         }
@@ -238,23 +240,23 @@ public class SubscriptionService {
         Transaction transaction;
         if (subscription.getStatus().isSuperAdmin()) {
             transaction = transactionService.create(time, getPrice(subscription), subscription);
-            subscription.setStop(time + (10 * 1000));
+            subscription.setStop(time + (360 * 1000));
             // subscription.setStop(time + ((31556952L / 12) * 1000));
         } else {
             switch (duration) {
                 case "1":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice1Month(), subscription);
-                    subscription.setStop(time + (10 * 1000));
+                    subscription.setStop(time + (360 * 1000));
                     // subscription.setStop(time + ((31556952L / 12) * 1000));
                     break;
                 case "3":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice3Months(), subscription);
-                    subscription.setStop(time + (10 * 1000));
+                    subscription.setStop(time + (360 * 1000));
                     // subscription.setStop(time + ((3 * 31556952L / 12) * 1000));
                     break;
                 case "12":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice12Months(), subscription);
-                    subscription.setStop(time + (10 * 1000));
+                    subscription.setStop(time + (360 * 1000));
                     // subscription.setStop(time + ((12 * 31556952L / 12) * 1000));
                     break;
                 default:
