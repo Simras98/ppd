@@ -88,12 +88,12 @@ main .head{
 }
 .container .link-box .image1{
     height: 100%;
-    width: 80px;
-    margin-left: 18%;
+    width: 50%;
+    margin-left: 21%;
 }
 .container .link-box .image{
     height: 100%;
-    width: 70px;
+    width:50%;
     margin-left: 25%;
 }
 @media (max-width: 1000px) {
@@ -118,14 +118,5 @@ main .head{
         font-size: 14px;
         font-weight: bold;
     }
-    .container .link-box .image1{
-        height: 100%;
-        width: 70px;
-        margin-left: 0.01%;
-    }
-    .container .link-box .image{
-        height: 100%;
-        width: 75px;
-        margin-left: 0.01%;
-    }
+
 }
