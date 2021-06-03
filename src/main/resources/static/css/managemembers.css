@@ -64,13 +64,13 @@ body{
 header{
     display: flex;
     justify-content: space-between;
+    margin-left: 19%;
 }
 h1{
     font-size: 2.6vw;
 }
 header h1{
     color: white;
-    margin-left: 20%;
 }
 .logo{
     width: 100px;
