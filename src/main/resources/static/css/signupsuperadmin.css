@@ -52,12 +52,12 @@ a:after {
     transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:before {
-    background: #9b59b6;
+    background: #71b7e6;
     width: 100%;
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:after {
-    background:#71b7e6;
+    background:transparent;
     width: 100%;
     transition: 0s;
 }
@@ -69,7 +69,7 @@ a:hover:after {
     border-radius: 5px;
 }
 .container .title{
-    padding-left: 210px;
+    text-align: center;
     font-size: 25px;
     font-weight: 500;
 }
@@ -127,7 +127,7 @@ form .price-details .category{
     justify-content : space-between;
 }
 form .login{
-    padding-left: 210px;
+    text-align: center;
 }
 form .button{
     height: 35px;

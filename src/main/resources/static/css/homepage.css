@@ -32,7 +32,7 @@ a:before, a:after {
     width: 0%;
     height: 2px;
     bottom: -2px;
-    background: #71b7e6;
+    background:#9b59b6;
 }
 a:before {
     left: 0;
@@ -43,32 +43,32 @@ a:after {
     transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:before {
-    background: #fff;
+    background: #71b7e6;
     width: 100%;
     transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 a:hover:after {
-    background:#71b7e6;
+    background:transparent;
     width: 100%;
     transition: 0s;
 }
 main{
     display: grid;
-    height: 240vh;
+    height: 100%;
+    width : 100%;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .head .homeimg{
-    width : 208vh;
-    height: 55vh;
+    width : 100%;
 }
 .cont .container{
     display: flex;
-    width: 98vw;
+    width: 100%;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 .cont .title{
-    padding-left: 38vw;
+    text-align: center;
     color: #ffffff;
     font-style: italic;
     box-shadow: 0 1px 3px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.28);
@@ -78,7 +78,7 @@ main{
 box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
 }
 .cont .title1{
-    padding-left: 43vw;
+    text-align: center;
     color:#ffffff;
     font-style: italic;
     box-shadow: 0 1px 3px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.28);
@@ -87,15 +87,16 @@ box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
 .cont .title1:hover{
     box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
 }
-.cont .imageenvlope{
+body .imageenvlope{
     width: 20px;
     padding-left: 5px;
 }
-.cont .image-social{
+body .image-social{
     width: 40px;
     padding: 5px 10px;
 }
-.cont .cont-social{
+body .cont-social{
+    height: 8%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -124,18 +125,9 @@ box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
      align-content: center;
      margin-left: 20px;
 }
-.sub-cont .descriptionss{
-    margin-left: 20px;
-}
-.sub-cont .descriptionn{
-    margin-left: 14px;
-}
  .sub-cont .description{
-     margin-left: 24px;
+     text-align: center;
  }
-.sub-cont .descriptionsx{
-    margin-left: 4px;
-}
 .sub-cont .descriptions{
     margin-left: 16px;
 }
@@ -152,17 +144,9 @@ box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
     font-size: 13px;
 }
  .sub-cont .description2{
-     margin-left: 20px;
+     text-align: center;
      font-size: 13px;
  }
-.sub-cont .description3{
-    margin-left: 30px;
-    font-size: 13px;
-}
-.sub-cont .desc1{
-    margin-left: 30px;
-    font-size: 13px;
-}
 .sub-cont .price{
     margin-left: 40px;
 }
@@ -172,13 +156,6 @@ box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
 @media only screen and (max-width: 900px) {
     nav{
         margin-left: 37px;
-    }
-    .head .homeimg{
-        width: 100%;
-    }
-    main{
-        width: 98vw;
-        height: 371vw;
     }
     .container .sub-cont{
         width: 40vw;
