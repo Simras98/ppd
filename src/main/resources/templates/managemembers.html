@@ -24,7 +24,7 @@
     </header>
     <main>
         <div class="formulaire">
-            <div class="title"><strong>Ajouter un adhérent</strong></div>
+            <div class="title1"><strong>Ajouter un adhérent</strong></div>
             <p th:text="${success}"></p>
             <p th:text="${error}"></p>
             <form action="/addmembersconfirm" id="addMemberConfirm" method="post">
@@ -102,13 +102,14 @@
                         <input id="admin" name="admin" type="radio" value="true"> Administrateur
                         <input id="member" name="admin" type="radio" value="false"> Membre
                     </div>
+
                     <div class="input-button1">
                         <input id="addMemberButton" name='addMemberButton' type="submit" value="Ajouter">
                     </div>
                 </div>
+                <br>
             </form>
-            <br>
-            <div class="title"><strong>Ajouter des adhérents via Excel</strong></div>
+            <div class="title2"><strong> Ajouter des adhérents à partir d’Excel</strong></div>
             <div class="input-button2">
                 <form action="/addmemberfromfileconfirm" id="addMemberFromFileConfirm" method="post"
                       enctype="multipart/form-data">
@@ -116,19 +117,19 @@
                            name="file"
                            type="file"
                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                        <input id="addMemberFromFileButton"
-                               name="addMemberFromFileButton"
-                               type="submit"
-                               value="Ajouter"/>
+                    <input class="ajouter" id="addMemberFromFileButton"
+                           name="addMemberFromFileButton"
+                           type="submit"
+                           value="Ajouter"/>
                 </form>
             </div>
-            <br>
-            <div class="title"><strong>Récuperer la liste des membres</strong></div>
-            <form action="/receivemembersfromfile" method="get">
-                <div class="input-button1">
-                    <input id="downloadMemberButton" name='downloadMemberButton' type="submit" value="Exporter">
-                </div>
-            </form>
+            <div class="title3"><strong> Exporter les adhérents </strong></div>
+            <div class="input-button3">
+
+                <form action="/receivemembersfromfile" method="get">
+                    <button type="submit">Exporter</button>
+                </form>
+            </div>
         </div>
         <div class="tableau">
             <table>

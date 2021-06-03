@@ -97,21 +97,13 @@ main .head{
     margin-left: 25%;
 }
 @media (max-width: 1000px) {
-    .cont{
-        width: 100%;
-        margin: 20px 0 5px 0;
-        align-content: space-between;
-    }
     nav{
         max-width: 100%;
         padding-left: 30px;
     }
     .container{
-        width: 40%;
+        width: 45%;
         align-content: space-between;
-    }
-    .container .link-box{
-        position: center;
     }
     .container .link-box .link{
         margin-left: 8px;

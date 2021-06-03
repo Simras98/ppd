@@ -16,11 +16,12 @@ body{
     top: 0;
     height: 100%;
     background: white;
+    max-width: 254px;
+    min-width: 100px;
 }
 .main-content{
     width: 75%;
     height: 100%;
-
 }
 .siderbar-logo{
     padding-left: 2rem;
@@ -79,21 +80,31 @@ main{
     justify-content: space-between;
 }
 .main-content{
-    margin-left: 245px;
+    width: 100%;
     height: 100%;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .formulaire{
-    padding : 1% 1.5%;
-    max-width : 70%;
+    width: 50%;
     background:#fff;
     border-radius : 5px;
-    margin-left: 15%;
-    margin-right: 20px;
+    margin-left: 40%;
+    padding: 1% 2%;
 }
-.formulaire .title{
+.formulaire .title1{
+    font-size: 20px;
+    text-align: center;
+}
+.formulaire .title2{
+    font-size: 20px;
+    margin-left: 22%;
+    margin-bottom: 4%;
+}
+.formulaire .title3{
     font-size: 20px;
     margin-left: 35%;
+    margin-bottom: 4%;
+    margin-top: 4%;
 }
 .formulaire form .user-details{
     display : flex;
@@ -105,14 +116,12 @@ main{
 form .user-details .input-box{
     margin-bottom : 15px;
     width : calc(100% /2 - 20px);
-
 }
 .user-details .input-box .details {
     display : block;
     margin-bottom : 10px;
     font-size : 15px;
     font-weight : 550;
-
 }
 .user-details .input-box input {
     height : 45px;
@@ -140,12 +149,13 @@ form .user-details .input-box{
     margin-bottom : 10px;
     font-size : 15px;
     font-weight : 550;
-    margin-right: 300px;
+    margin-right: 236px;
 }
 .input-button1 input{
-    height: 110%;
-    width: 60%;
-    margin-left: 250px;
+    height: 72%;
+    width: 45%;
+    margin-left: 260px;
+    margin-top: 4%;
     outline: none;
     color:#fff;
     border:none;
@@ -159,18 +169,45 @@ form .user-details .input-box{
     display: flex;
     justify-content : space-between;
 }
+.input-button2 .ajouter{
+    height: 34%;
+    width: 22%;
+    margin-left: 265px;
+    margin-top: 4%;
+    outline: none;
+    color:#fff;
+    border:none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
+.input-button3 button{
+    height: 80%;
+    width: 22%;
+    margin-left: 265px;
+    margin-bottom: 4%;
+    outline: none;
+    color:#fff;
+    border:none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
 .tableau{
     display:block;
     justify-content: space-between;
-    padding: 3%;
-    margin-left: 1%;
+    padding: 1% 2%;
+    margin-left: 28%;
 }
 table{
-    width: 70%;
     box-shadow: -1px 12px 12px -6px rgba(0,0,0,0.5);
 }
 table, td, th{
-    padding: 2vw;
+    padding: 0.5vw;
     border: 1px solid slategrey;
     border-collapse: collapse;
     text-align: center;
@@ -219,6 +256,7 @@ a{
     padding: 8px 0;
     color: #fff;
     text-decoration: none;
+    /*align-content: ;*/
 }
 a:hover{
     color: #fff;
