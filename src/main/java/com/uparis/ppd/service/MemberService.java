@@ -147,7 +147,7 @@ public void resetPassword(String email) {
 				String customMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
 						+ "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
 						+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
-						+"<br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+						+"<p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
                 FormatService serviceF = new FormatService();
 				String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
 						"OurAsso");
