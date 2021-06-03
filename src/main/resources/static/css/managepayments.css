@@ -70,7 +70,7 @@ h1{
 }
 header h1{
     color: white;
-    margin-left: 20%;
+    padding-left: 5%;
 }
 .logo{
     width: 100px;
@@ -78,9 +78,6 @@ header h1{
 }
 main{
     justify-content: space-between;
-}
-main h2{
-    color: white;
 }
 .tableau{
     display:block;

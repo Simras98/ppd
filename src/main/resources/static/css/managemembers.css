@@ -150,13 +150,13 @@ form .user-details .input-box{
     margin-bottom : 10px;
     font-size : 15px;
     font-weight : 550;
-    margin-right: 70%;
+    margin-right: 250px;
+
 }
 .input-button1 input{
-    height: 70%;
-    width: 40%;
-    margin-left: 280px;
-    margin-top: 4%;
+    width: 21%;
+    display: block;
+    margin : auto;
     outline: none;
     color:#fff;
     border:none;
@@ -166,15 +166,10 @@ form .user-details .input-box{
     letter-spacing: 1px;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
-.input-button2{
-    display: flex;
-    justify-content : space-between;
-}
 .input-button2 .ajouter{
-    height: 38%;
-    width: 35%;
-    margin-left: 75%;
-    margin-top: 4%;
+    width: 21%;
+    display: block;
+    margin : auto;
     outline: none;
     color:#fff;
     border:none;
@@ -186,8 +181,8 @@ form .user-details .input-box{
 }
 .input-button3 button{
     width: 21%;
-    margin-left: 43%;
-    margin-bottom: 4%;
+    display: block;
+    margin : auto;
     outline: none;
     color:#fff;
     border:none;
@@ -291,4 +286,51 @@ a:hover:after {
     background: transparent;
     width: 100%;
     transition: 0s;
+}
+@media (max-width: 700px) {
+    .formulaire {
+        max-width: 115%;
+        min-width: 65%;
+        margin-left: 10%;
+    }
+    .formulaire {
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+
+    .formulaire::-webkit-scrollbar {
+        width: 0;
+    }
+
+    form .user-details .input-box {
+        margin: 10px 0 5px 0;
+        width: 100%;
+    }
+
+    .input-button1 input {
+        height: 100%;
+        width: 80%;
+        margin-left: 30px;
+    }
+
+    form .input-button2 input {
+        height: 100%;
+        width: 80%;
+    }
+
+    .tableau table {
+        max-width: 4%;
+        min-width: 2%;
+        margin-left: 5%;
+    }
+    .tableau {
+        max-height: 700px;
+        overflow-y: scroll;
+    }
+    .tableau::-webkit-scrollbar {
+        width: 0;
+    }
+    .main-content{
+        width: 100%;
+    }
 }
