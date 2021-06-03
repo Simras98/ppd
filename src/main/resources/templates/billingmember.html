@@ -61,17 +61,17 @@
                 <div class="type">
                     <div id="price1">
                         <span class="ab">Abonnement 1 mois</span>
-                        <p th:text="${session.subscription.association.price1Month}"></p>
+                        <p th:text="${session.subscription.association.price1Month}"> €</p>
                         <input id="month1" name="duration" value="1" type="radio">
                     </div>
                     <div id="price3">
                         <span class="ab">Abonnement 3 mois</span>
-                        <p th:text="${session.subscription.association.price3Months}"></p>
+                        <p th:text="${session.subscription.association.price3Months}"> €</p>
                         <input id="month3" name="duration" value="3" type="radio">
                     </div>
                     <div id="price12">
                         <span class="ab"> Abonnement 12 mois</span>
-                        <p th:text="${session.subscription.association.price12Months}"></p>
+                        <p th:text="${session.subscription.association.price12Months}"> €</p>
                         <input id="month12" name="duration" value="12" type="radio">
                     </div>
                 </div>
