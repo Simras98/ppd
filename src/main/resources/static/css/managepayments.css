@@ -16,6 +16,8 @@ body{
     top: 0;
     height: 100%;
     background: white;
+    max-width: 254px;
+    min-width: 100px;
 }
 .main-content{
     margin-left: 245px;
@@ -68,7 +70,7 @@ h1{
 }
 header h1{
     color: white;
-    padding-left:20px;
+    margin-left: 20%;
 }
 .logo{
     width: 100px;

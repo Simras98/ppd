@@ -70,7 +70,7 @@ h1{
 }
 header h1{
     color: white;
-    margin-left: 1%;
+    margin-left: 20%;
 }
 .logo{
     width: 100px;
@@ -85,10 +85,11 @@ main{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .formulaire{
-    width: 50%;
+    max-width: 700px;
+    min-width: 400px;
     background:#fff;
     border-radius : 5px;
-    margin-left: 40%;
+    margin-left: 35%;
     padding: 1% 2%;
 }
 .formulaire .title1{
@@ -97,12 +98,12 @@ main{
 }
 .formulaire .title2{
     font-size: 20px;
-    margin-left: 22%;
+    text-align: center;
     margin-bottom: 4%;
 }
 .formulaire .title3{
     font-size: 20px;
-    margin-left: 35%;
+    text-align: center;
     margin-bottom: 4%;
     margin-top: 4%;
 }
@@ -149,12 +150,12 @@ form .user-details .input-box{
     margin-bottom : 10px;
     font-size : 15px;
     font-weight : 550;
-    margin-right: 236px;
+    margin-right: 70%;
 }
 .input-button1 input{
-    height: 72%;
-    width: 45%;
-    margin-left: 260px;
+    height: 70%;
+    width: 40%;
+    margin-left: 280px;
     margin-top: 4%;
     outline: none;
     color:#fff;
@@ -170,9 +171,9 @@ form .user-details .input-box{
     justify-content : space-between;
 }
 .input-button2 .ajouter{
-    height: 34%;
-    width: 22%;
-    margin-left: 265px;
+    height: 38%;
+    width: 35%;
+    margin-left: 75%;
     margin-top: 4%;
     outline: none;
     color:#fff;
@@ -184,9 +185,8 @@ form .user-details .input-box{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .input-button3 button{
-    height: 80%;
-    width: 22%;
-    margin-left: 265px;
+    width: 21%;
+    margin-left: 43%;
     margin-bottom: 4%;
     outline: none;
     color:#fff;
@@ -201,7 +201,7 @@ form .user-details .input-box{
     display:block;
     justify-content: space-between;
     padding: 1% 2%;
-    margin-left: 28%;
+    margin-left: 22%;
 }
 table{
     box-shadow: -1px 12px 12px -6px rgba(0,0,0,0.5);
@@ -291,50 +291,4 @@ a:hover:after {
     background: transparent;
     width: 100%;
     transition: 0s;
-}
-@media (max-width: 700px) {
-    .formulaire {
-        max-width: 115%;
-        min-width: 65%;
-        margin-left: 10%;
-    }
-    .formulaire {
-        max-height: 450px;
-        overflow-y: scroll;
-    }
-
-    .formulaire::-webkit-scrollbar {
-        width: 0;
-    }
-
-    form .user-details .input-box {
-        margin: 10px 0 5px 0;
-        width: 100%;
-    }
-
-    .input-button1 input {
-        height: 100%;
-        width: 80%;
-        margin-left: 30px;
-    }
-
-    form .input-button2 input {
-        height: 100%;
-        width: 80%;
-    }
-    .tableau table {
-        max-width: 4%;
-        min-width: 2%;
-        margin-left: 5%;
-    }
-    .tableau {
-        max-height: 700px;
-        overflow-y: scroll;
-    }
-    .tableau::-webkit-scrollbar {
-        width: 0;
-    }
-    .main-content{
-        width: 100%;
-    }
 }
