@@ -164,5 +164,8 @@ nav ul li a {
     text-align: center;
     margin-top: 12%;
 }
+.container .sub-container:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.55), 0 10px 10px rgba(0,0,0,0.52);
+}
 
 
