@@ -46,10 +46,7 @@ public class MemberService {
 
     @Qualifier("getJavaMailSender")
     @Autowired
-    private JavaMailSender emailSender;
-
-    @Value("${spring.mail.username}")
-    private String ourassoEmail;
+    private JavaMailSender javaMailSender;
 
     public Member create(String firstName, String lastName, String sex, String birthDate, String address, String city, String postalCode, String email, String phoneNumber, String password) {
         if (getByEmail(email) == null) {
@@ -136,7 +133,7 @@ public void resetPassword(String email) {
 			
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-				mimeMessage.setFrom(new InternetAddress(ourassoEmail));
+				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
 				mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
 
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -155,7 +152,7 @@ public void resetPassword(String email) {
 
 			}
 		};
-		emailSender.send(preparator);
+		javaMailSender.send(preparator);
 	}
 
     public List<String> createRandomPasswords(int number) {
