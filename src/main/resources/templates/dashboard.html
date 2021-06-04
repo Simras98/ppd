@@ -20,44 +20,43 @@
         <div class="topbar" th:insert="fragments/topbar.html :: topbar"></div>
         <div class="sidebar" th:insert="fragments/sidebar.html :: sidebar"></div>
     </header>
-    <div id="case_sup">
-        <div class="card card-1">
-            <div id="modele_case_1">
-                <img class="image_member1" src="images/user.png"/>
-                <div id="case_1_text">
-                    <p id="member_count_number" th:text="${session.members.size()}"></p>
-                    <p id="member_count1">Membres</p>
-                </div>
+    <main>
+    <div class="cont">
+    <div class="container">
+        <div class="sub-container">
+            <img class="image" src="images/user.png"/>
+            <div class="description">
+                <p th:text="${session.members.size()}"></p>
+                <p> Membres</p>
             </div>
         </div>
-        <div class="card card-1">
-            <div id="modele_case_1">
-                <img class="image_member2" src="images/donnant.png"/>
-                <div id="case_2_text">
-                    <p id="member_count_number">3 €</p>
-                    <p id="member_count2">de collectes</p>
-                </div>
+        <div class="sub-container">
+            <img class="image" src="images/donnant.png"/>
+            <div class="description">
+                <p> 3 €</p>
+                <p> de collectes</p>
             </div>
         </div>
-        <div class="card card-1">
-            <div id="case_4">
-                <img class="image_member4" src="images/verifie.png"/>
-                <div id="case_4_text">
-                    <p id="member_count_number" th:text="${session.date}"></p>
-                    <p id="member_count4">Avant expiration</p>
-                </div>
+
+    </div>
+    <div class="container">
+        <div class="sub-container">
+            <img class="image" src="images/verifie.png"/>
+            <div class="description1">
+                <p th:text="${session.date}"></p>
+                <p >Avant expiration</p>
             </div>
         </div>
-        <div class="card_2 card-1">
-            <div id="case_5">
-                <img class="image_member5" src="images/new_member.png"/>
-                <div id=case_5_text>
-                    <p id="member_count_number5" th:text="${session.membersinmonth.size()}"></p>
-                    <p id="member_count5">durant ce mois</p>
-                </div>
+        <div class="sub-container">
+            <img class="image" src="images/new_member.png"/>
+            <div class="description1" id=case_5_text>
+                <p id="member_count_number5" th:text="${session.membersinmonth.size()}"></p>
+                <p> durant ce mois</p>
             </div>
         </div>
     </div>
+     </div>
+    </main>
 </div>
 </body>
 </html>

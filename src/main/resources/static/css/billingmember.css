@@ -11,8 +11,10 @@ main {
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .formulaire{
-    padding : 20px 30px;
-    max-width : 800px;
+    padding :1% 2%;
+    position: center;
+    margin: auto;
+    max-width: 800px;
     width: 100%;
     background:#fff;
     border-radius : 5px;
@@ -20,6 +22,7 @@ main {
 }
 .formulaire .titre{
     font-size: 20px;
+    text-align: center;
 }
 .formulaire form .user-details{
     display : flex;
@@ -62,27 +65,10 @@ form .ab-details .type {
     margin: 14px 0;
     justify-content : space-between;
 }
-form .button{
-    height: 45px;
-    margin: 35px 0;
-}
-.input-button1 input{
-    height: 100%;
-    width: 30%;
-    margin-left: 35%;
-    outline: none;
-    color:#fff;
-    border:none;
-    font-size: 18px;
-    font-weight: 500;
-    border-radius: 5px;
-    letter-spacing: 1px;
-    background: linear-gradient(135deg,#71b7e6,#9b59b6);
-}
-.input-button2 input{
-    height: 100%;
+.input-button1 input,.input-button2 input{
     width: 40%;
-    margin-left: 30%;
+    display: block;
+    margin : auto;
     outline: none;
     color:#fff;
     border:none;
@@ -93,7 +79,7 @@ form .button{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 nav{
-    padding-left: 700px;
+    text-align: right;
 }
 nav ul li{
     display: inline-flex;

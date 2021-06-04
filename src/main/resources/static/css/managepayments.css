@@ -20,8 +20,9 @@ body{
     min-width: 100px;
 }
 .main-content{
-    margin-left: 245px;
+    margin-left: 18%;
     height: 900px;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .siderbar-logo{
     padding-left: 2rem;
@@ -122,6 +123,9 @@ tr:nth-child(even):hover{
     color: black;
     transform: scale(1.2);
     transition: transform 50ms ease-in;
+}
+nav{
+    text-align: right;
 }
 nav ul li{
     display: inline-flex;

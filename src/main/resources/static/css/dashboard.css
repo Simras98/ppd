@@ -19,11 +19,7 @@ body{
     max-width: 254px;
     min-width: 100px;
 }
-.main-content{
-    margin-left: 250px;
-    width: 75%;
-    height: 100%;
-}
+
 a{
     position: relative;
     display: block;
@@ -100,8 +96,10 @@ a:hover:after {
     font-size: 1.5rem;
     padding-right: 1rem;
 }
-h1{
-    font-size: 2.6vw;
+.main-content{
+    margin-left: 18%;
+    height: 900px;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 header{
     display: flex;
@@ -109,12 +107,18 @@ header{
 }
 header h1{
     color: white;
-    margin-left: 1%;
+    margin-left:1%;
+}
+h1{
+    font-size: 2.6vw;
 }
 .logo{
     width: 100px;
     height: 100px;
 }
+nav{
+     text-align: right;
+ }
 nav ul li{
     display: inline-flex;
     list-style: none;
@@ -125,105 +129,40 @@ nav ul li a {
     font-size: 1.3vw;
     padding: 0px 20px;
 }
-case_sup{
+.cont{
+    position: center;
+    margin: auto;
+    max-width: 100%;
     width: 100%;
+    justify-content: center;
 }
-.card {
-    background: #fff;
+.cont .container{
+    display: flex;
+    width: 60%;
+    height: 30%;
+    margin-bottom: 5%;
+}
+.container .sub-container{
+    width: 50%;
+    margin-right: 10%;
+    outline: none;
+    background: #ffff;
+    padding: 5% 6% ;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    display: inline-block;
-    height: 250px;
-    margin: 2.5rem;
-    position: relative;
-    width: 40%;
-}
-.card_2 {
-    background: #fff;
-    border-radius: 5px;
-    display: inline-block;
-    height: 250px;
-    margin: 2.5rem;
-    position: relative;
-    width: 40%;
-}
-#case_2_text{
-    position:relative;left: 15px; top:0px;
-}
-#case_4_text{
-    position:relative;right: 25px; top:10px;
-}
-#case_5{
-    position:absolute;left: 90px; top:20px;
-}
-#case_4{
-    position:absolute;left: 100px; top:10px;
-}
-#case_5_text{
-    position:relative;left: 2px; top:0px;
-}
-#case_sup{
-    position:relative;left : 50px;
-}
-#case_2_text{
-    position:relative;right: 20px; top:0px;
-}
-#case_1_text{
-    position:relative;left: 12px; top:0px;
-}
-#modele_case_1{
-    position:absolute;left: 110px; top:10px;
-}
-.card-1 {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.88);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-
 }
-.card-1:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.55), 0 10px 10px rgba(0,0,0,0.52);
+.sub-container .image{
+    width: 50%;
+    margin-left: 25%;
 }
-.image_member1{
-    height: 120px;
-    width: 120px;
-    margin-left: 20px;
+.sub-container .description{
+    text-align: center;
 }
-.image_member2{
-    height: 120px;
-    width: 120px;
-    margin-left: 25px;
-}
-.image_member4{
-    height: 120px;
-    width: 120px;
-    margin-left: 35px;
-}
-.image_member5{
-    height: 120px;
-    width: 120px;
-    margin-left: 35px;
-    margin-bottom: 5px;
+.sub-container .description1{
+    text-align: center;
+    margin-top: 12%;
 }
 
-#member_count_number{
-    margin-left: 30%;
-    font-size :1.8vw;
-}
-#member_count_number5{
-    margin-left: 55%;
-    font-size :1.8vw;
-}
-#member_count4{
-    margin-left: 35px;
-    font-size :1.8vw;
-}
-#member_count2{
-    margin-left: 5px;
-    font-size :1.8vw;
-}
-#member_count1{
-    margin-left: 10px;
-    font-size :1.8vw;
-}
-#member_count5{
-    margin-left: 30px;
-    font-size :1.8vw;
-}
+

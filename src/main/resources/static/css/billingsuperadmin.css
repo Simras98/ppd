@@ -13,8 +13,10 @@ main {
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 .formulaire{
-    padding : 20px 30px;
-    max-width : 800px;
+    padding :1% 2%;
+    position: center;
+    margin: auto;
+    max-width: 800px;
     width: 100%;
     background:#fff;
     border-radius : 5px;
@@ -22,6 +24,7 @@ main {
 }
 .formulaire .titre{
     font-size: 20px;
+    text-align: center;
 }
 .formulaire form .user-details{
     display : flex;
@@ -59,9 +62,9 @@ form .button{
     margin: 35px 0;
 }
 .input-button input{
-    height: 100%;
     width: 30%;
-    margin-left: 35%;
+    display: block;
+    margin : auto;
     outline: none;
     color:#fff;
     border:none;
@@ -72,7 +75,7 @@ form .button{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 nav{
-    padding-left: 700px;
+    text-align: right;
 }
 nav ul li{
     display: inline-flex;
