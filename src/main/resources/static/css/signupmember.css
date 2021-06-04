@@ -9,6 +9,8 @@ main{
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
+    padding-bottom: 8%;
+    padding-top: 8%;
 }
 nav{
     text-align: right;
