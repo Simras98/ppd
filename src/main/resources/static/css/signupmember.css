@@ -11,7 +11,7 @@ main{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 nav{
-    padding-left: 50%;
+    text-align: right;
 }
 nav ul li{
     display: inline-flex;
@@ -20,7 +20,7 @@ nav ul li{
 nav ul li a {
     color: blueviolet;
     text-decoration: none;
-    font-size: 1.8vw;
+    font-size: 1.3vw;
     padding: 0px 20px;
 }
 a{
@@ -60,6 +60,10 @@ a:hover:after {
     background:transparent;
     width: 100%;
     transition: 0s;
+}
+#centerInscrit{
+    margin: 0 auto;
+    width: 140px;
 }
 .container{
     max-width: 700px;
@@ -121,7 +125,7 @@ form .user-details .level-details {
     margin-bottom: 5px;
 }
 form .login{
-    padding-left: 210px;
+   text-align: center;
 }
 form .button{
     height: 35px;

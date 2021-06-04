@@ -4,7 +4,7 @@
     margin-right : 20px;
 }
 nav{
-    padding-left: 50%;
+    text-align: right;
 }
 nav ul li{
     display: inline-flex;
@@ -13,7 +13,7 @@ nav ul li{
 nav ul li a {
     color: blueviolet;
     text-decoration: none;
-    font-size: 1.8vw;
+    font-size: 1.3vw;
     padding: 0px 20px;
 }
 a{
