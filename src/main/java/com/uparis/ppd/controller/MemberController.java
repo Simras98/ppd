@@ -373,7 +373,7 @@ public class MemberController {
                     member.setPhoneNumber(phoneNumber);
                 }
                 memberService.update(member);
-                Subscription updatedSubscription = subscriptionService.getSpecificSubscriptionByAssociation(subscription.getAssociation(), member);
+                Subscription updatedSubscription = subscriptionService.getSubscription(member, subscription.getAssociation());
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), updatedSubscription);
                 model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescProfileChanged());
                 return constantProperties.getControllerProfile();

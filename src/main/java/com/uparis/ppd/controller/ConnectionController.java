@@ -155,7 +155,7 @@ public class ConnectionController {
     }
 
     @GetMapping("/signup")
-    public String signUp() {
+    public String signup() {
         return constantProperties.getControllerSignup();
     }
 

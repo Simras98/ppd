@@ -60,16 +60,6 @@ public class SubscriptionService {
         return subscriptionRepository.findByAssociation(association);
     }
 
-    public Subscription getSpecificSubscriptionByAssociation(Association association, Member member) {
-        List<Subscription> subscriptions = subscriptionRepository.findByAssociation(association);
-        for (Subscription sub : subscriptions) {
-            if (sub.getMember() == member) {
-                return sub;
-            }
-        }
-        return null;
-    }
-
     public List<Member> getMembersByAssociation(Subscription subscription) {
         List<Subscription> subscriptions = getSubscriptionsByAssociation(subscription.getAssociation());
         List<Member> members = new ArrayList<>();
@@ -116,11 +106,7 @@ public class SubscriptionService {
     public boolean getStatusSuperAdmin(Subscription subscription) {
         return subscription.getStatus().isSuperAdmin();
     }
-
-    public boolean getStatusAdmin(Subscription subscription) {
-        return subscription.getStatus().isAdmin();
-    }
-
+    
     public String convertLongToDateString(Subscription subscription) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();

@@ -79,12 +79,12 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_NAME = "Vous devez rentrer un nom valide !";
     private static final String ATTRIBUTE_DESC_NOTSUBSCRIBED = "Vous n'êtes pas abonné à cette association !";
     private static final String ATTRIBUTE_DESC_PASSWORD = "Les mots de passe ne correspondent pas !";
+    private static final String ATTRIBUTE_DESC_PASSWORDCHANGED = "Mot de passe modifié avec succès !";
     private static final String ATTRIBUTE_DESC_PAYMENTFAILED = "Paiment invalide. Veuillez-contacter les administrateurs !";
     private static final String ATTRIBUTE_DESC_PHONENUMBER = "Vous devez rentrer un numéro de téléphone valide !";
-    private static final String ATTRIBUTE_DESC_PASSWORDCHANGED = "Mot de passe modifié avec succès !";
     private static final String ATTRIBUTE_DESC_POSTALCODE = "Vous devez rentrer un code postal valide !";
+    private static final String ATTRIBUTE_DESC_PRICE = "Vous devez rentrer un prix valide !";
     private static final String ATTRIBUTE_DESC_PROFILECHANGED = "Votre profil a été modifié avec succès !";
-    private static final String ATTRIBUTE_DESC_PRICE = "Vous devez rentrer une description d'association valide !";
     private static final String ATTRIBUTE_DESC_STATUS = "Vous devez choisir un statut valide !";
     private static final String ATTRIBUTE_DESC_SUBSCRIBED = "Vous êtes déjà abonné à cette association !";
     private static final String ATTRIBUTE_DESC_SUBSCRIPTIONEXPIRED = "Votre abonnement a expiré. Veuillez renouveler votre abonnement !";
@@ -330,6 +330,10 @@ public class ConstantProperties {
         return ATTRIBUTE_DESC_PASSWORD;
     }
 
+    public String getAttributeDescPasswordChanged() {
+        return ATTRIBUTE_DESC_PASSWORDCHANGED;
+    }
+
     public String getAttributeDescPaymentFailed() {
         return ATTRIBUTE_DESC_PAYMENTFAILED;
     }
@@ -338,20 +342,16 @@ public class ConstantProperties {
         return ATTRIBUTE_DESC_PHONENUMBER;
     }
 
-    public String getAttributeDescPasswordChanged() {
-        return ATTRIBUTE_DESC_PASSWORDCHANGED;
-    }
-
     public String getAttributeDescPostalCode() {
         return ATTRIBUTE_DESC_POSTALCODE;
     }
 
-    public String getAttributeDescProfileChanged() {
-        return ATTRIBUTE_DESC_PROFILECHANGED;
-    }
-
     public String getAttributeDescPrice() {
         return ATTRIBUTE_DESC_PRICE;
+    }
+
+    public String getAttributeDescProfileChanged() {
+        return ATTRIBUTE_DESC_PROFILECHANGED;
     }
 
     public String getAttributeDescGender() {

@@ -74,14 +74,6 @@ public class MemberService {
         return member.orElse(null);
     }
 
-    public List<Member> getBySearch(String keyword) {
-        if (keyword != null) {
-            return memberRepository.search(keyword);
-        } else {
-            return memberRepository.findAll();
-        }
-    }
-
     public int getNumberOfPasswords(MultipartFile file) {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
@@ -117,6 +109,7 @@ public class MemberService {
             throw new StorageException("impossible de lire le fichier " + file, e);
         }
     }
+
     public Member connect(String email, String password) {
         Member member = getByEmail(email);
         if (member != null && bCryptPasswordEncoder.matches(password, member.getPassword())) {
@@ -126,34 +119,28 @@ public class MemberService {
         }
     }
 
-public void resetPassword(String email) {
-		
+    public void resetPassword(String email) {
+        MimeMessagePreparator preparator = mimeMessage -> {
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
+            mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
 
-		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-			
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-				mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-				mimeMessage.setFrom(new InternetAddress(constantProperties.getOurassoEmail()));
-				mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
-
-				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-				Member member = getByEmail(email);
-				String newPassword = createRandomPassword();
-				member.setPassword(bCryptPasswordEncoder.encode(newPassword));
-				update(member);
-				String customMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
-						+ "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
-						+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
-						+"<p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
-                FormatService serviceF = new FormatService();
-				String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
-						"OurAsso");
-				helper.setText(messageText, true);
-
-			}
-		};
-		javaMailSender.send(preparator);
-	}
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            Member member = getByEmail(email);
+            String newPassword = createRandomPassword();
+            member.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            update(member);
+            String customMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
+                    + "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
+                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
+                    + "<p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+            FormatService serviceF = new FormatService();
+            String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
+                    "OurAsso");
+            helper.setText(messageText, true);
+        };
+        javaMailSender.send(preparator);
+    }
 
     public List<String> createRandomPasswords(int number) {
         List<String> passwords = new ArrayList<>();
