@@ -2,6 +2,7 @@ package com.uparis.ppd.service;
 
 import com.uparis.ppd.exception.StorageException;
 import com.uparis.ppd.model.Member;
+import com.uparis.ppd.properties.ConstantProperties;
 import com.uparis.ppd.repository.MemberRepository;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -33,6 +34,9 @@ public class MemberService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private ConstantProperties constantProperties;
 
     @Autowired
     private FormatService formatService;
@@ -85,7 +89,7 @@ public class MemberService {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
             XSSFSheet worksheet = workbook.getSheetAt(0);
-            return worksheet.getPhysicalNumberOfRows() - 1;
+            return worksheet.getPhysicalNumberOfRows();
         } catch (IOException e) {
             throw new StorageException("impossible de lire le fichier " + file, e);
         }
@@ -96,8 +100,8 @@ public class MemberService {
             XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
             XSSFSheet worksheet = workbook.getSheetAt(0);
             List<Member> members = new ArrayList<>();
-            if (worksheet.getPhysicalNumberOfRows() > 1) {
-                for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            for (int i = 0; i < worksheet.getPhysicalNumberOfRows(); i++) {
+                if (i > 0) {
                     XSSFRow row = worksheet.getRow(i);
                     members.add(create(row.getCell(0).getStringCellValue(),
                             row.getCell(1).getStringCellValue(),
@@ -108,7 +112,7 @@ public class MemberService {
                             String.valueOf(row.getCell(6).getNumericCellValue()).substring(0, String.valueOf(row.getCell(6).getNumericCellValue()).length() - 2),
                             row.getCell(7).getStringCellValue(),
                             row.getCell(8).getStringCellValue(),
-                            passwords.get(i-1)));
+                            passwords.get(i)));
                 }
             }
             return members;
@@ -116,7 +120,6 @@ public class MemberService {
             throw new StorageException("impossible de lire le fichier " + file, e);
         }
     }
-
     public Member connect(String email, String password) {
         Member member = getByEmail(email);
         if (member != null && bCryptPasswordEncoder.matches(password, member.getPassword())) {
@@ -126,34 +129,34 @@ public class MemberService {
         }
     }
 
-    public void resetPassword(String email) {
+public void resetPassword(String email) {
+		
 
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+				mimeMessage.setFrom(new InternetAddress(ourassoEmail));
+				mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
 
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-                mimeMessage.setFrom(new InternetAddress(ourassoEmail));
-                mimeMessage.setSubject("Ourasso : Votre nouveau mot de passe");
-
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-                Member member = getByEmail(email);
-                String newPassword = createRandomPassword();
-                member.setPassword(bCryptPasswordEncoder.encode(newPassword));
-                update(member);
-                String customMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
-                        + "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
-                        + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
-                        + "<p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
+				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				Member member = getByEmail(email);
+				String newPassword = createRandomPassword();
+				member.setPassword(bCryptPasswordEncoder.encode(newPassword));
+				update(member);
+				String customMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
+						+ "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
+						+ "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
+						+"<p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
                 FormatService serviceF = new FormatService();
-                String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
-                        "OurAsso");
-                helper.setText(messageText, true);
+				String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
+						"OurAsso");
+				helper.setText(messageText, true);
 
-            }
-        };
-        emailSender.send(preparator);
-    }
+			}
+		};
+		emailSender.send(preparator);
+	}
 
     public List<String> createRandomPasswords(int number) {
         List<String> passwords = new ArrayList<>();
