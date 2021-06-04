@@ -16,6 +16,10 @@
 <div th:fragment="topbar">
     <nav id="topbar">
         <ul>
+          
+          <li>
+                <a href="/dashboard"
+                   th:if="${#strings.contains(#httpServletRequest.requestURI, 'profile')}">Tableau de bord</a></li>
             <li>
                 <a href="/"
                    th:if="${session.subscription == null}">Accueil</a></li>
@@ -35,6 +39,7 @@
                    th:if="${session.subscription != null}">Profile</a></li>
             <li><a href="/logout"
                    th:if="${session.subscription != null}">Déconnexion</a></li>
+
         </ul>
     </nav>
 </div>
