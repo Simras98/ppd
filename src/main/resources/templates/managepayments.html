@@ -22,6 +22,7 @@
         <div class="sidebar" th:insert="fragments/sidebar.html :: sidebar"></div>
     </header>
     <main>
+        <div class="cont">
         <p th:text="${success}"></p>
         <p th:text="${error}"></p>
         <div class="tableau">
@@ -35,6 +36,7 @@
                     <td th:utext="${Transaction.price}"></td>
                 </tr>
             </table>
+        </div>
         </div>
     </main>
 </div>
