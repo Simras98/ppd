@@ -23,8 +23,8 @@
     <main>
         <div class="formulaire">
             <div class="title"><strong>Formulaire de contact</strong></div>
-            <p th:text="${success}"></p>
-            <p th:text="${error}"></p>
+            <p class="succ" th:text="${success}"></p>
+            <p class="err" th:text="${error}"></p>
             <form action="/contactconfirm" id="contactConfirm" method="post">
                 <div class="user-details">
                     <div class="input-box">

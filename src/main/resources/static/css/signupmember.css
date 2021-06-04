@@ -79,6 +79,11 @@ a:hover:after {
     font-size: 25px;
     font-weight: 500;
 }
+.container .err{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
 .container form .user-details{
     display: flex;
     flex-wrap: wrap;

@@ -78,6 +78,17 @@ main{
     font-size: 25px;
     font-weight: 500;
 }
+.container .err{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+.container .succ{
+    color: forestgreen;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 3%;
+}
 .container form .user-details{
     display: flex;
     flex-wrap: wrap;

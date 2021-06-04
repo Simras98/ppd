@@ -96,6 +96,16 @@ main{
     font-size: 20px;
     text-align: center;
 }
+.formulaire .err{
+    color: red;
+    font-size: 15px;
+}
+.formulaire .succ{
+    color: forestgreen;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 3%;
+}
 .formulaire .title2{
     font-size: 20px;
     text-align: center;

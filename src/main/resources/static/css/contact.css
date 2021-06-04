@@ -97,6 +97,18 @@ main{
     font-size: 20px;
     text-align: center;
 }
+.formulaire .err{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+.formulaire .succ{
+    color: forestgreen;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 3%;
+}
+
 .formulaire form .user-details{
     display : block;
     flex-wrap : wrap;

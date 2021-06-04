@@ -17,14 +17,16 @@
 <body>
 <div class="main-content">
     <header>
+        <div class="side">
         <img class="logo" src="images/logo.png">
+        </div>
         <div class="topbar" th:insert="fragments/topbar.html :: topbar"></div>
     </header>
     <main>
         <div class="container">
             <div class="title"><strong>Profile</strong></div>
-            <p th:text="${success}"></p>
-            <p th:text="${error}"></p>
+            <p class="succ" th:text="${success}"></p>
+            <p class="err" th:text="${error}"></p>
             <form action="/profileedit" id="profile" method="post">
                 <div class="user-details">
                     <div class="input-box">

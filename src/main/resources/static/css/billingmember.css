@@ -24,6 +24,11 @@ main {
     font-size: 20px;
     text-align: center;
 }
+.formulaire .err{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
 .formulaire form .user-details{
     display : flex;
     flex-wrap : wrap;

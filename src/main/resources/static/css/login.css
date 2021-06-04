@@ -73,6 +73,12 @@ main{
     font-weight: 500;
     padding-left: 65px;
 }
+.container .err{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+
 .container .textj{
     font-size: 20px;
     font-weight: 500;
