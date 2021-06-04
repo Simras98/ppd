@@ -31,7 +31,7 @@ public class SubscriptionService {
 
     @Qualifier("getJavaMailSender")
     @Autowired
-    private JavaMailSender emailSender;
+    private JavaMailSender javaMailSender;
 
     @Autowired
     private SubscriptionRepository subscriptionRepository;
@@ -173,7 +173,7 @@ public class SubscriptionService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setText(messageText, true);
         };
-        emailSender.send(preparator);
+        javaMailSender.send(preparator);
 
     }
 
@@ -203,7 +203,7 @@ public class SubscriptionService {
             String messageText = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
             helper.setText(messageText, true);
         };
-        emailSender.send(preparator);
+        javaMailSender.send(preparator);
     }
 
     @Scheduled(fixedDelay = 5000)
@@ -226,7 +226,7 @@ public class SubscriptionService {
                     String messageText = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
                     helper.setText(messageText, true);
                 };
-                emailSender.send(preparator);
+                javaMailSender.send(preparator);
                 subscription.setNotified(true);
                 update(subscription);
             }
@@ -425,6 +425,6 @@ public class SubscriptionService {
                     "OurAsso");
             helper.setText(messageText, true);
         };
-        emailSender.send(preparator);
+        javaMailSender.send(preparator);
     }
 }
