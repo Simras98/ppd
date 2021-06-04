@@ -144,7 +144,7 @@ public class SubscriptionService {
                             + "Voici votre mot de passe que nous vous invitons à changer une fois connecté : "
                             + password + "<br>"
                             + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
-                            + " <br><br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso.</p>";
+                            + " <br><br>Cordialement, L’équipe Ourasso.</p>";
             textTemp = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
         } else if (subscription.getStatus().isSuperAdmin()) {
             customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
@@ -190,16 +190,16 @@ public class SubscriptionService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             String customMessage =
                     "<p style=\"text-align: center;\">Merci de vous être abonné(e), ce dernier arrivera à expiration le "
-                            + shortDate + "." + "<br>Voici votre numéro d'adhésion : <br>"
-                            + "<div style=\" border-bottom-left-radius: 15px;\n"
+                            + shortDate + "." + "<br>Voici votre numéro d'adhésion : <br></p>"
+                            + "<div style=\" padding: 30px;\"><div style=\" border-bottom-left-radius: 15px;\n"
                             + "  border-bottom-right-radius: 15px;\n" + "  border-top-right-radius: 15px;\n"
-                            + "  border-top-left-radius: 15px;\n" + "  box-sizing: border-box;\n"
-                            + "  background: linear-gradient(135deg,#71b7e6,#9b59b6);\n" + "  font-weight : bold;\n" + "  font-size : 20px;\n"
-                            + "  color: white;width:auto;text-align:center;padding:15px;\">\n" + "<p>"
-                            + String.format("%010d", subscription.getMember().getId()) + "</p>\n" + "</div>"
-                            + "<br></p>"
- 
-                            + " <p style=\"text-align: center;\">Cordialement, L’équipe Ourasso.</p>";
+                            + "  border-top-left-radius: 15px;margin: 0 auto;\n"
+                            + "     width: 150px; \n" + "  box-sizing: border-box;\n"
+                            + "  background: linear-gradient(135deg,#71b7e6,#9b59b6);\n" + "  font-weight : bold;\n" + "  font-size : 15px;\n"
+                            + "  color: white;text-align:center;padding:15px;\">\n" + "<p>"
+                            + String.format("%010d", subscription.getMember().getId())  + "</div></div>"
+                            + "<br>" 
+                            + "<br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso.</p>";
             String messageText = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
             helper.setText(messageText, true);
         };
@@ -221,9 +221,8 @@ public class SubscriptionService {
                             "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
                                     + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
                                     + "Votre abonnement a expiré, veuillez le renouveler !" + "\n" + "<br>"
-                                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
-                                 
-                                    + " <br><p style=\"text-align: center;\">Cordialement, L’équipe Ourasso.</p>";
+                                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                                    + " <br><br>Cordialement, L’équipe Ourasso.</p>";
                     String messageText = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
                     helper.setText(messageText, true);
                 };
