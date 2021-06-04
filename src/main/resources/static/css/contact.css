@@ -86,16 +86,16 @@ main{
 }
 .formulaire{
     padding : 2% 5%;
-    max-width : 100%;
-    width: 50%;
+    max-width : 40%;
+    width: 40%;
     background:#fff;
     border-radius : 5px;
-    margin-left: 35%;
-    margin-bottom: 40%;
+    margin-left: 40%;
+    margin-top: -40%;
 }
 .formulaire .title{
     font-size: 20px;
-    margin-left: 27%;
+    text-align: center;
 }
 .formulaire form .user-details{
     display : block;
