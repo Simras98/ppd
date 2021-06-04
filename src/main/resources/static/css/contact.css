@@ -6,9 +6,6 @@
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
 }
-body{
-    background: linear-gradient(135deg,#71b7e6,#9b59b6);
-}
 .sidebar{
     width: 18%;
     position: fixed;
@@ -16,11 +13,8 @@ body{
     top: 0;
     height: 100%;
     background: white;
-}
-.main-content{
-    margin-left: 18%;
-    height: 900px;
-    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+    max-width: 254px;
+    min-width: 100px;
 }
 .siderbar-logo{
     padding-left: 2rem;
@@ -60,16 +54,23 @@ body{
     font-size: 1.5rem;
     padding-right: 1rem;
 }
+main{
+    display: flex;
+    height: 180vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
 header{
     display: flex;
     justify-content: space-between;
-}
-header h1{
-    color: white;
-    margin-left:1%;
+    margin-left: 19%;
 }
 h1{
     font-size: 2.6vw;
+}
+header h1{
+    color: white;
 }
 .logo{
     width: 100px;
@@ -78,14 +79,19 @@ h1{
 main{
     justify-content: space-between;
 }
+.main-content{
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
 .formulaire{
     padding : 2% 5%;
-    max-width : 50%;
+    max-width : 100%;
     width: 50%;
     background:#fff;
     border-radius : 5px;
-    margin-left: 25%;
-    margin-top: 5%;
+    margin-left: 35%;
+    margin-bottom: 40%;
 }
 .formulaire .title{
     font-size: 20px;
@@ -213,29 +219,31 @@ a:hover:after {
     width: 100%;
     transition: 0s;
 }
-@media (max-width: 400px) {
-
+@media (max-width: 700px) {
     .formulaire {
         max-width: 90%;
         min-width: 65%;
         margin-left: 10%;
     }
+    .main-content{
+        width: 100%;
+        height: 100%;
+    }
+    .formulaire {
+        max-height: 450px;
+        overflow-y: scroll;
+    }
 
+    .formulaire::-webkit-scrollbar {
+        width: 0;
+    }
     form .user-details .input-box {
         margin: 10px 0 5px 0;
         width: 100%;
     }
-    .user-details .gender-details .details {
-        margin: 10px 0 5px 0;
-        width: 100%;
-    }
-    .user-details .level-details .details {
-        margin: 10px 0 5px 0;
-        width: 100%;
-    }
-    form .input-button1 input{
+    .input-button1 input {
         height: 100%;
-        width: 900px;
-        margin-left: 60px;
+        width: 80%;
+        margin-left: 30px;
     }
 }
