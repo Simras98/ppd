@@ -31,6 +31,10 @@ a{
     color: #9b59b6;
     text-decoration: none;
 }
+#centerInscrit{
+    margin: 0 auto;
+     width: 140px; 
+}
 a:hover{
     color: #71b7e6;
     text-decoration: none;
