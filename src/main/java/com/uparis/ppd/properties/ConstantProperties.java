@@ -14,10 +14,10 @@ public class ConstantProperties {
     private static final String CONTROLLER_DASHBOARD = "dashboard";
     private static final String CONTROLLER_INDEX = "index";
     private static final String CONTROLLER_JOIN = "join";
-    private static final String CONTROLLER_SIGNUP = "signup";
     private static final String CONTROLLER_LOGIN = "login";
     private static final String CONTROLLER_PASSWORDFORGOTTEN = "passwordforgotten";
     private static final String CONTROLLER_PROFILE = "profile";
+    private static final String CONTROLLER_SIGNUP = "signup";
     private static final String CONTROLLER_SIGNUPMEMBER = "signupmember";
     private static final String CONTROLLER_SIGNUPSUPERADMIN = "signupsuperadmin";
 
@@ -122,10 +122,6 @@ public class ConstantProperties {
         return CONTROLLER_JOIN;
     }
 
-    public String getControllerSignup() {
-        return CONTROLLER_SIGNUP;
-    }
-
     public String getControllerLogin() {
         return CONTROLLER_LOGIN;
     }
@@ -136,6 +132,10 @@ public class ConstantProperties {
 
     public String getControllerProfile() {
         return CONTROLLER_PROFILE;
+    }
+
+    public String getControllerSignup() {
+        return CONTROLLER_SIGNUP;
     }
 
     public String getControllerSignupMember() {
