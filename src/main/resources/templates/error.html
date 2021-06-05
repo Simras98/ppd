@@ -28,7 +28,7 @@
         <div th:if="${#strings.equalsIgnoreCase(error, 'not found')== false and #strings.equalsIgnoreCase(error, 'internal server error')==false}">
             <h1 class="error" th:text="'Erreur, ' + ${error} "></h1>
         </div>
-        <a href="/index">Retourner à l'accueil</a>
+        <a id = "text_width_error" href="/index">Retourner à l'accueil</a>
     </div>
 </main>
 </body>
