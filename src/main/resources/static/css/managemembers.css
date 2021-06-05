@@ -9,6 +9,11 @@
 body{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  filter: grayscale(1);
+}
 .sidebar{
     width: 18%;
     position: fixed;
