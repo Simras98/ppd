@@ -135,6 +135,11 @@ nav ul li a {
     font-size: 1.3vw;
     padding: 0px 20px;
 }
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  filter: grayscale(1);
+}
 .cont{
     padding : 1% 1%;
     margin-left: 15%;
