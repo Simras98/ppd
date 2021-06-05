@@ -16,6 +16,11 @@
     max-width: 254px;
     min-width: 100px;
 }
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  filter: grayscale(1);
+}
 .siderbar-logo{
     padding-left: 2rem;
     margin-left: 34px;
