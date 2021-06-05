@@ -16,6 +16,11 @@ nav ul li a {
     font-size: 1.3vw;
     padding: 0px 20px;
 }
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  filter: grayscale(1);
+}
 a{
     position: relative;
     display: block;
@@ -62,6 +67,9 @@ main{
 main .head{
     padding-left: 20px;
     color: white;
+}
+#text_width_error{
+	width: 150px;
 }
 @media only screen and (max-width: 700px) {
     main{
