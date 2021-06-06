@@ -2,9 +2,6 @@
     width: 100px;
     height: 100px;
     float : left;
-    margin-left: 5%;
-    margin-right: 5.1%;
-
 }
 .disabled {
   pointer-events: none;
