@@ -1,9 +1,8 @@
 .logo{
-    width : 15.7%;
-    height: 6.2em;
+    width : 17%;
     float : left;
     padding-left: 4%;
-    padding-right: 4%;
+    padding-right: 5%;
 }
 .disabled {
   pointer-events: none;
