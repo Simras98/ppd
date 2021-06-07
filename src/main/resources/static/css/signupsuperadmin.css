@@ -1,9 +1,8 @@
 .logo{
-    width : 16.73%;
-    height: 100px;
+    width : 17%;
     float : left;
-    padding-left: 4.4%;
-    padding-right: 4.35%;
+    padding-left: 4%;
+    padding-right: 5%;
 }
 main{
     display: flex;
