@@ -1,7 +1,9 @@
 package com.uparis.ppd.service;
 
+import com.google.re2j.Pattern;
 import com.uparis.ppd.exception.StorageException;
 import com.uparis.ppd.model.Member;
+import com.uparis.ppd.model.Subscription;
 import com.uparis.ppd.properties.ConstantProperties;
 import com.uparis.ppd.repository.MemberRepository;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -24,10 +26,10 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class MemberService {
@@ -40,6 +42,9 @@ public class MemberService {
 
     @Autowired
     private FormatService formatService;
+
+    @Autowired
+    private RegexService regexService;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -92,6 +97,20 @@ public class MemberService {
             for (int i = 0; i < worksheet.getPhysicalNumberOfRows(); i++) {
                 if (i > 0) {
                     XSSFRow row = worksheet.getRow(i);
+                    if (!Pattern.compile(regexService.getWord()).matcher(row.getCell(0).getStringCellValue()).find()
+                    || !Pattern.compile(regexService.getWord()).matcher(row.getCell(1).getStringCellValue()).find()
+                    || !Pattern.compile(regexService.getSex()).matcher(row.getCell(2).getStringCellValue()).find()
+                    || !Pattern.compile(regexService.getBirthDate()).matcher(row.getCell(3).getStringCellValue()).find()
+                            || !checkBirthdate(row.getCell(3).getStringCellValue())
+                    || !Pattern.compile(regexService.getAddress()).matcher(row.getCell(4).getStringCellValue()).find()
+                    || !Pattern.compile(regexService.getWord()).matcher(row.getCell(5).getStringCellValue()).find()
+                    || !Pattern.compile(regexService.getPostalCode()).matcher(String.valueOf(row.getCell(6).getNumericCellValue()).substring(0, String.valueOf(row.getCell(6).getNumericCellValue()).length() - 2)).find()
+                    || !Pattern.compile(regexService.getEmail()).matcher(row.getCell(7).getStringCellValue()).find()
+                    || !Pattern.compile(regexService.getPhoneNumber()).matcher(row.getCell(8).getStringCellValue()).find()
+                    || !Pattern.compile(regexService.getLevel()).matcher(row.getCell(9).getStringCellValue()).find()
+                    || getByEmail(row.getCell(7).getStringCellValue()) != null) {
+                        continue;
+                    }
                     members.add(create(row.getCell(0).getStringCellValue(),
                             row.getCell(1).getStringCellValue(),
                             row.getCell(2).getStringCellValue(),
@@ -172,5 +191,27 @@ public class MemberService {
             return true;
         }
         return false;
+    }
+
+    public boolean checkBirthdate(String birthDate) {
+        Date dateNow = new Date();
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
+            return dateNow.after(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public String convertLongToDateString(Subscription subscription) {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+        if (subscription.isDelayed()) {
+            calendar.setTimeInMillis(subscription.getDelay());
+        } else {
+            calendar.setTimeInMillis(subscription.getStop());
+        }
+        return formatter.format(calendar.getTime());
     }
 }

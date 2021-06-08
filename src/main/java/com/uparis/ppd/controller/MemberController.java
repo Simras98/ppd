@@ -112,7 +112,7 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                     return constantProperties.getControllerManageMembers();
                 }
-                if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
+                if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find() || !memberService.checkBirthdate(birthDate)) {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescBirthdate());
                     return constantProperties.getControllerManageMembers();
                 }
@@ -140,19 +140,26 @@ public class MemberController {
                     model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescStatus());
                     return constantProperties.getControllerManageMembers();
                 }
-                String password = memberService.createRandomPassword();
-                Member member = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
-                Status status = statusService.create(Boolean.parseBoolean(isAdmin), false);
-                Subscription newSubscription = subscriptionService.create(System.currentTimeMillis(), 0, 0, 0, false, false, member, status, subscription.getAssociation(), Collections.emptySet());
-                subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), password);
-                Subscription updatedSubscription = subscriptionService.getSubscription(subscription.getMember(), subscription.getAssociation());
-                List<Member> updatedMembers = subscriptionService.getMembersByAssociation(updatedSubscription);
-                List<Status> updatedStatus = subscriptionService.getStatusByAssociation(updatedSubscription);
-                request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), updatedMembers);
-                request.getSession().setAttribute(constantProperties.getAttributeNameStatus(), updatedStatus);
-                model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescMemberAdded());
-                model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManageMembers());
-                return constantProperties.getControllerManageMembers();
+                Member potentialMember = memberService.getByEmail(email);
+                if (potentialMember == null) {
+                    String password = memberService.createRandomPassword();
+                    Member member = memberService.create(firstName, lastName, sex, birthDate, address, city, postalCode, email, phoneNumber, password);
+                    Status status = statusService.create(Boolean.parseBoolean(isAdmin), false);
+                    Subscription newSubscription = subscriptionService.create(System.currentTimeMillis(), 0, 0, 0, false, false, member, status, subscription.getAssociation(), Collections.emptySet());
+                    subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), password);
+                    Subscription updatedSubscription = subscriptionService.getSubscription(subscription.getMember(), subscription.getAssociation());
+                    List<Member> updatedMembers = subscriptionService.getMembersByAssociation(updatedSubscription);
+                    List<Status> updatedStatus = subscriptionService.getStatusByAssociation(updatedSubscription);
+                    request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), updatedMembers);
+                    request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(updatedSubscription));
+                    request.getSession().setAttribute(constantProperties.getAttributeNameStatus(), updatedStatus);
+                    model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescMemberAdded());
+                    model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManageMembers());
+                    return constantProperties.getControllerManageMembers();
+                } else {
+                    model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescEmailExist());
+                    return constantProperties.getControllerSignupMember();
+                }
             } else {
                 model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescSubscriptionExpired());
                 if (subscriptionService.getStatusSuperAdmin(subscription)) {
@@ -184,13 +191,14 @@ public class MemberController {
                 List<Member> members = memberService.createFromFile(file, passwords);
                 List<Status> status = statusService.createFromFile(file);
                 for (int i = 0; i < members.size(); i++) {
-                    Subscription newSubscription = subscriptionService.create(System.currentTimeMillis(),0, 0, 0, false, false, members.get(i), status.get(i), subscription.getAssociation(), Collections.emptySet());
+                    Subscription newSubscription = subscriptionService.create(System.currentTimeMillis(), 0, 0, 0, false, false, members.get(i), status.get(i), subscription.getAssociation(), Collections.emptySet());
                     subscriptionService.notifyWelcome(newSubscription, subscription.getMember(), passwords.get(i));
                 }
                 Subscription updatedSubscription = subscriptionService.getSubscription(subscription.getMember(), subscription.getAssociation());
                 List<Member> updatedMembers = subscriptionService.getMembersByAssociation(updatedSubscription);
                 List<Status> updatedStatus = subscriptionService.getStatusByAssociation(updatedSubscription);
                 request.getSession().setAttribute(constantProperties.getAttributeNameMembers(), updatedMembers);
+                request.getSession().setAttribute(constantProperties.getAttributeNameMembersInMonth(), subscriptionService.getMembersByAssociationInLastMonth(updatedSubscription));
                 request.getSession().setAttribute(constantProperties.getAttributeNameStatus(), updatedStatus);
                 model.addAttribute(constantProperties.getAttributeNameSuccess(), constantProperties.getAttributeDescMembersAdded());
                 model.addAttribute(constantProperties.getAttributeNamePage(), constantProperties.getControllerManageMembers());
@@ -312,60 +320,60 @@ public class MemberController {
         if (subscription != null) {
             if (subscriptionService.isValid(subscription)) {
                 Member member = memberService.getByEmail(subscription.getMember().getEmail());
-                if(!firstName.isEmpty()) {
+                if (!firstName.isEmpty()) {
                     if (!Pattern.compile(regexService.getWord()).matcher(firstName).find()) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescFirstname());
                         return constantProperties.getControllerProfile();
                     }
                     member.setFirstName(firstName);
                 }
-                if(!lastName.isEmpty()) {
+                if (!lastName.isEmpty()) {
                     if (!Pattern.compile(regexService.getWord()).matcher(lastName).find()) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescLastname());
                         return constantProperties.getControllerProfile();
                     }
                     member.setLastName(lastName);
                 }
-                if(!birthDate.isEmpty()) {
-                    if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
+                if (!birthDate.isEmpty()) {
+                    if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find() || !memberService.checkBirthdate(birthDate)) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescBirthdate());
                         return constantProperties.getControllerProfile();
                     }
                     member.setBirthDate(birthDate);
                 }
-                if(!address.isEmpty()) {
+                if (!address.isEmpty()) {
                     if (!Pattern.compile(regexService.getAddress()).matcher(address).find()) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescAddress());
                         return constantProperties.getControllerProfile();
                     }
                     member.setAddress(address);
                 }
-                if(!city.isEmpty()) {
+                if (!city.isEmpty()) {
                     if (!Pattern.compile(regexService.getWord()).matcher(city).find()) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescCity());
                         return constantProperties.getControllerProfile();
                     }
                     member.setCity(city);
                 }
-                if(!postalCode.isEmpty()) {
+                if (!postalCode.isEmpty()) {
                     if (!Pattern.compile(regexService.getPostalCode()).matcher(postalCode).find()) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPostalCode());
                         return constantProperties.getControllerProfile();
                     }
                     member.setPostalCode(postalCode);
                 }
-                if(!email.isEmpty()) {
+                if (!email.isEmpty()) {
                     if (!Pattern.compile(regexService.getEmail()).matcher(email).find()) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescEmail());
                         return constantProperties.getControllerProfile();
                     }
-                    if(memberService.getByEmail(email) != null){
+                    if (memberService.getByEmail(email) != null && !email.equals(member.getEmail())) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescEmailExist());
                         return constantProperties.getControllerProfile();
                     }
                     member.setEmail(email);
                 }
-                if(!phoneNumber.isEmpty()) {
+                if (!phoneNumber.isEmpty()) {
                     if (!Pattern.compile(regexService.getPhoneNumber()).matcher(phoneNumber).find()) {
                         model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescPhoneNumber());
                         return constantProperties.getControllerProfile();

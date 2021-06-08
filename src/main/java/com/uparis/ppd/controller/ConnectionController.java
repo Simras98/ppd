@@ -211,7 +211,7 @@ public class ConnectionController {
             model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescGender());
             return constantProperties.getControllerSignupMember();
         }
-        if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
+        if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find() || !memberService.checkBirthdate(birthDate)) {
             model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescBirthdate());
             return constantProperties.getControllerSignupMember();
         }
@@ -333,7 +333,7 @@ public class ConnectionController {
             model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescGender());
             return constantProperties.getControllerSignupSuperAdmin();
         }
-        if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find()) {
+        if (!Pattern.compile(regexService.getBirthDate()).matcher(birthDate).find() || !memberService.checkBirthdate(birthDate)) {
             model.addAttribute(constantProperties.getAttributeNameError(), constantProperties.getAttributeDescBirthdate());
             return constantProperties.getControllerSignupSuperAdmin();
         }

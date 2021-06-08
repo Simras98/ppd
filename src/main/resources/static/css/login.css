@@ -135,6 +135,14 @@ form .pass{
 form .sign{
     margin-left: 25px;
 }
+form .h-captcha{
+    text-align: center;
+}
+form .disabled {
+    pointer-events: none;
+    cursor: default;
+    filter: grayscale(1);
+}
 @media only screen and (max-width: 700px) {
     .container{
         width: 95%;

@@ -23,7 +23,7 @@
 <div th:insert="fragments/topbar.html :: topbar"></div>
 <main>
     <div class="container">
-        <div class="textj">Rejoignez-nous !</div>
+        <div class="textj">Rejoignez une association existante !</div>
         <hr/>
         <p class="err" th:text="${error}"></p>
         <form action="/joinconfirm" id="joinConfirm" method="post">
@@ -49,8 +49,12 @@
                        type="password">
             </div>
             <br>
-            <div class="connect">
-                <input id="joinButton" type="submit" value="Rejoindre">
+            <div class="h-captcha" data-callback="submitForm"
+                 data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
+            </div>
+            <br>
+            <div class="connect disabled">
+                <input id="joinButton" type="submit" value="Rejoindre" disabled>
             </div>
             <br>
             <div>
@@ -74,6 +78,7 @@
         const ok = await response.json();
         if (ok) {
             document.getElementById("loginButton").disabled = false;
+            document.getElementById("signUpButton").classList.remove('disabled');
         } else {
             window.location.href = "login.html";
         }

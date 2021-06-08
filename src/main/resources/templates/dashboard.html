@@ -21,41 +21,41 @@
         <div class="sidebar" th:insert="fragments/sidebar.html :: sidebar"></div>
     </header>
     <main>
-    <div class="cont">
-    <div class="container">
-        <div class="sub-container">
-            <img class="image" src="images/user.png"/>
-            <div class="description">
-                <p th:text="${session.members.size()}"></p>
-                <p> Membres</p>
-            </div>
-        </div>
-        <div class="sub-container">
-            <img class="image" src="images/donnant.png"/>
-            <div class="description">
-                <p> 3 €</p>
-                <p> de collectes</p>
-            </div>
-        </div>
+        <div class="cont">
+            <div class="container">
+                <div class="sub-container">
+                    <img class="image" src="images/user.png"/>
+                    <div class="description">
+                        <p th:text="${session.members.size()}"></p>
+                        <p>Membres</p>
+                    </div>
+                </div>
+                <div class="sub-container">
+                    <img class="image" src="images/donnant.png"/>
+                    <div class="description">
+                        <p>0 €</p>
+                        <p>de collecté</p>
+                    </div>
+                </div>
 
-    </div>
-    <div class="container">
-        <div class="sub-container">
-            <img class="image" src="images/verifie.png"/>
-            <div class="description1">
-                <p th:text="${session.date}"></p>
-                <p >Avant expiration</p>
+            </div>
+            <div class="container">
+                <div class="sub-container">
+                    <img class="image" src="images/verifie.png"/>
+                    <div class="description1">
+                        <p th:text="${session.date}"></p>
+                        <p>Avant expiration</p>
+                    </div>
+                </div>
+                <div class="sub-container">
+                    <img class="image" src="images/new_member.png"/>
+                    <div class="description1" id=case_5_text>
+                        <p id="member_count_number5" th:text="${session.membersinmonth.size()}"></p>
+                        <p> durant ce mois</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="sub-container">
-            <img class="image" src="images/new_member.png"/>
-            <div class="description1" id=case_5_text>
-                <p id="member_count_number5" th:text="${session.membersinmonth.size()}"></p>
-                <p> durant ce mois</p>
-            </div>
-        </div>
-    </div>
-     </div>
     </main>
 </div>
 </body>
