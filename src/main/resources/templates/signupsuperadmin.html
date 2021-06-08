@@ -176,7 +176,7 @@
             <div class="h-captcha" data-callback="submitForm"
                  data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
             </div>
-            <div class="button disabled">
+            <div id="signUpButtonDiv" class="button disabled">
                 <input id="signUpButton" type="submit" value="S'inscrire" disabled>
             </div>
             <div id = "centerInscrit">
@@ -197,7 +197,7 @@
         const ok = await response.json();
         if (ok) {
             document.getElementById("signUpButton").disabled = false;
-            document.getElementById("signUpButton").classList.remove('disabled');
+            document.getElementById("signUpButtonDiv").classList.remove('disabled');
         } else {
             window.location.href = "signupsuperadmin.html";
         }

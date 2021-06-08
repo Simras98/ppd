@@ -53,7 +53,7 @@
                  data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
             </div>
             <br>
-            <div class="connect disabled">
+            <div id="joinButtonDiv" class="connect disabled">
                 <input id="joinButton" type="submit" value="Rejoindre" disabled>
             </div>
             <br>
@@ -78,7 +78,7 @@
         const ok = await response.json();
         if (ok) {
             document.getElementById("joinButton").disabled = false;
-            document.getElementById("joinButton").classList.remove('disabled');
+            document.getElementById("joinButtonDiv").classList.remove('disabled');
         } else {
             window.location.href = "join.html";
         }

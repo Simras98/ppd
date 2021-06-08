@@ -52,7 +52,7 @@
                  data-sitekey="faee6d9a-baec-4cc7-baa2-a3e27d9b196d">
             </div>
             <br>
-            <div class="connecter disabled">
+            <div id="loginButtonDiv" class="connecter disabled">
                 <input id="loginButton" type="submit" value="Se connecter" disabled>
             </div>
             <br>
@@ -77,7 +77,7 @@
         const ok = await response.json();
         if (ok) {
             document.getElementById("loginButton").disabled = false;
-            document.getElementById("loginButton").classList.remove('disabled');
+            document.getElementById("loginButtonDiv").classList.remove('disabled');
         } else {
             window.location.href = "login.html";
         }
