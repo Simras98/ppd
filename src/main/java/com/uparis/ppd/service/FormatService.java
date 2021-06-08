@@ -75,7 +75,7 @@ public class FormatService {
           + "        <table style=\"font-weight: normal;border-collapse: collapse;border: 0;margin: 0;padding: 0;font-family: Arial, sans-serif;\">\r\n"
           + "          <tr>\r"
           + "            <td colspan=\"4\" valign=\"top\" class=\"image-section\" style=\"border-collapse: collapse;border: 0;display: block;width: auto;margin: 0;padding: 0;-webkit-text-size-adjust: none;color: #555559;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px;background-color: #fff;border-bottom: 4px solid #af52cc\">\r\n"
-          + "              <a href=\"https://ppd-asso.herokuapp.com\"><img class=\"top-image\" src=\"https://i.ibb.co/SwJ6FzK/output-onlinepngtools.png\" style=\"line-height: 1;width: 100px; display: block;\r\n"
+          + "              <a href=\"https://ourasso.herokuapp.com\"><img class=\"top-image\" src=\"https://i.ibb.co/SwJ6FzK/output-onlinepngtools.png\" style=\"line-height: 1;width: 100px; display: block;\r\n"
           + "    margin-left: auto;\r\n"
           + "    margin-right: auto\" alt=\"OurAsso\"></a>\r\n"
           + "            <br></td>\r"

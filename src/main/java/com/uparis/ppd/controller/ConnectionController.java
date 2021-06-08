@@ -370,7 +370,6 @@ public class ConnectionController {
                 association = associationService.create(associationName, associationDescription, association1MonthPrice, association3MonthPrice, association12MonthPrice);
                 long currentTime = System.currentTimeMillis();
                 Subscription subscription = subscriptionService.create(currentTime, currentTime, currentTime + (60 * 1000), 0, false, false, superAdmin, status, association, Collections.emptySet());
-                // Subscription subscription = subscriptionService.create(System.currentTimeMillis(), System.currentTimeMillis() + ((31556952L / 12) * 1000), 0, false, false, superAdmin, status, association, Collections.emptySet());
                 subscriptionService.notifyWelcome(subscription, null, null);
                 request.getSession().setAttribute(constantProperties.getAttributeNameSubscription(), subscription);
                 request.getSession().setAttribute(constantProperties.getAttributeNameDate(), subscriptionService.convertLongToDateString(subscription));

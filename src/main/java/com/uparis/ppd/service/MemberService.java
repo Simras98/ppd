@@ -83,7 +83,7 @@ public class MemberService {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
             XSSFSheet worksheet = workbook.getSheetAt(0);
-            return worksheet.getPhysicalNumberOfRows();
+            return worksheet.getPhysicalNumberOfRows() -1;
         } catch (IOException e) {
             throw new StorageException("impossible de lire le fichier " + file, e);
         }
@@ -120,7 +120,7 @@ public class MemberService {
                             String.valueOf(row.getCell(6).getNumericCellValue()).substring(0, String.valueOf(row.getCell(6).getNumericCellValue()).length() - 2),
                             row.getCell(7).getStringCellValue(),
                             row.getCell(8).getStringCellValue(),
-                            passwords.get(i)));
+                            passwords.get(i-1)));
                 }
             }
             return members;
@@ -151,7 +151,7 @@ public class MemberService {
             update(member);
             String customMessage = "<p style=\"text-align: center;\">Bonjour " + member.getFirstName() + " " + member.getLastName() + " !" + "\n"
                     + "\n" + "Voici votre nouveau mot de passe : " + newPassword + "\n" + "<br>"
-                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
+                    + "<a href=\" https://ourasso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a></p>"
                     + "<p style=\"text-align: center;\">Cordialement, L’équipe Ourasso</p>";
             FormatService serviceF = new FormatService();
             String messageText = serviceF.mailTemplateGenerator(member.getFirstName(), customMessage,
@@ -202,16 +202,5 @@ public class MemberService {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public String convertLongToDateString(Subscription subscription) {
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar calendar = Calendar.getInstance();
-        if (subscription.isDelayed()) {
-            calendar.setTimeInMillis(subscription.getDelay());
-        } else {
-            calendar.setTimeInMillis(subscription.getStop());
-        }
-        return formatter.format(calendar.getTime());
     }
 }

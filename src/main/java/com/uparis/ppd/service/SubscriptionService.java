@@ -129,7 +129,7 @@ public class SubscriptionService {
                             + subscription.getAssociation().getName() + ".<br>"
                             + "Voici votre mot de passe que nous vous invitons à changer une fois connecté : "
                             + password + "<br>"
-                            + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                            + "<a href=\" https://ourasso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
                             + " <br><br>Cordialement, L’équipe Ourasso.</p>";
             textTemp = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
         } else if (subscription.getStatus().isSuperAdmin()) {
@@ -137,7 +137,7 @@ public class SubscriptionService {
                     + " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "<br>"
                     + "Vous venez de créer et rejoindre l'association " + subscription.getAssociation().getName() + "."
                     + "<br>"
-                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                    + "<a href=\" https://ourasso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
                     + "<br>"
                     + "<br>" + "Cordialement, l'équipe Ourasso.</p>";
             textTemp = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
@@ -145,7 +145,7 @@ public class SubscriptionService {
             customMessage = "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName()
                     + " " + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
                     + "Vous venez de rejoindre l'association " + subscription.getAssociation().getName() + ". <br>"
-                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                    + "<a href=\" https://ourasso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
                     + "<br>"
                     + "<br>" + "Cordialement, l'équipe Ourasso.</p>";
             textTemp = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
@@ -207,7 +207,7 @@ public class SubscriptionService {
                             "<p style=\"text-align: center;\">Bonjour " + subscription.getMember().getFirstName() + " "
                                     + subscription.getMember().getLastName() + ", " + "bienvenue chez Ourasso !" + "\n" + "<br>"
                                     + "Votre abonnement a expiré, veuillez le renouveler !" + "\n" + "<br>"
-                                    + "<a href=\" https://ppd-asso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
+                                    + "<a href=\" https://ourasso.herokuapp.com/login\">Veuillez cliquer ici pour vous connecter</a>"
                                     + " <br><br>Cordialement, L’équipe Ourasso.</p>";
                     String messageText = formatService.mailTemplateGenerator(subscription.getMember().getFirstName(), customMessage, "OurAsso");
                     helper.setText(messageText, true);
@@ -224,24 +224,20 @@ public class SubscriptionService {
         Transaction transaction;
         if (subscription.getStatus().isSuperAdmin()) {
             transaction = transactionService.create(time, getPrice(subscription), subscription);
-            subscription.setStop(time + (360 * 1000));
-            // subscription.setStop(time + ((31556952L / 12) * 1000));
+            subscription.setStop(time + ((31556952L / 12) * 1000));
         } else {
             switch (duration) {
                 case "1":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice1Month(), subscription);
-                    subscription.setStop(time + (360 * 1000));
-                    // subscription.setStop(time + ((31556952L / 12) * 1000));
+                    subscription.setStop(time + ((31556952L / 12) * 1000));
                     break;
                 case "3":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice3Months(), subscription);
-                    subscription.setStop(time + (360 * 1000));
-                    // subscription.setStop(time + ((3 * 31556952L / 12) * 1000));
+                    subscription.setStop(time + ((3 * 31556952L / 12) * 1000));
                     break;
                 case "12":
                     transaction = transactionService.create(time, subscription.getAssociation().getPrice12Months(), subscription);
-                    subscription.setStop(time + (360 * 1000));
-                    // subscription.setStop(time + ((12 * 31556952L / 12) * 1000));
+                    subscription.setStop(time + ((12 * 31556952L / 12) * 1000));
                     break;
                 default:
                     return false;
@@ -281,8 +277,7 @@ public class SubscriptionService {
 
     public void skipSubscription(Subscription subscription) {
         long time = System.currentTimeMillis();
-        subscription.setDelay(time + (10 * 1000));
-        // subscription.setDelay(time + ((31556952L / 365) * 7) * 1000);
+        subscription.setDelay(time + ((31556952L / 365) * 7) * 1000);
         subscription.setDelayed(true);
         subscription.setStart(0);
         subscription.setStop(0);
