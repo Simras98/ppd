@@ -77,10 +77,10 @@
         });
         const ok = await response.json();
         if (ok) {
-            document.getElementById("loginButton").disabled = false;
-            document.getElementById("signUpButton").classList.remove('disabled');
+            document.getElementById("joinButton").disabled = false;
+            document.getElementById("joinButton").classList.remove('disabled');
         } else {
-            window.location.href = "login.html";
+            window.location.href = "join.html";
         }
     }
 </script>

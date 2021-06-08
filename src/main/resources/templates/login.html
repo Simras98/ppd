@@ -77,7 +77,7 @@
         const ok = await response.json();
         if (ok) {
             document.getElementById("loginButton").disabled = false;
-            document.getElementById("signUpButton").classList.remove('disabled');
+            document.getElementById("loginButton").classList.remove('disabled');
         } else {
             window.location.href = "login.html";
         }
