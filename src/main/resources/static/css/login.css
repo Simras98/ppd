@@ -19,7 +19,7 @@ nav ul li a {
 }
 a{
     position: relative;
-    display: block;
+    display: inline-block;
     cursor: pointer;
     padding: 8px 0;
     color: #9b59b6;
