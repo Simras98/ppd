@@ -65,7 +65,7 @@ public class ConstantProperties {
     private static final String ATTRIBUTE_DESC_EMAILNOTFOUND = "L'adresse email n'a pas été trouvée !";
     private static final String ATTRIBUTE_DESC_EMAILSEND = "Un email a été envoyé !";
     private static final String ATTRIBUTE_DESC_ERROR = "Un problème a eu lieu !";
-    private static final String ATTRIBUTE_DESC_EXPIRATIONDATE = "Vous devez rentrer une date d'expiration valide !";
+    private static final String ATTRIBUTE_DESC_EXPIRATIONDATE = "Vous devez rentrer une date d'expiration valide : MM/YY !";
     private static final String ATTRIBUTE_DESC_EXPIRATIONDATEEXPIRED = "Votre carte bancaire a exprirée !";
     private static final String ATTRIBUTE_DESC_FIRSTNAME = "Vous devez rentrer un prénom valide !";
     private static final String ATTRIBUTE_DESC_FULFILLFIELDS = "Vous devez remplir les champs pour valider !";
